@@ -1,0 +1,13 @@
+{
+  "grades": [{
+    "id": "15803-020",
+    "measurements": [
+      {"ts":"2025-11-19T19:14:00","line":"A","screen":"A general","phase":"after_ab124_start_before_stop","note":"Пользователь указал фазу: после пуска АБ-124, до останова. Все числа требуют сверки.","values":{"drive_current":194.24,"rpm":532.7,"mfr":2.035,"mfr_raw":2.18,"pal":7.90,"vgvd":23.11,"fnd":201.7}},
+      {"ts":"2025-11-19T20:20:30","line":"A","screen":"A-329 panel","phase":"after_ab124_start_before_stop","note":"Время из EXIF; на панели видны номера зон. Все числа требуют сверки.","values":{"pal":7.96,"pal_sp":7.60,"z1_t":263,"z1_f":14.28,"z1_out":14.0,"z2_t":253,"z2_f":17.70,"z2_out":27.0,"z3_t":258,"z3_f":11.89,"z3_out":16.0}},
+      {"ts":"2025-11-20T16:05:34","line":"A","screen":"A_PTR_mode","phase":"after_ab124_start_before_stop","note":"Время из меток списка. Все числа требуют сверки.","values":{"drive_current":191.4,"pal":6.43,"mfr":2.053,"t14069":216.7,"fnd":175.3,"rpm":542.0,"a124_rpm":314.7,"vgvd":24.87,"propylene":9.43,"ab124_rpm":0.06}},
+      {"ts":"2025-11-20T17:14:30","line":"A","screen":"A_PTR_mode","phase":"after_ab124_start_before_stop","note":"Время из меток списка. Все числа требуют сверки.","values":{"drive_current":184.9,"pal":10.38,"mfr":1.959,"t14069":238.55,"fnd":340.2,"rpm":853.2,"a124_rpm":249.4,"vgvd":25.89,"propylene":29.94,"ab124_rpm":270.59}},
+      {"ts":"2025-11-20T19:06:06","line":"A","screen":"A_PTR_mode","phase":"after_ab124_start_before_stop","note":"Время из меток списка. Все числа требуют сверки.","values":{"drive_current":171.2,"pal":7.63,"mfr":2.030,"t14069":246.0,"fnd":290.6,"rpm":303.9,"a124_rpm":246.9,"vgvd":25.98,"propylene":30.00,"ab124_rpm":179.58}},
+      {"ts":"2025-11-20T20:05:28","line":"A","screen":"A_PTR_mode","phase":"after_ab124_start_before_stop","note":"Время из меток списка. Все числа требуют сверки.","values":{"drive_current":173.0,"pal":8.39,"mfr":1.993,"t14069":248.40,"fnd":267.5,"rpm":823.1,"a124_rpm":253.7,"vgvd":25.82,"propylene":30.31,"ab124_rpm":183.59}}
+    ]
+  }]
+}

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Режимы марок УПЭ</title>
+<style>
+:root{
+  --paper:#E4E8E3; --panel:#F4F6F2; --field:#FBFCFA;
+  --ink:#19201C; --ink-2:#5A655D; --rule:#C2C9BF; --rule-soft:#D8DED5;
+  --up:#9C5714; --down:#15646B; --mark:#24382C; --warn:#8A6D12; --alarm:#A03024; --radius:3px;
+}
+:root:not([data-theme="light"]){@media (prefers-color-scheme: dark){
+  --paper:#141814; --panel:#1C221D; --field:#232A24;
+  --ink:#E6EBE4; --ink-2:#97A399; --rule:#333D35; --rule-soft:#2A322B;
+  --up:#E0A055; --down:#5FC0C6; --mark:#BFD6C6; --warn:#D7BE62; --alarm:#E5877A;
+}}
+:root[data-theme="dark"]{
+  --paper:#141814; --panel:#1C221D; --field:#232A24;
+  --ink:#E6EBE4; --ink-2:#97A399; --rule:#333D35; --rule-soft:#2A322B;
+  --up:#E0A055; --down:#5FC0C6; --mark:#BFD6C6; --warn:#D7BE62; --alarm:#E5877A;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%;padding-bottom:92px}
+.num{font-family:ui-monospace,"SF Mono","Roboto Mono","DejaVu Sans Mono",monospace;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+header{padding:18px 16px 12px;border-bottom:1px solid var(--rule);background:var(--panel)}
+header h1{margin:0;font-size:19px;font-weight:650;letter-spacing:-.01em}
+header p{margin:3px 0 0;color:var(--ink-2);font-size:13px}
+main{padding:0 0 24px;max-width:760px;margin:0 auto}
+section[hidden]{display:none}
+.section-head{padding:20px 16px 8px;font-size:13px;color:var(--ink-2)}
+.sheet{background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.group-title{padding:12px 16px 6px;font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule);background:var(--field)}
+
+.grade{width:100%;text-align:left;background:var(--panel);border:0;border-top:1px solid var(--rule-soft);
+  padding:14px 16px;color:inherit;font:inherit;cursor:pointer;
+  display:grid;grid-template-columns:auto 1fr;gap:0 14px;align-items:baseline}
+.grade:first-child{border-top:0}
+.grade b{font-size:24px;font-weight:650;letter-spacing:-.03em}
+.grade .modes,.grade .note{grid-column:2;color:var(--ink-2);font-size:13px}
+
+.sheet-head{padding:16px 16px 10px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sheet-head b{font-size:30px;font-weight:650;letter-spacing:-.03em}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 12px}
+.chip{border:1px solid var(--rule);background:transparent;color:var(--ink-2);
+  padding:6px 11px;border-radius:var(--radius);font:inherit;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--mark);color:var(--panel);border-color:var(--mark)}
+:root[data-theme="dark"] .chip[aria-pressed="true"]{color:var(--paper)}
+
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:baseline;
+  padding:10px 16px;border-top:1px solid var(--rule-soft)}
+.row .lab{font-size:15px}
+.row .sub{display:block;font-size:12px;color:var(--ink-2)}
+.row .val{font-size:20px;font-weight:600;white-space:nowrap}
+.row .val.out{color:var(--alarm)}
+.row .unit{font-size:12px;color:var(--ink-2);font-weight:400;margin-left:3px}
+.row .spread{grid-column:2;text-align:right;font-size:12px;color:var(--ink-2);white-space:nowrap}
+.row.check .lab::after{content:" ?";color:var(--warn);font-weight:700}
+.meta{padding:12px 16px 16px;font-size:13px;color:var(--ink-2);border-top:1px solid var(--rule-soft)}
+.meta ol{margin:6px 0 0;padding-left:20px}
+.meta li{margin-bottom:4px}
+
+table.rec{width:100%;border-collapse:collapse;font-size:13px}
+table.rec td,table.rec th{padding:6px 16px;border-top:1px solid var(--rule-soft);text-align:right}
+table.rec td:first-child,table.rec th:first-child{text-align:left}
+table.rec th{color:var(--ink-2);font-weight:400}
+
+details{border-top:1px solid var(--rule-soft)}
+summary{padding:11px 16px;cursor:pointer;font-size:15px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary .when{color:var(--ink-2);font-size:13px;display:block}
+details[open] summary{background:var(--field)}
+.snap{padding:4px 16px 12px;font-size:14px}
+.snap div{display:flex;justify-content:space-between;gap:12px;padding:3px 0;border-bottom:1px solid var(--rule-soft)}
+.snap span:last-child{font-weight:600}
+
+.form{background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:14px 16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;color:var(--ink-2);margin-bottom:4px}
+select,input[type=number],textarea{width:100%;background:var(--field);color:var(--ink);
+  border:1px solid var(--rule);border-radius:var(--radius);padding:10px 11px;font:inherit;font-size:16px}
+textarea{min-height:160px;font-family:ui-monospace,monospace;font-size:13px;line-height:1.5}
+.btn{background:var(--mark);color:var(--panel);border:0;border-radius:var(--radius);
+  padding:12px 16px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;width:100%}
+:root[data-theme="dark"] .btn{color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--rule);font-weight:400}
+.btn+.btn{margin-top:8px}
+
+.trow{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:11px 16px;
+  border-top:1px solid var(--rule-soft);align-items:baseline}
+.trow .lab{font-size:15px}
+.trow .sub{display:block;font-size:12px;color:var(--ink-2)}
+.trow .pair{text-align:right;white-space:nowrap}
+.trow .from{color:var(--ink-2);font-size:15px}
+.trow .to{font-size:21px;font-weight:650;margin-left:8px}
+.trow .unit{font-size:12px;color:var(--ink-2);font-weight:400;margin-left:3px}
+.trow .d{grid-column:2;text-align:right;font-size:13px}
+.d.up{color:var(--up)} .d.down{color:var(--down)} .d.flat{color:var(--ink-2)}
+.ramp{padding:12px 16px;border-top:1px solid var(--rule-soft);font-size:14px}
+.ramp .steps{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.ramp .step{border:1px solid var(--rule);border-radius:var(--radius);padding:6px 10px;font-size:15px}
+.hint{padding:14px 16px;color:var(--ink-2);font-size:13px}
+.empty-state{padding:40px 16px;text-align:center;color:var(--ink-2);font-size:15px}
+
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--panel);
+  border-top:1px solid var(--rule);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:transparent;border:0;border-right:1px solid var(--rule-soft);
+  padding:14px 4px;color:var(--ink-2);font:inherit;font-size:14px;cursor:pointer}
+nav button:last-child{border-right:0}
+nav button[aria-current="true"]{color:var(--ink);font-weight:650;box-shadow:inset 0 -3px 0 var(--mark)}
+.back{background:transparent;border:0;color:var(--ink-2);font:inherit;font-size:15px;padding:12px 16px;cursor:pointer}
+:focus-visible{outline:2px solid var(--up);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Режимы марок УПЭ</h1>
+  <p>Замеры, нормы техкарты и расчёт перехода</p>
+</header>
+
+<main>
+  <section id="view-grades">
+    <div class="section-head">Марки в базе</div>
+    <div id="gradeList"></div>
+    <p class="hint">Каждая марка — набор замеров. В карточке медиана по параметру, разброс и норма из техкарты.</p>
+  </section>
+
+  <section id="view-grade" hidden>
+    <button class="back" id="backBtn">← К списку марок</button>
+    <div class="sheet" id="gradeSheet"></div>
+  </section>
+
+  <section id="view-trans" hidden>
+    <div class="form">
+      <div class="field"><label for="fromSel">Работаем сейчас</label><select id="fromSel"></select></div>
+      <div class="field"><label for="toSel">Переходим на</label><select id="toSel"></select></div>
+      <div class="field"><label for="loadInp">Нагрузка после перехода (необязательно)</label>
+        <input type="number" id="loadInp" step="0.1" placeholder="по умолчанию — медиана целевой марки"></div>
+      <button class="btn" id="calcBtn">Рассчитать уставки</button>
+    </div>
+    <div id="transOut"></div>
+  </section>
+
+  <section id="view-data" hidden>
+    <div class="form">
+      <p class="hint" style="padding:0 0 12px">Вставь JSON с замерами — добавится к базе и сохранится на телефоне.
+        Замер с тем же временем в той же марке перезаписывается.</p>
+      <div class="field"><textarea id="importArea" placeholder='{"grades":[{"id":"15803-020","measurements":[{"ts":"2026-09-20T07:03","line":"А","params":{"load":168}}]}]}'></textarea></div>
+      <button class="btn" id="importBtn">Добавить в базу</button>
+      <button class="btn ghost" id="exportBtn">Скопировать всю базу</button>
+      <button class="btn ghost" id="resetBtn">Сбросить мои добавления</button>
+      <p class="hint" id="dataMsg" style="padding-left:0;padding-right:0"></p>
+    </div>
+    <div class="section-head">Параметры, которые понимает база</div>
+    <div class="sheet" id="paramList"></div>
+  </section>
+</main>
+
+<nav>
+  <button data-view="grades" aria-current="true">Марки</button>
+  <button data-view="trans">Переход</button>
+  <button data-view="data">База</button>
+</nav>
+
+<script>
+"use strict";
+
+var GROUPS = [
+  ["core","Режим и качество"],
+  ["reac","Реактор"],
+  ["init","Инициатор по зонам"],
+  ["clean","Очищенность зон"],
+  ["ethy","Свежий этилен и возвратный газ"],
+  ["comp","Компрессия"],
+  ["hotw","Горячая вода"],
+  ["unld","Выгрузка и грануляция"],
+  ["extr","Экструзия"]
+];
+
+var PARAMS = [
+  {id:"load",    g:"core", label:"Нагрузка на гл. привод",  tag:"EIE-A404",  unit:"",      scale:"base"},
+  {id:"prod",    g:"core", label:"Производительность",      tag:"техкарта",  unit:"т/ч",   scale:"base"},
+  {id:"rpm",     g:"core", label:"Обороты А-404",           tag:"SI17711",   unit:"об/мин",scale:"load"},
+  {id:"pal",     g:"core", label:"Расход ПАЛ",              tag:"F12740A",   unit:"кг/ч",  scale:"load"},
+  {id:"pal_sp",  g:"core", label:"Уставка ПАЛ",             tag:"FIC12740A", unit:"кг/ч",  scale:"load"},
+  {id:"c3_flow", g:"core", label:"Расход пропилена",        tag:"FIC10065",  unit:"м³/ч",  scale:"load"},
+  {id:"mfr",     g:"core", label:"ПТР",                     tag:"ПТР428",    unit:"г/10мин",scale:false},
+  {id:"mfr_raw", g:"core", label:"ПТР исходный",            tag:"ПТР428",    unit:"г/10мин",scale:false},
+  {id:"mfr_est", g:"core", label:"ПТР виртуальный анализатор", tag:"EST_LA_MI", unit:"г/10мин", scale:false},
+  {id:"mfr_lab", g:"core", label:"ПТР по лаборатории",      tag:"лаб.",      unit:"г/10мин",scale:false},
+  {id:"dens_est",g:"core", label:"Плотность расчётная",     tag:"EST_LA_DEN",unit:"г/см³", scale:false},
+  {id:"vgvd",    g:"core", label:"Давление ВГВД",           tag:"PC15714",   unit:"МПа",   scale:false},
+  {id:"fnd",     g:"core", label:"Расход на ФНД",           tag:"F10703A",   unit:"",      scale:"load"},
+  {id:"pn_p",    g:"core", label:"Давление пневмотранспорта",tag:"PI-51149_A",unit:"кПа",  scale:false},
+
+  {id:"r_p",     g:"reac", label:"Давление в реакторе",     tag:"P14002",  unit:"МПа", scale:false},
+  {id:"r_p2",    g:"reac", label:"Давление 2-го плунжера",  tag:"P14026",  unit:"МПа", scale:false},
+  {id:"valve",   g:"reac", label:"Задание клапана выхода",  tag:"гл. р-р", unit:"%",   scale:false},
+  {id:"t_start", g:"reac", label:"Т точки начала реакции",  tag:"T14007",  unit:"°C",  scale:false},
+  {id:"t_mix",   g:"reac", label:"Т в точке смешения",      tag:"TIRCAE14033", unit:"°C", scale:false},
+  {id:"t1_max",  g:"reac", label:"Пик 1-й зоны",            tag:"T1A_MAX", unit:"°C",  scale:false},
+  {id:"t2_max",  g:"reac", label:"Пик 2-й зоны",            tag:"T2A_MAX", unit:"°C",  scale:false},
+  {id:"t3_max",  g:"reac", label:"Пик 3-й зоны",            tag:"T3A_MAX", unit:"°C",  scale:false},
+
+  {id:"z1_f",   g:"init", label:"Инициатор в 1-ю зону", tag:"А-302",  unit:"кг/ч", scale:"load"},
+  {id:"z1_sp",  g:"init", label:"Уставка Т 1-й зоны",   tag:"А-329",  unit:"°C",   scale:false},
+  {id:"z1_t",   g:"init", label:"Тмакс 1-й зоны",       tag:"А-329",  unit:"°C",   scale:false},
+  {id:"z1_out", g:"init", label:"Выход клапана 1-й зоны",tag:"А-329", unit:"%",    scale:false},
+  {id:"z2_f",   g:"init", label:"Инициатор во 2-ю зону",tag:"А-305",  unit:"кг/ч", scale:"load"},
+  {id:"z2_sp",  g:"init", label:"Уставка Т 2-й зоны",   tag:"А-329",  unit:"°C",   scale:false},
+  {id:"z2_t",   g:"init", label:"Тмакс 2-й зоны",       tag:"А-329",  unit:"°C",   scale:false},
+  {id:"z2_out", g:"init", label:"Выход клапана 2-й зоны",tag:"А-329", unit:"%",    scale:false},
+  {id:"z3_f",   g:"init", label:"Инициатор в 3-ю зону", tag:"А-306",  unit:"кг/ч", scale:"load"},
+  {id:"z3_sp",  g:"init", label:"Уставка Т 3-й зоны",   tag:"А-329",  unit:"°C",   scale:false},
+  {id:"z3_t",   g:"init", label:"Тмакс 3-й зоны",       tag:"А-329",  unit:"°C",   scale:false},
+  {id:"z3_out", g:"init", label:"Выход клапана 3-й зоны",tag:"А-329", unit:"%",    scale:false},
+
+  {id:"cidx1", g:"clean", label:"Индекс очищенности 1-й зоны", tag:"Cindx_A_zone1", unit:"", scale:false},
+  {id:"cidx2", g:"clean", label:"Индекс очищенности 2-й зоны", tag:"Cindx_A_zone2", unit:"", scale:false},
+  {id:"cidx3", g:"clean", label:"Индекс очищенности 3-й зоны", tag:"Cindx_A_zone3", unit:"", scale:false},
+
+  {id:"c2_p",   g:"ethy", label:"Давление свежего этилена", tag:"PIR10071", unit:"МПа", scale:false},
+  {id:"c2_flow",g:"ethy", label:"Расход свежего этилена",   tag:"FIR11004", unit:"м³/ч",scale:"load"},
+  {id:"vg_flow",g:"ethy", label:"Возвратный газ из 2 каскада", tag:"FIR12002", unit:"м³/ч", scale:"load"},
+  {id:"o2",     g:"ethy", label:"Кислород",   tag:"Q10073", unit:"ppm", scale:false},
+  {id:"ch4",    g:"ethy", label:"Метан",      tag:"Q10072", unit:"ppm", scale:false},
+  {id:"c2h6",   g:"ethy", label:"Этан",       tag:"Q10072", unit:"ppm", scale:false},
+  {id:"c2h2",   g:"ethy", label:"Ацетилен",   tag:"Q10093", unit:"ppm", scale:false},
+  {id:"c3_vgvd",g:"ethy", label:"Пропилен в ВГВД", tag:"QR12033", unit:"%", scale:false},
+  {id:"c3_vgnd",g:"ethy", label:"Пропилен в ВГНД", tag:"Q10022",  unit:"%", scale:false},
+  {id:"n2_fnd", g:"ethy", label:"Азот на ФНД", tag:"FIRC11001A", unit:"м³/ч", scale:false},
+
+  {id:"a124_rpm", g:"comp", label:"Обороты А-124",  tag:"100-315 об", unit:"об", scale:"load"},
+  {id:"a124_p3",  g:"comp", label:"А-124, 3-я ступень", tag:"P11036", unit:"МПа", scale:false},
+  {id:"ab124_rpm",g:"comp", label:"Обороты АБ-124", tag:"100-280 об", unit:"об", scale:"load"},
+  {id:"a103_p3",  g:"comp", label:"А-103, 3-я ступень", tag:"P10019", unit:"МПа", scale:false},
+  {id:"a152_p",   g:"comp", label:"А-152, 2-я ступень", tag:"P12126", unit:"МПа", scale:false},
+  {id:"a171_p",   g:"comp", label:"А-171, 2-я ступень", tag:"P12326", unit:"МПа", scale:false},
+  {id:"a152_cap", g:"comp", label:"Производительность А-152", tag:"CP_1A_152", unit:"", scale:"load"},
+  {id:"a171_cap", g:"comp", label:"Производительность А-171", tag:"CP_1A_171", unit:"", scale:"load"},
+
+  {id:"hw_f302", g:"hotw", label:"Расход воды в 1-ю зону",  tag:"FIRC13032", unit:"м³/ч", scale:"load"},
+  {id:"hw_f305", g:"hotw", label:"Расход воды во 2-ю зону", tag:"FIRC13033", unit:"м³/ч", scale:"load"},
+  {id:"hw_f306", g:"hotw", label:"Расход воды в 3-ю зону",  tag:"FIRC13034", unit:"м³/ч", scale:"load"},
+  {id:"hw_f307", g:"hotw", label:"Расход на А-307",  tag:"FIRC13035", unit:"м³/ч", scale:"load"},
+  {id:"hw_f308", g:"hotw", label:"Расход на А-308",  tag:"FIRC13036", unit:"м³/ч", scale:"load"},
+  {id:"hw_pz1",  g:"hotw", label:"Давление воды после 1-й зоны", tag:"PIR13037", unit:"МПа", scale:false},
+  {id:"hw_pz2",  g:"hotw", label:"Давление воды после 2-й зоны", tag:"PIR13038", unit:"МПа", scale:false},
+  {id:"hw_pz3",  g:"hotw", label:"Давление воды после 3-й зоны", tag:"PIR13030a",unit:"МПа", scale:false},
+  {id:"hw_p307", g:"hotw", label:"Давление на А-307", tag:"PIR13039", unit:"МПа", scale:false},
+  {id:"hw_p308", g:"hotw", label:"Давление на А-308", tag:"PIR13040", unit:"МПа", scale:false},
+  {id:"hw_tz1",  g:"hotw", label:"Обратная вода 1-й зоны", tag:"T14091", unit:"°C", scale:false},
+  {id:"hw_tz2",  g:"hotw", label:"Обратная вода 2-й зоны", tag:"T14092", unit:"°C", scale:false},
+  {id:"hw_tz3",  g:"hotw", label:"Обратная вода 3-й зоны", tag:"T14093", unit:"°C", scale:false},
+  {id:"hw_p1",   g:"hotw", label:"Давление в А-602/1", tag:"PIRCA13001",  unit:"МПа", scale:false},
+  {id:"hw_l1",   g:"hotw", label:"Уровень в А-602/1",  tag:"LIRCAE13002", unit:"мм",  scale:false},
+  {id:"hw_p2",   g:"hotw", label:"Давление в А-602/2", tag:"PIRCA13029",  unit:"МПа", scale:false},
+  {id:"hw_l2",   g:"hotw", label:"Уровень в А-602/2",  tag:"LIRCAE13030", unit:"мм",  scale:false},
+  {id:"hw_t100", g:"hotw", label:"Температура на выходе из АВО", tag:"TIRA13100", unit:"°C", scale:false},
+  {id:"hw_t43",  g:"hotw", label:"Температура TIR13043", tag:"TIR13043", unit:"°C", scale:false},
+  {id:"hw_t503", g:"hotw", label:"Температура TIRCA13503", tag:"TIRCA13503", unit:"°C", scale:false},
+  {id:"hw_t504", g:"hotw", label:"Температура TIRCA13504", tag:"TIRCA13504", unit:"°C", scale:false},
+
+  {id:"ovd_p",  g:"unld", label:"Давление ОВД",      tag:"PR14705", unit:"МПа", scale:false},
+  {id:"ond_p",  g:"unld", label:"Давление ОНД",      tag:"P16706",  unit:"МПа", scale:false},
+  {id:"a401_t", g:"unld", label:"Температура А-401", tag:"TI14724", unit:"°C",  scale:false},
+  {id:"lv_pos", g:"unld", label:"Положение LV-14702",tag:"LZI14702",unit:"%",   scale:false},
+
+  {id:"ex_c2",  g:"extr", label:"Т 2-го цилиндра экструдера", tag:"экструзия", unit:"°C", scale:false},
+  {id:"ex_c3",  g:"extr", label:"Т 3-го цилиндра экструдера", tag:"экструзия", unit:"°C", scale:false},
+  {id:"ex_c4",  g:"extr", label:"Т 4-го цилиндра экструдера", tag:"экструзия", unit:"°C", scale:false},
+  {id:"ex_die", g:"extr", label:"Температура фильеры",        tag:"экструзия", unit:"°C", scale:false}
+];
+var P = {};
+PARAMS.forEach(function(p){ P[p.id] = p; });
+
+var SEED = {
+  grades: [{
+    id: "15803-020",
+    alias: "15803020",
+    note: "Техкарта продукта версии 54.2 от 16.05.2025, рецептура ПАЛ + пропилен.",
+    norms: {
+      prod:{lo:17.0, hi:18.5},
+      mfr:{lo:1.5, hi:2.5}, mfr_est:{lo:1.8, tg:2.0, hi:2.2}, mfr_raw:{lo:1.8, tg:2.0, hi:2.2},
+      dens_est:{lo:0.9200, hi:0.9240},
+      t_start:{lo:131, tg:133, hi:135},
+      t1_max:{lo:306, tg:311, hi:316},
+      t2_max:{lo:302, tg:306, hi:310},
+      t3_max:{lo:277, tg:282, hi:287},
+      r_p:{lo:227, tg:229, hi:231},
+      pal:{lo:1.5, hi:15},
+      c3_flow:{lo:5, hi:60},
+      z1_f:{lo:10, hi:40}, z2_f:{lo:10, hi:42}, z3_f:{lo:5, hi:40},
+      ex_c2:{lo:170, hi:200}, ex_c3:{lo:170, hi:200}, ex_c4:{lo:170, hi:200}, ex_die:{lo:125, hi:150},
+      cidx1:{lo:110, hi:160}, cidx2:{lo:100, hi:160}, cidx3:{lo:60, hi:120},
+      hw_tz1:{lo:175, hi:210}, hw_tz2:{lo:175, hi:210}, hw_tz3:{lo:175, hi:210},
+      hw_pz1:{lo:2.40, hi:4.90}, hw_pz2:{lo:2.40, hi:4.90}, hw_pz3:{lo:2.40, hi:4.90}
+    },
+    spec: [
+      ["Плотность", "0,9200–0,9240 г/см³"],
+      ["ПТР", "1,5–2,5 г/10 мин, разброс ±6 %"],
+      ["Количество включений", "не более 2 шт"],
+      ["Предел текучести при растяжении", "не менее 9,3 МПа"],
+      ["Прочность при разрыве", "не менее 11,3 МПа"],
+      ["Относительное удлинение при разрыве", "не менее 600 %"],
+      ["Проба на внешний вид плёнки", "вид А или В"],
+      ["Массовая доля экстрагируемых веществ", "не более 0,4 % (гранулят 0,30 %)"],
+      ["Запах и привкус водных вытяжек", "не выше 1 балла"],
+      ["ММР", "не более 9–11"],
+      ["Целевая производительность", "17,0–18,5 т/ч"]
+    ],
+    recipe: [
+      {zone:"1-я и 2-я зоны реактора", rows:[
+        ["Изопар Н (растворитель)", "33,84", "200", "—"],
+        ["DTBP", "2,68", "16", "0,8"],
+        ["TBPIN", "8,21", "50", "2"],
+        ["TBPEH", "12,31", "75", "3"],
+        ["TAPPI 25 кг", "9,52", "75", "3"],
+        ["TBPND (BNP75)", "9,52", "75", "3"],
+        ["TAPND", "12,69", "100", "4"]
+      ]},
+      {zone:"3-я зона реактора", rows:[
+        ["Изопар Н (растворитель)", "65,22", "300", "—"],
+        ["DTBP", "2,15", "10", "0,5"],
+        ["TBPIN", "21,09", "100", "4"],
+        ["TBPEH", "10,54", "50", "2"]
+      ]}
+    ],
+    notes: [
+      "Разница температур между цилиндрами 2, 3, 4-й зон экструдера не более 10 °C.",
+      "В период прогрева реактора от отложений и при ОПВ верхняя граница температуры охлаждающей воды 195 °C.",
+      "При повышении Т14069 выше 245 °C допускается пик 3-й зоны до 290 °C при сохранении диапазона ±5 °C.",
+      "ПТР регулируется только расходом ПАЛ, максимальные температуры 1, 2, 3 зон — только расходом инициаторов.",
+      "При низкой очищенности зон допускается снижение DTBP в коктейлях: для 1–2 зон до 8 кг, для 3 зоны до 5 кг.",
+      "TBPIN в канистрах 20 кг вместо 25 кг: для 1–2 зон 2,5 канистры по 20 кг, для 3 зоны 5 канистр по 20 кг.",
+      "Стабилизация не требуется."
+    ],
+    measurements: [
+      {
+        ts:"2026-09-20T07:03", line:"А",
+        source:"A_общий + панель А-329",
+        pumps:"зона 1 — А-329/1, зона 2 — А-329/2, зона 3 — А-329/3",
+        check:["pal_sp","pn_p","z1_out","z2_out","z3_out"],
+        params:{
+          load:168.01, rpm:813.3, pal:4.42, pal_sp:5.00,
+          mfr:1.980, mfr_raw:2.048, vgvd:26.18, fnd:313.6, pn_p:102.7,
+          z1_sp:313, z1_t:313, z1_f:29.94, z1_out:37.5,
+          z2_sp:307, z2_t:307, z2_f:36.05, z2_out:47.7,
+          z3_sp:283, z3_t:283, z3_f:16.32, z3_out:20.5,
+          ovd_p:26.97, a401_t:196.7, lv_pos:10.0
+        }
+      },
+      {
+        ts:"2026-09-19T07:45", line:"А",
+        source:"экран горячей воды",
+        check:["hw_pz3","hw_t43"],
+        params:{
+          hw_p1:0.60, hw_l1:1711, hw_t100:165.5, hw_t43:169.8,
+          hw_f302:93.86, hw_f305:99.13, hw_f306:137.90, hw_f307:21.39, hw_f308:103.67,
+          hw_pz1:4.4, hw_pz2:4.5, hw_p307:1.8, hw_p308:1.3
+        }
+      },
+      {
+        ts:"2025-09-21T16:19", line:"А",
+        source:"четыре экрана: СУУТП, возвратный газ, ПАЛ, выгрузка, горячая вода, панель А-329",
+        pumps:"зона 1 — А-329/2, зона 2 — А-329/4, зона 3 — А-329/1, резерв — А-329/3",
+        check:["a124_rpm","a103_p3","a152_p","a171_p","hw_t503","hw_t504","c2_flow","vg_flow"],
+        params:{
+          load:172.03, rpm:892.0, pal:6.60, pal_sp:6.57, c3_flow:33.55,
+          mfr:2.000, mfr_raw:1.682, mfr_est:1.719, mfr_lab:1.750, dens_est:0.9232,
+          vgvd:25.88, fnd:279.3, pn_p:109.9,
+          r_p:228.1, r_p2:191.3, valve:79.42,
+          t_start:133.1, t_mix:146.70, t1_max:310.72, t2_max:305.70, t3_max:283.45,
+          z1_f:29.85, z1_sp:312, z1_t:312, z1_out:37.8,
+          z2_f:34.19, z2_sp:307, z2_t:307, z2_out:64.2,
+          z3_f:17.28, z3_sp:283, z3_t:283, z3_out:54.1,
+          cidx1:116.05, cidx2:115.81, cidx3:68.99,
+          c2_p:1.696, c2_flow:7469.5, vg_flow:27443.2,
+          o2:0.09, ch4:11.7, c2h6:220.0, c2h2:0.87, c3_vgvd:0.531, c3_vgnd:1.438, n2_fnd:36.5,
+          a124_rpm:280.4, a124_p3:27.09, a103_p3:1.605, a152_cap:30.16, a171_cap:174.80,
+          hw_f302:91.49, hw_f305:100.81, hw_f306:146.94, hw_f307:95.24, hw_f308:109.22,
+          hw_pz1:4.42, hw_pz2:4.50, hw_pz3:4.37, hw_p307:1.6, hw_p308:1.4,
+          hw_tz1:187.40, hw_tz2:199.00, hw_tz3:180.30,
+          hw_p1:0.70, hw_l1:1649, hw_p2:0.58, hw_l2:1646,
+          hw_t100:165.4, hw_t43:174.8, hw_t503:151.60, hw_t504:151.61,
+          ovd_p:25.94, ond_p:0.1269, a401_t:200.1, lv_pos:11.3
+        }
+      }
+    ]
+  }]
+};
+
+var LS_KEY = "upe-rezhim-v3";
+var store = {grades: []};
+function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
+
+function readAdded(){
+  try{ var r = localStorage.getItem(LS_KEY); return r ? JSON.parse(r) : {grades:[]}; }
+  catch(e){ return {grades:[]}; }
+}
+function saveAdded(a){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(a)); return true; }catch(e){ return false; }
+}
+function loadStore(){ store = merge(deepCopy(SEED), readAdded()); }
+
+function merge(base, extra){
+  var out = deepCopy(base);
+  (extra.grades || []).forEach(function(g){
+    if(!g || !g.id) return;
+    var t = null;
+    out.grades.forEach(function(x){ if(String(x.id) === String(g.id) || x.alias === String(g.id)) t = x; });
+    if(!t){ t = {id:String(g.id), note:g.note||"", measurements:[]}; out.grades.push(t); }
+    if(g.note) t.note = g.note;
+    if(g.norms){ t.norms = t.norms || {}; for(var k in g.norms) t.norms[k] = g.norms[k]; }
+    if(g.spec) t.spec = g.spec;
+    if(g.recipe) t.recipe = g.recipe;
+    if(g.notes) t.notes = g.notes;
+    (g.measurements || []).forEach(function(m){
+      if(!m || !m.params) return;
+      var rec = {ts:m.ts||"", line:m.line||"", mode:m.mode||"", source:m.source||"",
+                 pumps:m.pumps||"", check:m.check||[], params:m.params};
+      var i = -1;
+      t.measurements.forEach(function(x, idx){ if(x.ts === rec.ts && x.line === rec.line) i = idx; });
+      if(i >= 0) t.measurements[i] = rec; else t.measurements.push(rec);
+    });
+    t.measurements.sort(function(a,b){ return String(b.ts).localeCompare(String(a.ts)); });
+  });
+  out.grades.sort(function(a,b){ return String(a.id).localeCompare(String(b.id), "ru", {numeric:true}); });
+  return out;
+}
+
+function median(a){
+  if(!a.length) return NaN;
+  var s = a.slice().sort(function(x,y){ return x-y; }), m = s.length >> 1;
+  return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2;
+}
+function profile(ms){
+  var out = {};
+  PARAMS.forEach(function(p){
+    var v = [];
+    ms.forEach(function(m){ var x = Number(m.params[p.id]); if(isFinite(x)) v.push(x); });
+    if(v.length) out[p.id] = {med:median(v), min:Math.min.apply(null,v), max:Math.max.apply(null,v), n:v.length};
+  });
+  return out;
+}
+function detectMode(m){
+  var a = Number(m.params.ab124_rpm), b = Number(m.params.a103_p3), tags = [];
+  if(m.mode) tags.push(m.mode);
+  if(isFinite(a) && a < 1) tags.push("без АБ-124");
+  if(isFinite(b) && b < 0.05) tags.push("без бустерного");
+  return tags.join(" · ");
+}
+function fmt(v){
+  if(v === null || v === undefined || v === "") return "—";
+  var n = Number(v);
+  if(!isFinite(n)) return String(v);
+  var a = Math.abs(n);
+  if(a >= 1000) return String(Math.round(n));
+  if(a >= 100)  return String(Math.round(n*10)/10);
+  if(a < 1 && a > 0) return String(Math.round(n*10000)/10000);
+  return String(Math.round(n*100)/100);
+}
+function fmtTs(ts){
+  if(!ts) return "время не указано";
+  var parts = String(ts).split("T"), d = (parts[0]||"").split("-");
+  return d.length === 3 ? d[2]+"."+d[1]+"."+d[0] + (parts[1] ? " " + parts[1] : "") : ts;
+}
+function normText(n){
+  if(!n) return "";
+  var s = "норма ";
+  if(n.lo !== undefined && n.hi !== undefined) s += fmt(n.lo) + "–" + fmt(n.hi);
+  else if(n.hi !== undefined) s += "до " + fmt(n.hi);
+  else if(n.lo !== undefined) s += "от " + fmt(n.lo);
+  if(n.tg !== undefined) s += " · цель " + fmt(n.tg);
+  return s;
+}
+function outOfNorm(v, n){
+  if(!n || !isFinite(v)) return false;
+  if(n.lo !== undefined && v < n.lo) return true;
+  if(n.hi !== undefined && v > n.hi) return true;
+  return false;
+}
+
+function renderList(){
+  var box = document.getElementById("gradeList");
+  box.innerHTML = "";
+  if(!store.grades.length){
+    box.innerHTML = '<p class="empty-state">База пустая. Добавь первый замер во вкладке «База».</p>';
+    return;
+  }
+  store.grades.forEach(function(g){
+    var n = g.measurements.length, last = g.measurements[0], lines = [];
+    g.measurements.forEach(function(m){ if(m.line && lines.indexOf(m.line) < 0) lines.push(m.line); });
+    var b = document.createElement("button");
+    b.className = "grade";
+    b.innerHTML = "<b>" + g.id + "</b>" +
+      '<span class="modes">' + n + " " + (n===1?"замер":(n<5?"замера":"замеров")) +
+      (lines.length ? " · линия " + lines.join(", ") : "") +
+      (g.norms ? " · есть техкарта" : "") + "</span>" +
+      '<span class="note">последний ' + fmtTs(last ? last.ts : "") + "</span>";
+    b.onclick = function(){ openGrade(g.id); };
+    box.appendChild(b);
+  });
+}
+
+var lineFilter = "";
+
+function openGrade(id, lf){
+  var g = null;
+  store.grades.forEach(function(x){ if(String(x.id) === String(id)) g = x; });
+  if(!g) return;
+  if(lf !== undefined) lineFilter = lf;
+  var lines = [];
+  g.measurements.forEach(function(m){ if(m.line && lines.indexOf(m.line) < 0) lines.push(m.line); });
+  var ms = g.measurements.filter(function(m){ return !lineFilter || m.line === lineFilter; });
+  var pr = profile(ms), norms = g.norms || {}, flagged = {};
+  ms.forEach(function(m){ (m.check || []).forEach(function(c){ flagged[c] = true; }); });
+
+  var html = '<div class="sheet-head"><b>' + g.id + "</b>" +
+    '<span style="color:var(--ink-2);font-size:14px">' + ms.length + " замеров</span></div>";
+
+  if(lines.length > 1){
+    html += '<div class="chips"><button class="chip" data-line="" aria-pressed="' + (!lineFilter) + '">Все линии</button>';
+    lines.forEach(function(l){
+      html += '<button class="chip" data-line="' + l + '" aria-pressed="' + (lineFilter===l) + '">Линия ' + l + "</button>";
+    });
+    html += "</div>";
+  }
+
+  GROUPS.forEach(function(gr){
+    var rows = PARAMS.filter(function(p){ return p.g === gr[0] && pr[p.id]; });
+    if(!rows.length) return;
+    html += '<div class="group-title">' + gr[1] + "</div>";
+    rows.forEach(function(p){
+      var s = pr[p.id], n = norms[p.id];
+      var spread = (s.n > 1 && s.min !== s.max)
+        ? fmt(s.min) + "–" + fmt(s.max) + " · " + s.n + " зам." : (s.n + " зам.");
+      var nt = normText(n);
+      html += '<div class="row' + (flagged[p.id] ? " check" : "") + '">' +
+        '<span class="lab">' + p.label + '<span class="sub">' + p.tag + (nt ? " · " + nt : "") + "</span></span>" +
+        '<span class="val num' + (outOfNorm(s.med, n) ? " out" : "") + '">' + fmt(s.med) +
+        '<span class="unit">' + p.unit + "</span></span>" +
+        '<span class="spread num">' + spread + "</span></div>";
+    });
+  });
+
+  if(g.spec){
+    html += '<div class="group-title">Спецификация продукта</div><table class="rec">';
+    g.spec.forEach(function(r){ html += "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; });
+    html += "</table>";
+  }
+
+  if(g.recipe){
+    g.recipe.forEach(function(blk){
+      html += '<div class="group-title">Рецептура инициаторов · ' + blk.zone + '</div><table class="rec">' +
+        "<tr><th>Компонент</th><th>%</th><th>кг</th><th>шт.</th></tr>";
+      blk.rows.forEach(function(r){
+        html += "<tr><td>" + r[0] + '</td><td class="num">' + r[1] + '</td><td class="num">' + r[2] +
+          '</td><td class="num">' + r[3] + "</td></tr>";
+      });
+      html += "</table>";
+    });
+  }
+
+  html += '<div class="group-title">Замеры</div>';
+  ms.forEach(function(m){
+    var md = detectMode(m);
+    html += "<details><summary>" + fmtTs(m.ts) +
+      (m.line ? " · линия " + m.line : "") + (md ? " · " + md : "") +
+      '<span class="when">' + (m.source || "") + (m.pumps ? " · " + m.pumps : "") +
+      '</span></summary><div class="snap">';
+    PARAMS.forEach(function(p){
+      if(m.params[p.id] === undefined) return;
+      html += "<div><span>" + p.label + '</span><span class="num">' + fmt(m.params[p.id]) + " " + p.unit + "</span></div>";
+    });
+    html += "</div></details>";
+  });
+
+  if(g.notes){
+    html += '<div class="meta">Примечания техкарты:<ol>';
+    g.notes.forEach(function(t){ html += "<li>" + t + "</li>"; });
+    html += "</ol></div>";
+  }
+  if(g.note) html += '<div class="meta">' + g.note + "</div>";
+  html += '<div class="meta">Знак «?» — значение прочитано с фото неуверенно. Красным — выход за норму техкарты.</div>';
+
+  var sheet = document.getElementById("gradeSheet");
+  sheet.innerHTML = html;
+  var chips = sheet.querySelectorAll(".chip");
+  for(var i = 0; i < chips.length; i++){
+    (function(c){ c.onclick = function(){ openGrade(g.id, c.dataset.line); }; })(chips[i]);
+  }
+  show("grade");
+}
+
+function fillSelects(){
+  ["fromSel","toSel"].forEach(function(id){
+    var sel = document.getElementById(id), keep = sel.value;
+    sel.innerHTML = "";
+    store.grades.forEach(function(g){
+      var o = document.createElement("option");
+      o.value = g.id; o.textContent = g.id + " (" + g.measurements.length + ")";
+      sel.appendChild(o);
+    });
+    if(keep) sel.value = keep;
+  });
+  var ts = document.getElementById("toSel");
+  if(ts.options.length > 1 && ts.selectedIndex === 0) ts.selectedIndex = 1;
+}
+
+function calc(){
+  var out = document.getElementById("transOut"), ga = null, gb = null;
+  var av = document.getElementById("fromSel").value, bv = document.getElementById("toSel").value;
+  store.grades.forEach(function(x){ if(x.id === av) ga = x; if(x.id === bv) gb = x; });
+  if(!ga || !gb){ out.innerHTML = '<p class="empty-state">Выбери обе марки.</p>'; return; }
+  if(ga.id === gb.id){ out.innerHTML = '<p class="empty-state">Это одна и та же марка.</p>'; return; }
+
+  var pa = profile(ga.measurements), pb = profile(gb.measurements);
+  var refLoad = pb.load ? pb.load.med : NaN;
+  var inp = parseFloat(document.getElementById("loadInp").value);
+  var tgtLoad = (isFinite(inp) && inp > 0) ? inp : refLoad;
+  var k = (isFinite(refLoad) && refLoad > 0 && isFinite(tgtLoad)) ? tgtLoad / refLoad : 1;
+
+  var html = '<div class="section-head">' + ga.id + " → " + gb.id +
+    (Math.abs(k-1) > 0.005 ? " · пересчёт на " + fmt(tgtLoad) : "") + '</div><div class="sheet">';
+  var ramps = [], shown = 0;
+
+  GROUPS.forEach(function(gr){
+    var rows = PARAMS.filter(function(p){ return p.g === gr[0] && pb[p.id]; });
+    if(!rows.length) return;
+    html += '<div class="group-title">' + gr[1] + "</div>";
+    rows.forEach(function(p){
+      var from = pa[p.id] ? pa[p.id].med : NaN, to = pb[p.id].med;
+      if(p.scale === "load" && isFinite(k)) to *= k;
+      if(p.scale === "base" && isFinite(tgtLoad) && p.id === "load") to = tgtLoad;
+      var d = isFinite(from) ? to - from : NaN;
+      var pct = (isFinite(from) && from !== 0) ? d/from*100 : NaN;
+      var cls = !isFinite(d) ? "flat" : (d > 0.01 ? "up" : (d < -0.01 ? "down" : "flat"));
+      var sign = (isFinite(d) && d > 0) ? "+" : "";
+      shown++;
+      html += '<div class="trow"><span class="lab">' + p.label +
+        '<span class="sub">' + p.tag + "</span></span>" +
+        '<span class="pair"><span class="from num">' + (isFinite(from) ? fmt(from) : "—") +
+        '</span><span class="to num">' + fmt(to) + '<span class="unit">' + p.unit + "</span></span></span>" +
+        '<span class="d ' + cls + ' num">' +
+        (isFinite(d) ? sign + fmt(d) + (isFinite(pct) ? "  (" + sign + Math.round(pct) + "%)" : "")
+                     : "нет замеров по текущей марке") + "</span></div>";
+      if(isFinite(pct) && Math.abs(pct) >= 35 && p.scale === "load") ramps.push({p:p, from:from, to:to});
+    });
+  });
+  html += "</div>";
+  if(!shown){ out.innerHTML = '<p class="empty-state">По целевой марке нет замеров.</p>'; return; }
+
+  if(ramps.length){
+    html += '<div class="sheet" style="margin-top:14px">';
+    ramps.forEach(function(r){
+      var s1 = r.from + (r.to - r.from)/3, s2 = r.from + 2*(r.to - r.from)/3;
+      html += '<div class="ramp">Ступени по «' + r.p.label + '» — набирать с контролем анализа:<div class="steps">' +
+        [r.from, s1, s2, r.to].map(function(v){ return '<span class="step num">' + fmt(v) + "</span>"; }).join("") +
+        "</div></div>";
+    });
+    html += "</div>";
+  }
+  html += '<p class="hint">Значения — медианы по замерам. Расходы пересчитаны пропорционально нагрузке; ' +
+    'температурные уставки, давления и ПТР взяты как есть. По техкарте ПТР ведут только расходом ПАЛ, ' +
+    'а пики зон — только расходом инициаторов.</p>';
+  out.innerHTML = html;
+}
+
+function renderParams(){
+  var html = "";
+  GROUPS.forEach(function(gr){
+    html += '<div class="group-title">' + gr[1] + "</div>";
+    PARAMS.filter(function(p){ return p.g === gr[0]; }).forEach(function(p){
+      html += '<div class="row"><span class="lab">' + p.label + '<span class="sub">ключ ' + p.id +
+        " · " + p.tag + (p.unit ? " · " + p.unit : "") + " · " +
+        (p.scale === "base" ? "база пересчёта" : p.scale === "load" ? "тянется за нагрузкой" : "уставка") +
+        "</span></span></div>";
+    });
+  });
+  document.getElementById("paramList").innerHTML = html;
+}
+function doImport(){
+  var msg = document.getElementById("dataMsg");
+  var txt = document.getElementById("importArea").value.replace(/^\s+|\s+$/g, "");
+  if(!txt){ msg.textContent = "Поле пустое — вставь JSON."; return; }
+  var data;
+  try{ data = JSON.parse(txt); }catch(e){ msg.textContent = "JSON не разобрался: " + e.message; return; }
+  if(!data || !data.grades || !data.grades.length){ msg.textContent = 'Нужен объект с полем "grades".'; return; }
+  var added = merge(readAdded(), data);
+  if(saveAdded(added)){
+    loadStore(); renderList(); fillSelects();
+    document.getElementById("importArea").value = "";
+    var n = 0;
+    store.grades.forEach(function(g){ n += g.measurements.length; });
+    msg.textContent = "Готово: " + store.grades.length + " марок, " + n + " замеров.";
+  } else {
+    msg.textContent = "Не удалось сохранить на этом устройстве — данные будут только до перезагрузки.";
+  }
+}
+function doExport(){
+  var msg = document.getElementById("dataMsg"), txt = JSON.stringify(store, null, 2);
+  document.getElementById("importArea").value = txt;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(
+      function(){ msg.textContent = "База скопирована и показана в поле выше."; },
+      function(){ msg.textContent = "База показана в поле выше — скопируй вручную."; });
+  } else msg.textContent = "База показана в поле выше — скопируй вручную.";
+}
+function doReset(){
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  loadStore(); renderList(); fillSelects();
+  document.getElementById("dataMsg").textContent = "Добавленные замеры удалены, осталась встроенная база.";
+}
+
+function show(view){
+  ["grades","grade","trans","data"].forEach(function(v){
+    var el = document.getElementById("view-" + v);
+    if(el) el.hidden = (v !== view);
+  });
+  var btns = document.querySelectorAll("nav button");
+  for(var i = 0; i < btns.length; i++){
+    var on = btns[i].dataset.view === view || (view === "grade" && btns[i].dataset.view === "grades");
+    btns[i].setAttribute("aria-current", on ? "true" : "false");
+  }
+  window.scrollTo(0,0);
+}
+var navBtns = document.querySelectorAll("nav button");
+for(var i = 0; i < navBtns.length; i++){
+  (function(b){ b.onclick = function(){ show(b.dataset.view); }; })(navBtns[i]);
+}
+document.getElementById("backBtn").onclick = function(){ lineFilter = ""; show("grades"); };
+document.getElementById("calcBtn").onclick = calc;
+document.getElementById("importBtn").onclick = doImport;
+document.getElementById("exportBtn").onclick = doExport;
+document.getElementById("resetBtn").onclick = doReset;
+
+loadStore(); renderList(); renderParams(); fillSelects();
+</script>
+</body>
+</html>

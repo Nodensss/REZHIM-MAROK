@@ -1,0 +1,39 @@
+{
+  "source": "photo-recognition",
+  "status": "requires_review",
+  "observed_at": "2026-07-13T09:54:08",
+  "line": "A",
+  "grade": "15803-020",
+  "measurements": {
+    "drive_current": 167.4,
+    "rpm": 803.3,
+    "mfr": 2.021,
+    "mfr_raw": 1.941,
+    "pal": 5.16,
+    "vgvd": 26.56,
+    "fnd": 128.9
+  },
+  "extra": [
+    {
+      "tag": "LC14703",
+      "label": "Уровень в ОНД A402",
+      "value": 40.44,
+      "unit": "%"
+    },
+    {
+      "tag": "L12741",
+      "label": "Уровень ПАЛ в A235",
+      "value": 62.0,
+      "unit": "%"
+    },
+    {
+      "tag": "P16701",
+      "label": "Р в A507",
+      "value": 0.074,
+      "unit": "МПа"
+    }
+  ],
+  "source_files": [
+    "IMG_20260713_095612.jpg"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "grades": [{
+    "id": "15803-020",
+    "measurements": [{
+      "ts": "2026-07-13T10:04:44",
+      "line": "A",
+      "screen": "temperatures",
+      "recognition_method": "manual_visual_review_from_photo",
+      "note": "Время взято из EXIF: шкала экрана охватывает около 09:10–10:00. Все поля требуют сверки.",
+      "values": {"t14069": 227.5},
+      "extra": [
+        {"tag":"T14007","label":"T14007","value":133.0,"unit":"°C"},
+        {"tag":"T14024","label":"T14024","value":209.5,"unit":"°C"},
+        {"tag":"T14033","label":"T14033","value":147.1,"unit":"°C"},
+        {"tag":"T14045","label":"T14045","value":275.7,"unit":"°C"},
+        {"tag":"T14078","label":"T14078","value":253.2,"unit":"°C"},
+        {"tag":"T14080","label":"T14080","value":294.6,"unit":"°C"},
+        {"tag":"T14089","label":"T14089","value":238.2,"unit":"°C"}
+      ]
+    }]
+  }]
+}

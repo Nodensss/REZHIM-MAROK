@@ -1,0 +1,21 @@
+.venv/
+.venv-*/
+__pycache__/
+*.pyc
+tmp/
+.codex-remote-attachments/
+
+# Android build output and caches
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/android/
+
+# Generated from data/ by rezhim/android_snapshot.py (android_build.ps1, CI)
+android/app/src/main/assets/base/
+android/app/src/main/assets/sources/
+
+# Over GitHub's 100 MB file limit: published as Release assets
+*.apk
+15803020.pdf

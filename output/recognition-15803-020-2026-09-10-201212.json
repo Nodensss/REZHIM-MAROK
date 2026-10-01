@@ -1,0 +1,30 @@
+{
+  "grades": [{
+    "id": "15803-020",
+    "measurements": [{
+      "ts": "2026-09-10T20:12:12",
+      "line": "A",
+      "screen": "A general and A-329",
+      "recognition_method": "manual_visual_review_from_photos",
+      "note": "Время с экрана и совпадает с EXIF. Все поля требуют сверки. Насосы 329 сохранены в extra: соответствие зонам на данном кадре не подтверждено.",
+      "values": {
+        "drive_current": 167.53,
+        "rpm": 794.7,
+        "mfr": 1.976,
+        "mfr_raw": 2.135,
+        "pal": 6.38,
+        "vgvd": 25.89,
+        "fnd": 106.7
+      },
+      "extra": [
+        {"tag":"LC14703","label":"Уровень в ОНД A402","value":59.10,"unit":"%"},
+        {"tag":"L12741","label":"Уровень ПАЛ в A235","value":60.34,"unit":"%"},
+        {"tag":"P16701","label":"Р в A507","value":0.090,"unit":"МПа"},
+        {"tag":"transition_granulation","label":"Переход грануляция","value":2.21,"unit":""},
+        {"tag":"A329_1","label":"329/1","value":313.53,"unit":"°C"},
+        {"tag":"A329_2","label":"329/2","value":306.59,"unit":"°C"},
+        {"tag":"A329_3","label":"329/3","value":281.73,"unit":"°C"}
+      ]
+    }]
+  }]
+}

@@ -1,0 +1,107 @@
+{
+  "source": "photo-recognition",
+  "status": "requires_review",
+  "observed_at": "2026-02-11T08:42:01",
+  "line": "A",
+  "grade": "15803-020",
+  "measurements": {
+    "pal": 7.59,
+    "pal_sp": 7.74,
+    "z1_sp": 313,
+    "z1_t": 313,
+    "z1_f": 32.24,
+    "z1_out": 39.7,
+    "z2_sp": 307,
+    "z2_t": 307,
+    "z2_f": 35.84,
+    "z2_out": 50.7,
+    "z3_sp": 282,
+    "z3_t": 282,
+    "z3_f": 16.26,
+    "z3_out": 17.5,
+    "rpm": 803.0,
+    "ex_die": 144.1,
+    "drive_current": 167.27
+  },
+  "extra": [
+    {
+      "tag": "knives_rpm",
+      "label": "Обороты ножей",
+      "value": 664.4,
+      "unit": ""
+    },
+    {
+      "tag": "melt_temperature",
+      "label": "Температура расплава",
+      "value": 239.9,
+      "unit": ""
+    },
+    {
+      "tag": "a436_purge",
+      "label": "Продувка A436",
+      "value": 712.8,
+      "unit": ""
+    },
+    {
+      "tag": "hydrotransport_flow",
+      "label": "Расход гидротранспорта",
+      "value": 298.4,
+      "unit": ""
+    },
+    {
+      "tag": "pneumotransport",
+      "label": "Пневмотранспорт",
+      "value": 113.9,
+      "unit": ""
+    },
+    {
+      "tag": "a402_pressure",
+      "label": "Давление A402",
+      "value": 0.164,
+      "unit": ""
+    },
+    {
+      "tag": "a402_level",
+      "label": "Уровень A402",
+      "value": 40.23,
+      "unit": ""
+    },
+    {
+      "tag": "die_pressure",
+      "label": "Давление на фильеру",
+      "value": 6.171,
+      "unit": ""
+    },
+    {
+      "tag": "a403_pressure",
+      "label": "Давление A403",
+      "value": 0.135,
+      "unit": ""
+    },
+    {
+      "tag": "a403_level",
+      "label": "Уровень A403",
+      "value": 14.99,
+      "unit": ""
+    },
+    {
+      "tag": "a425_discharge_temperature",
+      "label": "Температура нагн. A425",
+      "value": 37.94,
+      "unit": ""
+    },
+    {
+      "tag": "a425_suction_temperature",
+      "label": "Температура на всас A425",
+      "value": 25.07,
+      "unit": ""
+    }
+  ],
+  "source_files": [
+    "1088C02A-891D-4525-AD07-9ADF12BED8A2.jpg",
+    "69B28663-E682-4E43-8A74-8C65ED3AB6C0.jpg",
+    "975BD18B-3FE9-4126-8E4A-23B77B75D965.jpg",
+    "26118F14-B034-4CD7-861C-BB1A552051E2.jpg",
+    "C101C963-05DB-4291-974E-57E052054687.jpg"
+  ]
+}

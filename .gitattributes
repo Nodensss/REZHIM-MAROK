@@ -1,0 +1,6 @@
+# Source files are stored byte for byte: the database records their SHA-256.
+data/** -text
+# Shell script run on Linux in GitHub Actions.
+android/gradlew text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf

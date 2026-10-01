@@ -1,0 +1,45 @@
+{
+  "grade": "15803-020",
+  "timestamp": "2025-09-21T16:19:00",
+  "line": "A",
+  "reason": "Корректировка пользователя после повторного чтения фото: ошибки ручного переноса.",
+  "changes": [
+    {
+      "key": "a171_cap",
+      "old": 174.8,
+      "new": 29.89,
+      "status": "confirmed"
+    },
+    {
+      "key": "a124_rpm",
+      "old": 280.4,
+      "new": 313.9,
+      "status": "confirmed"
+    },
+    {
+      "key": "ab124_rpm",
+      "new": 280.4,
+      "status": "confirmed"
+    },
+    {
+      "key": "a152_p",
+      "new": 235.3,
+      "status": "review"
+    },
+    {
+      "key": "a171_p",
+      "new": 235.8,
+      "status": "review"
+    },
+    {
+      "key": "c3_vgnd",
+      "old": 1.438,
+      "status": "review",
+      "reason": "Пользователь сверит по фото: 1.438 или 1.238. Число пока не изменять."
+    }
+  ],
+  "context": {
+    "a103": "running",
+    "ab124": "running"
+  }
+}

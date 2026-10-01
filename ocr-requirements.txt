@@ -1,0 +1,4 @@
+# OCR is optional and does not affect the base application.
+# PaddlePaddle versions are selected against the installed Python and Windows build.
+paddlepaddle
+paddleocr

@@ -1,0 +1,27 @@
+{
+  "grades": [{
+    "id": "15803-020",
+    "measurements": [{
+      "ts": "2025-11-19T19:19:00",
+      "line": "A",
+      "screen": "A general",
+      "phase": "after_ab124_start_before_stop",
+      "note": "Пользователь указал фазу: после пуска АБ-124, перед остановом. Время взято с экрана; все числа требуют сверки.",
+      "values": {"drive_current":195.11,"rpm":531.8,"ex_die":150.0},
+      "extra": [
+        {"tag":"knives_rpm","label":"Обороты ножей","value":352.7,"unit":""},
+        {"tag":"melt_temperature","label":"Температура расплава","value":222.1,"unit":"°C"},
+        {"tag":"A436_purge","label":"Продувка A436","value":712.8,"unit":""},
+        {"tag":"hydrotransport_flow","label":"Расход гидротранспорта","value":294.4,"unit":""},
+        {"tag":"pneumotransport","label":"Пневмотранспорт","value":88.3,"unit":""},
+        {"tag":"A402_pressure","label":"Давление A402","value":0.0957,"unit":"МПа"},
+        {"tag":"A402_level","label":"Уровень A402","value":41.73,"unit":"%"},
+        {"tag":"die_pressure","label":"Давление на фильеру","value":6.709,"unit":"МПа"},
+        {"tag":"A403_pressure","label":"Давление A403","value":0.0673,"unit":"МПа"},
+        {"tag":"A403_level","label":"Уровень A403","value":24.85,"unit":"%"},
+        {"tag":"A425_discharge_temperature","label":"Температура нагн. A425","value":37.91,"unit":"°C"},
+        {"tag":"A425_suction_temperature","label":"Температура на всас A425","value":25.66,"unit":"°C"}
+      ]
+    }]
+  }]
+}

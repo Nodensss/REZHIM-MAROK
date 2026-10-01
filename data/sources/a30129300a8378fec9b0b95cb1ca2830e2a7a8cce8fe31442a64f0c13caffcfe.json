@@ -1,0 +1,32 @@
+{
+  "grades": [
+    {
+      "id": "15803-020",
+      "measurements": [
+        {
+          "ts": "2026-02-11T08:42:01",
+          "line": "A",
+          "values": {
+            "pal": 7.59,
+            "pal_sp": 7.74,
+            "z1_sp": 313,
+            "z1_t": 313,
+            "z1_f": 32.24,
+            "z1_out": 39.7,
+            "z2_sp": 307,
+            "z2_t": 307,
+            "z2_f": 35.84,
+            "z2_out": 50.7,
+            "z3_sp": 282,
+            "z3_t": 282,
+            "z3_f": 16.26,
+            "z3_out": 17.5
+          },
+          "extra": [],
+          "note": "Grade assigned by user: all current photos are grade 158. Visual transcription requires review. Panel date grouped with February series; panel clock not visible.",
+          "source_file": "1088C02A-891D-4525-AD07-9ADF12BED8A2.jpg"
+        }
+      ]
+    }
+  ]
+}

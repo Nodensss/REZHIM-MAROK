@@ -1,0 +1,3315 @@
+{
+  "built_at": "2026-09-21T10:14:32.095771+00:00",
+  "counts": {
+    "grades": 1,
+    "observations": 3,
+    "values": 102
+  },
+  "data": {
+    "doc_details": [
+      {
+        "card_notes": [
+          "Разница температур между цилиндрами 2, 3, 4-й зон экструдера не более 10 °C.",
+          "В период прогрева реактора от отложений и при ОПВ верхняя граница температуры охлаждающей воды 195 °C.",
+          "При повышении Т14069 выше 245 °C допускается пик 3-й зоны до 290 °C при сохранении диапазона ±5 °C.",
+          "ПТР регулируется только расходом ПАЛ, максимальные температуры 1, 2, 3 зон — только расходом инициаторов.",
+          "При низкой очищенности зон допускается снижение DTBP в коктейлях: для 1–2 зон до 8 кг, для 3 зоны до 5 кг.",
+          "TBPIN в канистрах 20 кг вместо 25 кг: для 1–2 зон 2,5 канистры по 20 кг, для 3 зоны 5 канистр по 20 кг.",
+          "Стабилизация не требуется."
+        ],
+        "date_basis": "Дата документа из миграции; отдельный период действия не указан.",
+        "doc_id": 1,
+        "recipe": [
+          {
+            "rows": [
+              [
+                "Изопар Н (растворитель)",
+                "33,84",
+                "200",
+                "—"
+              ],
+              [
+                "DTBP",
+                "2,68",
+                "16",
+                "0,8"
+              ],
+              [
+                "TBPIN",
+                "8,21",
+                "50",
+                "2"
+              ],
+              [
+                "TBPEH",
+                "12,31",
+                "75",
+                "3"
+              ],
+              [
+                "TAPPI 25 кг",
+                "9,52",
+                "75",
+                "3"
+              ],
+              [
+                "TBPND (BNP75)",
+                "9,52",
+                "75",
+                "3"
+              ],
+              [
+                "TAPND",
+                "12,69",
+                "100",
+                "4"
+              ]
+            ],
+            "zone": "1-я и 2-я зоны реактора"
+          },
+          {
+            "rows": [
+              [
+                "Изопар Н (растворитель)",
+                "65,22",
+                "300",
+                "—"
+              ],
+              [
+                "DTBP",
+                "2,15",
+                "10",
+                "0,5"
+              ],
+              [
+                "TBPIN",
+                "21,09",
+                "100",
+                "4"
+              ],
+              [
+                "TBPEH",
+                "10,54",
+                "50",
+                "2"
+              ]
+            ],
+            "zone": "3-я зона реактора"
+          }
+        ],
+        "spec": [
+          [
+            "Плотность",
+            "0,9200–0,9240 г/см³"
+          ],
+          [
+            "ПТР",
+            "1,5–2,5 г/10 мин, разброс ±6 %"
+          ],
+          [
+            "Количество включений",
+            "не более 2 шт"
+          ],
+          [
+            "Предел текучести при растяжении",
+            "не менее 9,3 МПа"
+          ],
+          [
+            "Прочность при разрыве",
+            "не менее 11,3 МПа"
+          ],
+          [
+            "Относительное удлинение при разрыве",
+            "не менее 600 %"
+          ],
+          [
+            "Проба на внешний вид плёнки",
+            "вид А или В"
+          ],
+          [
+            "Массовая доля экстрагируемых веществ",
+            "не более 0,4 % (гранулят 0,30 %)"
+          ],
+          [
+            "Запах и привкус водных вытяжек",
+            "не выше 1 балла"
+          ],
+          [
+            "ММР",
+            "не более 9–11"
+          ],
+          [
+            "Целевая производительность",
+            "17,0–18,5 т/ч"
+          ]
+        ],
+        "title": "Технологическая карта продукта FE 15803-020, ПАЛ + пропилен"
+      }
+    ],
+    "doc_version": [
+      {
+        "grade_id": 1,
+        "id": 1,
+        "notes": "Техкарта продукта версии 54.2 от 16.05.2025, рецептура ПАЛ + пропилен.\nРазница температур между цилиндрами 2, 3, 4-й зон экструдера не более 10 °C.\nВ период прогрева реактора от отложений и при ОПВ верхняя граница температуры охлаждающей воды 195 °C.\nПри повышении Т14069 выше 245 °C допускается пик 3-й зоны до 290 °C при сохранении диапазона ±5 °C.\nПТР регулируется только расходом ПАЛ, максимальные температуры 1, 2, 3 зон — только расходом инициаторов.\nПри низкой очищенности зон допускается снижение DTBP в коктейлях: для 1–2 зон до 8 кг, для 3 зоны до 5 кг.\nTBPIN в канистрах 20 кг вместо 25 кг: для 1–2 зон 2,5 канистры по 20 кг, для 3 зоны 5 канистр по 20 кг.\nСтабилизация не требуется.",
+        "source_id": 1,
+        "valid_from": "2025-05-16",
+        "valid_to": null,
+        "version": "54.2"
+      }
+    ],
+    "grade": [
+      {
+        "aliases": "15803020",
+        "id": 1,
+        "name": "15803-020"
+      }
+    ],
+    "measurement": [
+      {
+        "id": 1,
+        "number": 168.01,
+        "observation_id": 1,
+        "param_key": "load",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 2,
+        "number": 813.3,
+        "observation_id": 1,
+        "param_key": "rpm",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 3,
+        "number": 4.42,
+        "observation_id": 1,
+        "param_key": "pal",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 5,
+        "number": 1.98,
+        "observation_id": 1,
+        "param_key": "mfr",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 6,
+        "number": 2.048,
+        "observation_id": 1,
+        "param_key": "mfr_raw",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 7,
+        "number": 26.18,
+        "observation_id": 1,
+        "param_key": "vgvd",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 8,
+        "number": 313.6,
+        "observation_id": 1,
+        "param_key": "fnd",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 10,
+        "number": 313.0,
+        "observation_id": 1,
+        "param_key": "z1_sp",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 11,
+        "number": 313.0,
+        "observation_id": 1,
+        "param_key": "z1_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 12,
+        "number": 29.94,
+        "observation_id": 1,
+        "param_key": "z1_f",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 14,
+        "number": 307.0,
+        "observation_id": 1,
+        "param_key": "z2_sp",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 15,
+        "number": 307.0,
+        "observation_id": 1,
+        "param_key": "z2_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 16,
+        "number": 36.05,
+        "observation_id": 1,
+        "param_key": "z2_f",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 18,
+        "number": 283.0,
+        "observation_id": 1,
+        "param_key": "z3_sp",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 19,
+        "number": 283.0,
+        "observation_id": 1,
+        "param_key": "z3_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 20,
+        "number": 16.32,
+        "observation_id": 1,
+        "param_key": "z3_f",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 22,
+        "number": 26.97,
+        "observation_id": 1,
+        "param_key": "ovd_p",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 23,
+        "number": 196.7,
+        "observation_id": 1,
+        "param_key": "a401_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 24,
+        "number": 10.0,
+        "observation_id": 1,
+        "param_key": "lv_pos",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 25,
+        "number": 0.6,
+        "observation_id": 2,
+        "param_key": "hw_p1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 26,
+        "number": 1711.0,
+        "observation_id": 2,
+        "param_key": "hw_l1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 27,
+        "number": 165.5,
+        "observation_id": 2,
+        "param_key": "hw_t100",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 29,
+        "number": 93.86,
+        "observation_id": 2,
+        "param_key": "hw_f302",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 30,
+        "number": 99.13,
+        "observation_id": 2,
+        "param_key": "hw_f305",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 31,
+        "number": 137.9,
+        "observation_id": 2,
+        "param_key": "hw_f306",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 32,
+        "number": 21.39,
+        "observation_id": 2,
+        "param_key": "hw_f307",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 33,
+        "number": 103.67,
+        "observation_id": 2,
+        "param_key": "hw_f308",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 34,
+        "number": 4.4,
+        "observation_id": 2,
+        "param_key": "hw_pz1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 35,
+        "number": 4.5,
+        "observation_id": 2,
+        "param_key": "hw_pz2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 36,
+        "number": 1.8,
+        "observation_id": 2,
+        "param_key": "hw_p307",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 37,
+        "number": 1.3,
+        "observation_id": 2,
+        "param_key": "hw_p308",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 38,
+        "number": 172.03,
+        "observation_id": 3,
+        "param_key": "load",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 39,
+        "number": 892.0,
+        "observation_id": 3,
+        "param_key": "rpm",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 40,
+        "number": 6.6,
+        "observation_id": 3,
+        "param_key": "pal",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 41,
+        "number": 6.57,
+        "observation_id": 3,
+        "param_key": "pal_sp",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 42,
+        "number": 33.55,
+        "observation_id": 3,
+        "param_key": "c3_flow",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 43,
+        "number": 2.0,
+        "observation_id": 3,
+        "param_key": "mfr",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 44,
+        "number": 1.682,
+        "observation_id": 3,
+        "param_key": "mfr_raw",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 45,
+        "number": 1.719,
+        "observation_id": 3,
+        "param_key": "mfr_est",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 46,
+        "number": 1.75,
+        "observation_id": 3,
+        "param_key": "mfr_lab",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 47,
+        "number": 0.9232,
+        "observation_id": 3,
+        "param_key": "dens_est",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 48,
+        "number": 25.88,
+        "observation_id": 3,
+        "param_key": "vgvd",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 49,
+        "number": 279.3,
+        "observation_id": 3,
+        "param_key": "fnd",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 50,
+        "number": 109.9,
+        "observation_id": 3,
+        "param_key": "pn_p",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 51,
+        "number": 228.1,
+        "observation_id": 3,
+        "param_key": "r_p",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 52,
+        "number": 191.3,
+        "observation_id": 3,
+        "param_key": "r_p2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 53,
+        "number": 79.42,
+        "observation_id": 3,
+        "param_key": "valve",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 54,
+        "number": 133.1,
+        "observation_id": 3,
+        "param_key": "t_start",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 55,
+        "number": 146.7,
+        "observation_id": 3,
+        "param_key": "t_mix",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 56,
+        "number": 310.72,
+        "observation_id": 3,
+        "param_key": "t1_max",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 57,
+        "number": 305.7,
+        "observation_id": 3,
+        "param_key": "t2_max",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 58,
+        "number": 283.45,
+        "observation_id": 3,
+        "param_key": "t3_max",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 59,
+        "number": 29.85,
+        "observation_id": 3,
+        "param_key": "z1_f",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 60,
+        "number": 312.0,
+        "observation_id": 3,
+        "param_key": "z1_sp",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 61,
+        "number": 312.0,
+        "observation_id": 3,
+        "param_key": "z1_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 62,
+        "number": 37.8,
+        "observation_id": 3,
+        "param_key": "z1_out",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 63,
+        "number": 34.19,
+        "observation_id": 3,
+        "param_key": "z2_f",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 64,
+        "number": 307.0,
+        "observation_id": 3,
+        "param_key": "z2_sp",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 65,
+        "number": 307.0,
+        "observation_id": 3,
+        "param_key": "z2_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 66,
+        "number": 64.2,
+        "observation_id": 3,
+        "param_key": "z2_out",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 67,
+        "number": 17.28,
+        "observation_id": 3,
+        "param_key": "z3_f",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 68,
+        "number": 283.0,
+        "observation_id": 3,
+        "param_key": "z3_sp",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 69,
+        "number": 283.0,
+        "observation_id": 3,
+        "param_key": "z3_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 70,
+        "number": 54.1,
+        "observation_id": 3,
+        "param_key": "z3_out",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 71,
+        "number": 116.05,
+        "observation_id": 3,
+        "param_key": "cidx1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 72,
+        "number": 115.81,
+        "observation_id": 3,
+        "param_key": "cidx2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 73,
+        "number": 68.99,
+        "observation_id": 3,
+        "param_key": "cidx3",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 74,
+        "number": 1.696,
+        "observation_id": 3,
+        "param_key": "c2_p",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 77,
+        "number": 0.09,
+        "observation_id": 3,
+        "param_key": "o2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 78,
+        "number": 11.7,
+        "observation_id": 3,
+        "param_key": "ch4",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 79,
+        "number": 220.0,
+        "observation_id": 3,
+        "param_key": "c2h6",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 80,
+        "number": 0.87,
+        "observation_id": 3,
+        "param_key": "c2h2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 81,
+        "number": 0.531,
+        "observation_id": 3,
+        "param_key": "c3_vgvd",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 83,
+        "number": 36.5,
+        "observation_id": 3,
+        "param_key": "n2_fnd",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 85,
+        "number": 27.09,
+        "observation_id": 3,
+        "param_key": "a124_p3",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 87,
+        "number": 30.16,
+        "observation_id": 3,
+        "param_key": "a152_cap",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 89,
+        "number": 91.49,
+        "observation_id": 3,
+        "param_key": "hw_f302",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 90,
+        "number": 100.81,
+        "observation_id": 3,
+        "param_key": "hw_f305",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 91,
+        "number": 146.94,
+        "observation_id": 3,
+        "param_key": "hw_f306",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 92,
+        "number": 95.24,
+        "observation_id": 3,
+        "param_key": "hw_f307",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 93,
+        "number": 109.22,
+        "observation_id": 3,
+        "param_key": "hw_f308",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 94,
+        "number": 4.42,
+        "observation_id": 3,
+        "param_key": "hw_pz1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 95,
+        "number": 4.5,
+        "observation_id": 3,
+        "param_key": "hw_pz2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 96,
+        "number": 4.37,
+        "observation_id": 3,
+        "param_key": "hw_pz3",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 97,
+        "number": 1.6,
+        "observation_id": 3,
+        "param_key": "hw_p307",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 98,
+        "number": 1.4,
+        "observation_id": 3,
+        "param_key": "hw_p308",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 99,
+        "number": 187.4,
+        "observation_id": 3,
+        "param_key": "hw_tz1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 100,
+        "number": 199.0,
+        "observation_id": 3,
+        "param_key": "hw_tz2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 101,
+        "number": 180.3,
+        "observation_id": 3,
+        "param_key": "hw_tz3",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 102,
+        "number": 0.7,
+        "observation_id": 3,
+        "param_key": "hw_p1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 103,
+        "number": 1649.0,
+        "observation_id": 3,
+        "param_key": "hw_l1",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 104,
+        "number": 0.58,
+        "observation_id": 3,
+        "param_key": "hw_p2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 105,
+        "number": 1646.0,
+        "observation_id": 3,
+        "param_key": "hw_l2",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 106,
+        "number": 165.4,
+        "observation_id": 3,
+        "param_key": "hw_t100",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 107,
+        "number": 174.8,
+        "observation_id": 3,
+        "param_key": "hw_t43",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 110,
+        "number": 25.94,
+        "observation_id": 3,
+        "param_key": "ovd_p",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 111,
+        "number": 0.1269,
+        "observation_id": 3,
+        "param_key": "ond_p",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 112,
+        "number": 200.1,
+        "observation_id": 3,
+        "param_key": "a401_t",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 113,
+        "number": 11.3,
+        "observation_id": 3,
+        "param_key": "lv_pos",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 114,
+        "number": 29.89,
+        "observation_id": 3,
+        "param_key": "a171_cap",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 115,
+        "number": 313.9,
+        "observation_id": 3,
+        "param_key": "a124_rpm",
+        "state": "number",
+        "status": "confirmed"
+      },
+      {
+        "id": 116,
+        "number": 280.4,
+        "observation_id": 3,
+        "param_key": "ab124_rpm",
+        "state": "number",
+        "status": "confirmed"
+      }
+    ],
+    "norm": [
+      {
+        "doc_id": 1,
+        "id": 1,
+        "lower_value": 17.0,
+        "param_key": "prod",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 18.5
+      },
+      {
+        "doc_id": 1,
+        "id": 2,
+        "lower_value": 1.5,
+        "param_key": "mfr",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 2.5
+      },
+      {
+        "doc_id": 1,
+        "id": 3,
+        "lower_value": 1.8,
+        "param_key": "mfr_est",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": 2.0,
+        "upper_value": 2.2
+      },
+      {
+        "doc_id": 1,
+        "id": 4,
+        "lower_value": 1.8,
+        "param_key": "mfr_raw",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": 2.0,
+        "upper_value": 2.2
+      },
+      {
+        "doc_id": 1,
+        "id": 5,
+        "lower_value": 0.92,
+        "param_key": "dens_est",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 0.924
+      },
+      {
+        "doc_id": 1,
+        "id": 6,
+        "lower_value": 131.0,
+        "param_key": "t_start",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": 133.0,
+        "upper_value": 135.0
+      },
+      {
+        "doc_id": 1,
+        "id": 7,
+        "lower_value": 306.0,
+        "param_key": "t1_max",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": 311.0,
+        "upper_value": 316.0
+      },
+      {
+        "doc_id": 1,
+        "id": 8,
+        "lower_value": 302.0,
+        "param_key": "t2_max",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": 306.0,
+        "upper_value": 310.0
+      },
+      {
+        "doc_id": 1,
+        "id": 9,
+        "lower_value": 277.0,
+        "param_key": "t3_max",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": 282.0,
+        "upper_value": 287.0
+      },
+      {
+        "doc_id": 1,
+        "id": 10,
+        "lower_value": 227.0,
+        "param_key": "r_p",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": 229.0,
+        "upper_value": 231.0
+      },
+      {
+        "doc_id": 1,
+        "id": 11,
+        "lower_value": 1.5,
+        "param_key": "pal",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 15.0
+      },
+      {
+        "doc_id": 1,
+        "id": 12,
+        "lower_value": 5.0,
+        "param_key": "c3_flow",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 60.0
+      },
+      {
+        "doc_id": 1,
+        "id": 13,
+        "lower_value": 10.0,
+        "param_key": "z1_f",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 40.0
+      },
+      {
+        "doc_id": 1,
+        "id": 14,
+        "lower_value": 10.0,
+        "param_key": "z2_f",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 42.0
+      },
+      {
+        "doc_id": 1,
+        "id": 15,
+        "lower_value": 5.0,
+        "param_key": "z3_f",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 40.0
+      },
+      {
+        "doc_id": 1,
+        "id": 16,
+        "lower_value": 170.0,
+        "param_key": "ex_c2",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 200.0
+      },
+      {
+        "doc_id": 1,
+        "id": 17,
+        "lower_value": 170.0,
+        "param_key": "ex_c3",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 200.0
+      },
+      {
+        "doc_id": 1,
+        "id": 18,
+        "lower_value": 170.0,
+        "param_key": "ex_c4",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 200.0
+      },
+      {
+        "doc_id": 1,
+        "id": 19,
+        "lower_value": 125.0,
+        "param_key": "ex_die",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 150.0
+      },
+      {
+        "doc_id": 1,
+        "id": 20,
+        "lower_value": 110.0,
+        "param_key": "cidx1",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 160.0
+      },
+      {
+        "doc_id": 1,
+        "id": 21,
+        "lower_value": 100.0,
+        "param_key": "cidx2",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 160.0
+      },
+      {
+        "doc_id": 1,
+        "id": 22,
+        "lower_value": 60.0,
+        "param_key": "cidx3",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 120.0
+      },
+      {
+        "doc_id": 1,
+        "id": 23,
+        "lower_value": 175.0,
+        "param_key": "hw_tz1",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 210.0
+      },
+      {
+        "doc_id": 1,
+        "id": 24,
+        "lower_value": 175.0,
+        "param_key": "hw_tz2",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 210.0
+      },
+      {
+        "doc_id": 1,
+        "id": 25,
+        "lower_value": 175.0,
+        "param_key": "hw_tz3",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 210.0
+      },
+      {
+        "doc_id": 1,
+        "id": 26,
+        "lower_value": 2.4,
+        "param_key": "hw_pz1",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 4.9
+      },
+      {
+        "doc_id": 1,
+        "id": 27,
+        "lower_value": 2.4,
+        "param_key": "hw_pz2",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 4.9
+      },
+      {
+        "doc_id": 1,
+        "id": 28,
+        "lower_value": 2.4,
+        "param_key": "hw_pz3",
+        "row_number": "Не указана в исходнике",
+        "section": "Не указан в исходнике",
+        "target": null,
+        "upper_value": 4.9
+      }
+    ],
+    "observation": [
+      {
+        "a103": "unknown",
+        "ab124": "unknown",
+        "doc_id": 1,
+        "grade_id": 1,
+        "id": 1,
+        "line": "A",
+        "recipe12": "54.2 / 1-я и 2-я зоны реактора",
+        "recipe3": "54.2 / 3-я зона реактора",
+        "steady": null,
+        "suutp": "unknown",
+        "timestamp": "2026-09-20T07:03:00"
+      },
+      {
+        "a103": "unknown",
+        "ab124": "unknown",
+        "doc_id": 1,
+        "grade_id": 1,
+        "id": 2,
+        "line": "A",
+        "recipe12": "54.2 / 1-я и 2-я зоны реактора",
+        "recipe3": "54.2 / 3-я зона реактора",
+        "steady": null,
+        "suutp": "unknown",
+        "timestamp": "2026-09-19T07:45:00"
+      },
+      {
+        "a103": "running",
+        "ab124": "running",
+        "doc_id": 1,
+        "grade_id": 1,
+        "id": 3,
+        "line": "A",
+        "recipe12": "54.2 / 1-я и 2-я зоны реактора",
+        "recipe3": "54.2 / 3-я зона реактора",
+        "steady": null,
+        "suutp": "unknown",
+        "timestamp": "2025-09-21T16:19:00"
+      }
+    ],
+    "observation_details": [
+      {
+        "migration_sha256": "a2911d3d72ed02c4bd32901a39b3c6edc3f03c0c5c7afba2f94dab274097b9de",
+        "observation_id": 1,
+        "pumps_text": "зона 1 — А-329/1, зона 2 — А-329/2, зона 3 — А-329/3",
+        "review_without_value": [],
+        "source_description": "A_общий + панель А-329"
+      },
+      {
+        "migration_sha256": "a2911d3d72ed02c4bd32901a39b3c6edc3f03c0c5c7afba2f94dab274097b9de",
+        "observation_id": 2,
+        "pumps_text": null,
+        "review_without_value": [
+          "hw_pz3"
+        ],
+        "source_description": "экран горячей воды"
+      },
+      {
+        "migration_sha256": "a2911d3d72ed02c4bd32901a39b3c6edc3f03c0c5c7afba2f94dab274097b9de",
+        "observation_id": 3,
+        "pumps_text": "зона 1 — А-329/2, зона 2 — А-329/4, зона 3 — А-329/1, резерв — А-329/3",
+        "review_without_value": [],
+        "source_description": "четыре экрана: СУУТП, возвратный газ, ПАЛ, выгрузка, горячая вода, панель А-329"
+      }
+    ],
+    "param": [
+      {
+        "group_name": "Режим и качество",
+        "key": "production",
+        "load_dependency": "base",
+        "name": "Производительность",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": "т/ч"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "pal",
+        "load_dependency": "scales",
+        "name": "Расход ПАЛ",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "F12740A",
+        "unit": "кг/ч"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "propylene",
+        "load_dependency": "scales",
+        "name": "Расход пропилена",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "mfi",
+        "load_dependency": "independent",
+        "name": "ПТР",
+        "precision": 2,
+        "role": "lab",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Свежий этилен",
+        "key": "ethylene",
+        "load_dependency": "base",
+        "name": "Свежий этилен",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIR11004",
+        "unit": ""
+      },
+      {
+        "group_name": "Экструзия",
+        "key": "drive_current",
+        "load_dependency": "independent",
+        "name": "Ток главного привода",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "EIE-A404",
+        "unit": "А"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "water_temperature",
+        "load_dependency": "independent",
+        "name": "Температура горячей воды",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "t14069",
+        "load_dependency": "independent",
+        "name": "Температура T14069",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T14069",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "initiator1",
+        "load_dependency": "scales",
+        "name": "Инициатор, измеренный расход · зона 1",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "suutp_flow1",
+        "load_dependency": "scales",
+        "name": "Инициатор, расчёт СУУТП · зона 1",
+        "precision": 2,
+        "role": "suutp",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Реактор",
+        "key": "peak1",
+        "load_dependency": "independent",
+        "name": "Максимальная температура · зона 1",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "initiator2",
+        "load_dependency": "scales",
+        "name": "Инициатор, измеренный расход · зона 2",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "suutp_flow2",
+        "load_dependency": "scales",
+        "name": "Инициатор, расчёт СУУТП · зона 2",
+        "precision": 2,
+        "role": "suutp",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Реактор",
+        "key": "peak2",
+        "load_dependency": "independent",
+        "name": "Максимальная температура · зона 2",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "initiator3",
+        "load_dependency": "scales",
+        "name": "Инициатор, измеренный расход · зона 3",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "suutp_flow3",
+        "load_dependency": "scales",
+        "name": "Инициатор, расчёт СУУТП · зона 3",
+        "precision": 2,
+        "role": "suutp",
+        "tag": "",
+        "unit": ""
+      },
+      {
+        "group_name": "Реактор",
+        "key": "peak3",
+        "load_dependency": "independent",
+        "name": "Максимальная температура · зона 3",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "load",
+        "load_dependency": "independent",
+        "name": "Нагрузка на гл. привод",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "EIE-A404",
+        "unit": ""
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "prod",
+        "load_dependency": "base",
+        "name": "Производительность",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "техкарта",
+        "unit": "т/ч"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "rpm",
+        "load_dependency": "scales",
+        "name": "Обороты А-404",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "SI17711",
+        "unit": "об/мин"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "pal_sp",
+        "load_dependency": "scales",
+        "name": "Уставка ПАЛ",
+        "precision": 2,
+        "role": "setpoint",
+        "tag": "FIC12740A",
+        "unit": "кг/ч"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "c3_flow",
+        "load_dependency": "scales",
+        "name": "Расход пропилена",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIC10065",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "mfr",
+        "load_dependency": "independent",
+        "name": "ПТР",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "ПТР428",
+        "unit": "г/10мин"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "mfr_raw",
+        "load_dependency": "independent",
+        "name": "ПТР исходный",
+        "precision": 3,
+        "role": "measurement",
+        "tag": "ПТР428",
+        "unit": "г/10мин"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "mfr_est",
+        "load_dependency": "independent",
+        "name": "ПТР виртуальный анализатор",
+        "precision": 3,
+        "role": "suutp",
+        "tag": "EST_LA_MI",
+        "unit": "г/10мин"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "mfr_lab",
+        "load_dependency": "independent",
+        "name": "ПТР по лаборатории",
+        "precision": 2,
+        "role": "lab",
+        "tag": "лаб.",
+        "unit": "г/10мин"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "dens_est",
+        "load_dependency": "independent",
+        "name": "Плотность расчётная",
+        "precision": 4,
+        "role": "suutp",
+        "tag": "EST_LA_DEN",
+        "unit": "г/см³"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "vgvd",
+        "load_dependency": "independent",
+        "name": "Давление ВГВД",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PC15714",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "fnd",
+        "load_dependency": "scales",
+        "name": "Расход на ФНД",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "F10703A",
+        "unit": ""
+      },
+      {
+        "group_name": "Режим и качество",
+        "key": "pn_p",
+        "load_dependency": "independent",
+        "name": "Давление пневмотранспорта",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PI-51149_A",
+        "unit": "кПа"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "r_p",
+        "load_dependency": "independent",
+        "name": "Давление в реакторе",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "P14002",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "r_p2",
+        "load_dependency": "independent",
+        "name": "Давление 2-го плунжера",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "P14026",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "valve",
+        "load_dependency": "independent",
+        "name": "Задание клапана выхода",
+        "precision": 2,
+        "role": "setpoint",
+        "tag": "гл. р-р",
+        "unit": "%"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "t_start",
+        "load_dependency": "independent",
+        "name": "Т точки начала реакции",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T14007",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "t_mix",
+        "load_dependency": "independent",
+        "name": "Т в точке смешения",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "TIRCAE14033",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "t1_max",
+        "load_dependency": "independent",
+        "name": "Пик 1-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T1A_MAX",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "t2_max",
+        "load_dependency": "independent",
+        "name": "Пик 2-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T2A_MAX",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Реактор",
+        "key": "t3_max",
+        "load_dependency": "independent",
+        "name": "Пик 3-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T3A_MAX",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z1_f",
+        "load_dependency": "scales",
+        "name": "Инициатор в 1-ю зону",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "А-302",
+        "unit": "кг/ч"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z1_sp",
+        "load_dependency": "independent",
+        "name": "Уставка Т 1-й зоны",
+        "precision": 2,
+        "role": "setpoint",
+        "tag": "А-329",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z1_t",
+        "load_dependency": "independent",
+        "name": "Тмакс 1-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "А-329",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z1_out",
+        "load_dependency": "independent",
+        "name": "Выход клапана 1-й зоны",
+        "precision": 2,
+        "role": "controller_output",
+        "tag": "А-329",
+        "unit": "%"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z2_f",
+        "load_dependency": "scales",
+        "name": "Инициатор во 2-ю зону",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "А-305",
+        "unit": "кг/ч"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z2_sp",
+        "load_dependency": "independent",
+        "name": "Уставка Т 2-й зоны",
+        "precision": 2,
+        "role": "setpoint",
+        "tag": "А-329",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z2_t",
+        "load_dependency": "independent",
+        "name": "Тмакс 2-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "А-329",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z2_out",
+        "load_dependency": "independent",
+        "name": "Выход клапана 2-й зоны",
+        "precision": 2,
+        "role": "controller_output",
+        "tag": "А-329",
+        "unit": "%"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z3_f",
+        "load_dependency": "scales",
+        "name": "Инициатор в 3-ю зону",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "А-306",
+        "unit": "кг/ч"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z3_sp",
+        "load_dependency": "independent",
+        "name": "Уставка Т 3-й зоны",
+        "precision": 2,
+        "role": "setpoint",
+        "tag": "А-329",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z3_t",
+        "load_dependency": "independent",
+        "name": "Тмакс 3-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "А-329",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Инициатор по зонам",
+        "key": "z3_out",
+        "load_dependency": "independent",
+        "name": "Выход клапана 3-й зоны",
+        "precision": 2,
+        "role": "controller_output",
+        "tag": "А-329",
+        "unit": "%"
+      },
+      {
+        "group_name": "Очищенность зон",
+        "key": "cidx1",
+        "load_dependency": "independent",
+        "name": "Индекс очищенности 1-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "Cindx_A_zone1",
+        "unit": ""
+      },
+      {
+        "group_name": "Очищенность зон",
+        "key": "cidx2",
+        "load_dependency": "independent",
+        "name": "Индекс очищенности 2-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "Cindx_A_zone2",
+        "unit": ""
+      },
+      {
+        "group_name": "Очищенность зон",
+        "key": "cidx3",
+        "load_dependency": "independent",
+        "name": "Индекс очищенности 3-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "Cindx_A_zone3",
+        "unit": ""
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "c2_p",
+        "load_dependency": "independent",
+        "name": "Давление свежего этилена",
+        "precision": 3,
+        "role": "measurement",
+        "tag": "PIR10071",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "c2_flow",
+        "load_dependency": "base",
+        "name": "Расход свежего этилена",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIR11004",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "vg_flow",
+        "load_dependency": "scales",
+        "name": "Возвратный газ из 2 каскада",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIR12002",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "o2",
+        "load_dependency": "independent",
+        "name": "Кислород",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "Q10073",
+        "unit": "ppm"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "ch4",
+        "load_dependency": "independent",
+        "name": "Метан",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "Q10072",
+        "unit": "ppm"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "c2h6",
+        "load_dependency": "independent",
+        "name": "Этан",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "Q10072",
+        "unit": "ppm"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "c2h2",
+        "load_dependency": "independent",
+        "name": "Ацетилен",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "Q10093",
+        "unit": "ppm"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "c3_vgvd",
+        "load_dependency": "independent",
+        "name": "Пропилен в ВГВД",
+        "precision": 3,
+        "role": "measurement",
+        "tag": "QR12033",
+        "unit": "%"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "c3_vgnd",
+        "load_dependency": "independent",
+        "name": "Пропилен в ВГНД",
+        "precision": 3,
+        "role": "measurement",
+        "tag": "Q10022",
+        "unit": "%"
+      },
+      {
+        "group_name": "Свежий этилен и возвратный газ",
+        "key": "n2_fnd",
+        "load_dependency": "independent",
+        "name": "Азот на ФНД",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIRC11001A",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "a124_rpm",
+        "load_dependency": "scales",
+        "name": "Обороты А-124",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "100-315 об",
+        "unit": "об"
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "a124_p3",
+        "load_dependency": "independent",
+        "name": "А-124, 3-я ступень",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "P11036",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "ab124_rpm",
+        "load_dependency": "scales",
+        "name": "Обороты АБ-124",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "100-280 об",
+        "unit": "об"
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "a103_p3",
+        "load_dependency": "independent",
+        "name": "А-103, 3-я ступень",
+        "precision": 3,
+        "role": "measurement",
+        "tag": "P10019",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "a152_p",
+        "load_dependency": "independent",
+        "name": "А-152, 2-я ступень",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "P12126",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "a171_p",
+        "load_dependency": "independent",
+        "name": "А-171, 2-я ступень",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "P12326",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "a152_cap",
+        "load_dependency": "scales",
+        "name": "Производительность А-152",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "CP_1A_152",
+        "unit": ""
+      },
+      {
+        "group_name": "Компрессия",
+        "key": "a171_cap",
+        "load_dependency": "scales",
+        "name": "Производительность А-171",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "CP_1A_171",
+        "unit": ""
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_f302",
+        "load_dependency": "scales",
+        "name": "Расход воды в 1-ю зону",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIRC13032",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_f305",
+        "load_dependency": "scales",
+        "name": "Расход воды во 2-ю зону",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIRC13033",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_f306",
+        "load_dependency": "scales",
+        "name": "Расход воды в 3-ю зону",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIRC13034",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_f307",
+        "load_dependency": "scales",
+        "name": "Расход на А-307",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIRC13035",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_f308",
+        "load_dependency": "scales",
+        "name": "Расход на А-308",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "FIRC13036",
+        "unit": "м³/ч"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_pz1",
+        "load_dependency": "independent",
+        "name": "Давление воды после 1-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PIR13037",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_pz2",
+        "load_dependency": "independent",
+        "name": "Давление воды после 2-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PIR13038",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_pz3",
+        "load_dependency": "independent",
+        "name": "Давление воды после 3-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PIR13030a",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_p307",
+        "load_dependency": "independent",
+        "name": "Давление на А-307",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PIR13039",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_p308",
+        "load_dependency": "independent",
+        "name": "Давление на А-308",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PIR13040",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_tz1",
+        "load_dependency": "independent",
+        "name": "Обратная вода 1-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T14091",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_tz2",
+        "load_dependency": "independent",
+        "name": "Обратная вода 2-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T14092",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_tz3",
+        "load_dependency": "independent",
+        "name": "Обратная вода 3-й зоны",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "T14093",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_p1",
+        "load_dependency": "independent",
+        "name": "Давление в А-602/1",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PIRCA13001",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_l1",
+        "load_dependency": "independent",
+        "name": "Уровень в А-602/1",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "LIRCAE13002",
+        "unit": "мм"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_p2",
+        "load_dependency": "independent",
+        "name": "Давление в А-602/2",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PIRCA13029",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_l2",
+        "load_dependency": "independent",
+        "name": "Уровень в А-602/2",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "LIRCAE13030",
+        "unit": "мм"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_t100",
+        "load_dependency": "independent",
+        "name": "Температура на выходе из АВО",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "TIRA13100",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_t43",
+        "load_dependency": "independent",
+        "name": "Температура TIR13043",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "TIR13043",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_t503",
+        "load_dependency": "independent",
+        "name": "Температура TIRCA13503",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "TIRCA13503",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Горячая вода",
+        "key": "hw_t504",
+        "load_dependency": "independent",
+        "name": "Температура TIRCA13504",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "TIRCA13504",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Выгрузка и грануляция",
+        "key": "ovd_p",
+        "load_dependency": "independent",
+        "name": "Давление ОВД",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "PR14705",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Выгрузка и грануляция",
+        "key": "ond_p",
+        "load_dependency": "independent",
+        "name": "Давление ОНД",
+        "precision": 4,
+        "role": "measurement",
+        "tag": "P16706",
+        "unit": "МПа"
+      },
+      {
+        "group_name": "Выгрузка и грануляция",
+        "key": "a401_t",
+        "load_dependency": "independent",
+        "name": "Температура А-401",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "TI14724",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Выгрузка и грануляция",
+        "key": "lv_pos",
+        "load_dependency": "independent",
+        "name": "Положение LV-14702",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "LZI14702",
+        "unit": "%"
+      },
+      {
+        "group_name": "Экструзия",
+        "key": "ex_c2",
+        "load_dependency": "independent",
+        "name": "Т 2-го цилиндра экструдера",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "экструзия",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Экструзия",
+        "key": "ex_c3",
+        "load_dependency": "independent",
+        "name": "Т 3-го цилиндра экструдера",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "экструзия",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Экструзия",
+        "key": "ex_c4",
+        "load_dependency": "independent",
+        "name": "Т 4-го цилиндра экструдера",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "экструзия",
+        "unit": "°C"
+      },
+      {
+        "group_name": "Экструзия",
+        "key": "ex_die",
+        "load_dependency": "independent",
+        "name": "Температура фильеры",
+        "precision": 2,
+        "role": "measurement",
+        "tag": "экструзия",
+        "unit": "°C"
+      }
+    ],
+    "pump_map": [
+      {
+        "observation_id": 1,
+        "pump": 1,
+        "zone": 1
+      },
+      {
+        "observation_id": 1,
+        "pump": 2,
+        "zone": 2
+      },
+      {
+        "observation_id": 1,
+        "pump": 3,
+        "zone": 3
+      },
+      {
+        "observation_id": 3,
+        "pump": 2,
+        "zone": 1
+      },
+      {
+        "observation_id": 3,
+        "pump": 4,
+        "zone": 2
+      },
+      {
+        "observation_id": 3,
+        "pump": 1,
+        "zone": 3
+      }
+    ],
+    "recipe": [
+      {
+        "component": "Изопар Н (растворитель)",
+        "count": null,
+        "doc_id": 1,
+        "id": 1,
+        "mass": 200.0,
+        "percent": 33.84,
+        "version": "54.2 / 1-я и 2-я зоны реактора",
+        "zones": "1-я и 2-я зоны реактора"
+      },
+      {
+        "component": "DTBP",
+        "count": 0.8,
+        "doc_id": 1,
+        "id": 2,
+        "mass": 16.0,
+        "percent": 2.68,
+        "version": "54.2 / 1-я и 2-я зоны реактора",
+        "zones": "1-я и 2-я зоны реактора"
+      },
+      {
+        "component": "TBPIN",
+        "count": 2,
+        "doc_id": 1,
+        "id": 3,
+        "mass": 50.0,
+        "percent": 8.21,
+        "version": "54.2 / 1-я и 2-я зоны реактора",
+        "zones": "1-я и 2-я зоны реактора"
+      },
+      {
+        "component": "TBPEH",
+        "count": 3,
+        "doc_id": 1,
+        "id": 4,
+        "mass": 75.0,
+        "percent": 12.31,
+        "version": "54.2 / 1-я и 2-я зоны реактора",
+        "zones": "1-я и 2-я зоны реактора"
+      },
+      {
+        "component": "TAPPI 25 кг",
+        "count": 3,
+        "doc_id": 1,
+        "id": 5,
+        "mass": 75.0,
+        "percent": 9.52,
+        "version": "54.2 / 1-я и 2-я зоны реактора",
+        "zones": "1-я и 2-я зоны реактора"
+      },
+      {
+        "component": "TBPND (BNP75)",
+        "count": 3,
+        "doc_id": 1,
+        "id": 6,
+        "mass": 75.0,
+        "percent": 9.52,
+        "version": "54.2 / 1-я и 2-я зоны реактора",
+        "zones": "1-я и 2-я зоны реактора"
+      },
+      {
+        "component": "TAPND",
+        "count": 4,
+        "doc_id": 1,
+        "id": 7,
+        "mass": 100.0,
+        "percent": 12.69,
+        "version": "54.2 / 1-я и 2-я зоны реактора",
+        "zones": "1-я и 2-я зоны реактора"
+      },
+      {
+        "component": "Изопар Н (растворитель)",
+        "count": null,
+        "doc_id": 1,
+        "id": 8,
+        "mass": 300.0,
+        "percent": 65.22,
+        "version": "54.2 / 3-я зона реактора",
+        "zones": "3-я зона реактора"
+      },
+      {
+        "component": "DTBP",
+        "count": 0.5,
+        "doc_id": 1,
+        "id": 9,
+        "mass": 10.0,
+        "percent": 2.15,
+        "version": "54.2 / 3-я зона реактора",
+        "zones": "3-я зона реактора"
+      },
+      {
+        "component": "TBPIN",
+        "count": 4,
+        "doc_id": 1,
+        "id": 10,
+        "mass": 100.0,
+        "percent": 21.09,
+        "version": "54.2 / 3-я зона реактора",
+        "zones": "3-я зона реактора"
+      },
+      {
+        "component": "TBPEH",
+        "count": 2,
+        "doc_id": 1,
+        "id": 11,
+        "mass": 50.0,
+        "percent": 10.54,
+        "version": "54.2 / 3-я зона реактора",
+        "zones": "3-я зона реактора"
+      }
+    ],
+    "source": [
+      {
+        "created_at": "2026-09-20T13:30:00.331285+00:00",
+        "id": 1,
+        "kind": "migration",
+        "name": "migration-15803-020.json",
+        "screen": "legacy",
+        "sha256": "a2911d3d72ed02c4bd32901a39b3c6edc3f03c0c5c7afba2f94dab274097b9de"
+      },
+      {
+        "created_at": "2026-09-20T13:30:00.333265+00:00",
+        "id": 2,
+        "kind": "prototype",
+        "name": "rezhim.html",
+        "screen": "legacy",
+        "sha256": "7aaf3c6938cfa890ec1126317e18a1d55e87f01b8d8f8816ec1d9a1bfd984383"
+      },
+      {
+        "created_at": "2026-09-21T09:20:51.867007+00:00",
+        "id": 3,
+        "kind": "correction",
+        "name": "Корректировка пользователя — 21.09.2025 16-19.json",
+        "screen": "user",
+        "sha256": "02ccce4d1207ef0e5928c19677b51232f9d3daf4c3bf696726fa636e6899e83f"
+      }
+    ],
+    "value_source": [
+      {
+        "source_id": 1,
+        "value_id": 1
+      },
+      {
+        "source_id": 2,
+        "value_id": 1
+      },
+      {
+        "source_id": 1,
+        "value_id": 2
+      },
+      {
+        "source_id": 2,
+        "value_id": 2
+      },
+      {
+        "source_id": 1,
+        "value_id": 3
+      },
+      {
+        "source_id": 2,
+        "value_id": 3
+      },
+      {
+        "source_id": 1,
+        "value_id": 5
+      },
+      {
+        "source_id": 2,
+        "value_id": 5
+      },
+      {
+        "source_id": 1,
+        "value_id": 6
+      },
+      {
+        "source_id": 2,
+        "value_id": 6
+      },
+      {
+        "source_id": 1,
+        "value_id": 7
+      },
+      {
+        "source_id": 2,
+        "value_id": 7
+      },
+      {
+        "source_id": 1,
+        "value_id": 8
+      },
+      {
+        "source_id": 2,
+        "value_id": 8
+      },
+      {
+        "source_id": 1,
+        "value_id": 10
+      },
+      {
+        "source_id": 2,
+        "value_id": 10
+      },
+      {
+        "source_id": 1,
+        "value_id": 11
+      },
+      {
+        "source_id": 2,
+        "value_id": 11
+      },
+      {
+        "source_id": 1,
+        "value_id": 12
+      },
+      {
+        "source_id": 2,
+        "value_id": 12
+      },
+      {
+        "source_id": 1,
+        "value_id": 14
+      },
+      {
+        "source_id": 2,
+        "value_id": 14
+      },
+      {
+        "source_id": 1,
+        "value_id": 15
+      },
+      {
+        "source_id": 2,
+        "value_id": 15
+      },
+      {
+        "source_id": 1,
+        "value_id": 16
+      },
+      {
+        "source_id": 2,
+        "value_id": 16
+      },
+      {
+        "source_id": 1,
+        "value_id": 18
+      },
+      {
+        "source_id": 2,
+        "value_id": 18
+      },
+      {
+        "source_id": 1,
+        "value_id": 19
+      },
+      {
+        "source_id": 2,
+        "value_id": 19
+      },
+      {
+        "source_id": 1,
+        "value_id": 20
+      },
+      {
+        "source_id": 2,
+        "value_id": 20
+      },
+      {
+        "source_id": 1,
+        "value_id": 22
+      },
+      {
+        "source_id": 2,
+        "value_id": 22
+      },
+      {
+        "source_id": 1,
+        "value_id": 23
+      },
+      {
+        "source_id": 2,
+        "value_id": 23
+      },
+      {
+        "source_id": 1,
+        "value_id": 24
+      },
+      {
+        "source_id": 2,
+        "value_id": 24
+      },
+      {
+        "source_id": 1,
+        "value_id": 25
+      },
+      {
+        "source_id": 2,
+        "value_id": 25
+      },
+      {
+        "source_id": 1,
+        "value_id": 26
+      },
+      {
+        "source_id": 2,
+        "value_id": 26
+      },
+      {
+        "source_id": 1,
+        "value_id": 27
+      },
+      {
+        "source_id": 2,
+        "value_id": 27
+      },
+      {
+        "source_id": 1,
+        "value_id": 29
+      },
+      {
+        "source_id": 2,
+        "value_id": 29
+      },
+      {
+        "source_id": 1,
+        "value_id": 30
+      },
+      {
+        "source_id": 2,
+        "value_id": 30
+      },
+      {
+        "source_id": 1,
+        "value_id": 31
+      },
+      {
+        "source_id": 2,
+        "value_id": 31
+      },
+      {
+        "source_id": 1,
+        "value_id": 32
+      },
+      {
+        "source_id": 2,
+        "value_id": 32
+      },
+      {
+        "source_id": 1,
+        "value_id": 33
+      },
+      {
+        "source_id": 2,
+        "value_id": 33
+      },
+      {
+        "source_id": 1,
+        "value_id": 34
+      },
+      {
+        "source_id": 2,
+        "value_id": 34
+      },
+      {
+        "source_id": 1,
+        "value_id": 35
+      },
+      {
+        "source_id": 2,
+        "value_id": 35
+      },
+      {
+        "source_id": 1,
+        "value_id": 36
+      },
+      {
+        "source_id": 2,
+        "value_id": 36
+      },
+      {
+        "source_id": 1,
+        "value_id": 37
+      },
+      {
+        "source_id": 2,
+        "value_id": 37
+      },
+      {
+        "source_id": 1,
+        "value_id": 38
+      },
+      {
+        "source_id": 2,
+        "value_id": 38
+      },
+      {
+        "source_id": 1,
+        "value_id": 39
+      },
+      {
+        "source_id": 2,
+        "value_id": 39
+      },
+      {
+        "source_id": 1,
+        "value_id": 40
+      },
+      {
+        "source_id": 2,
+        "value_id": 40
+      },
+      {
+        "source_id": 1,
+        "value_id": 41
+      },
+      {
+        "source_id": 2,
+        "value_id": 41
+      },
+      {
+        "source_id": 1,
+        "value_id": 42
+      },
+      {
+        "source_id": 2,
+        "value_id": 42
+      },
+      {
+        "source_id": 1,
+        "value_id": 43
+      },
+      {
+        "source_id": 2,
+        "value_id": 43
+      },
+      {
+        "source_id": 1,
+        "value_id": 44
+      },
+      {
+        "source_id": 2,
+        "value_id": 44
+      },
+      {
+        "source_id": 1,
+        "value_id": 45
+      },
+      {
+        "source_id": 2,
+        "value_id": 45
+      },
+      {
+        "source_id": 1,
+        "value_id": 46
+      },
+      {
+        "source_id": 2,
+        "value_id": 46
+      },
+      {
+        "source_id": 1,
+        "value_id": 47
+      },
+      {
+        "source_id": 2,
+        "value_id": 47
+      },
+      {
+        "source_id": 1,
+        "value_id": 48
+      },
+      {
+        "source_id": 2,
+        "value_id": 48
+      },
+      {
+        "source_id": 1,
+        "value_id": 49
+      },
+      {
+        "source_id": 2,
+        "value_id": 49
+      },
+      {
+        "source_id": 1,
+        "value_id": 50
+      },
+      {
+        "source_id": 2,
+        "value_id": 50
+      },
+      {
+        "source_id": 1,
+        "value_id": 51
+      },
+      {
+        "source_id": 2,
+        "value_id": 51
+      },
+      {
+        "source_id": 1,
+        "value_id": 52
+      },
+      {
+        "source_id": 2,
+        "value_id": 52
+      },
+      {
+        "source_id": 1,
+        "value_id": 53
+      },
+      {
+        "source_id": 2,
+        "value_id": 53
+      },
+      {
+        "source_id": 1,
+        "value_id": 54
+      },
+      {
+        "source_id": 2,
+        "value_id": 54
+      },
+      {
+        "source_id": 1,
+        "value_id": 55
+      },
+      {
+        "source_id": 2,
+        "value_id": 55
+      },
+      {
+        "source_id": 1,
+        "value_id": 56
+      },
+      {
+        "source_id": 2,
+        "value_id": 56
+      },
+      {
+        "source_id": 1,
+        "value_id": 57
+      },
+      {
+        "source_id": 2,
+        "value_id": 57
+      },
+      {
+        "source_id": 1,
+        "value_id": 58
+      },
+      {
+        "source_id": 2,
+        "value_id": 58
+      },
+      {
+        "source_id": 1,
+        "value_id": 59
+      },
+      {
+        "source_id": 2,
+        "value_id": 59
+      },
+      {
+        "source_id": 1,
+        "value_id": 60
+      },
+      {
+        "source_id": 2,
+        "value_id": 60
+      },
+      {
+        "source_id": 1,
+        "value_id": 61
+      },
+      {
+        "source_id": 2,
+        "value_id": 61
+      },
+      {
+        "source_id": 1,
+        "value_id": 62
+      },
+      {
+        "source_id": 2,
+        "value_id": 62
+      },
+      {
+        "source_id": 1,
+        "value_id": 63
+      },
+      {
+        "source_id": 2,
+        "value_id": 63
+      },
+      {
+        "source_id": 1,
+        "value_id": 64
+      },
+      {
+        "source_id": 2,
+        "value_id": 64
+      },
+      {
+        "source_id": 1,
+        "value_id": 65
+      },
+      {
+        "source_id": 2,
+        "value_id": 65
+      },
+      {
+        "source_id": 1,
+        "value_id": 66
+      },
+      {
+        "source_id": 2,
+        "value_id": 66
+      },
+      {
+        "source_id": 1,
+        "value_id": 67
+      },
+      {
+        "source_id": 2,
+        "value_id": 67
+      },
+      {
+        "source_id": 1,
+        "value_id": 68
+      },
+      {
+        "source_id": 2,
+        "value_id": 68
+      },
+      {
+        "source_id": 1,
+        "value_id": 69
+      },
+      {
+        "source_id": 2,
+        "value_id": 69
+      },
+      {
+        "source_id": 1,
+        "value_id": 70
+      },
+      {
+        "source_id": 2,
+        "value_id": 70
+      },
+      {
+        "source_id": 1,
+        "value_id": 71
+      },
+      {
+        "source_id": 2,
+        "value_id": 71
+      },
+      {
+        "source_id": 1,
+        "value_id": 72
+      },
+      {
+        "source_id": 2,
+        "value_id": 72
+      },
+      {
+        "source_id": 1,
+        "value_id": 73
+      },
+      {
+        "source_id": 2,
+        "value_id": 73
+      },
+      {
+        "source_id": 1,
+        "value_id": 74
+      },
+      {
+        "source_id": 2,
+        "value_id": 74
+      },
+      {
+        "source_id": 1,
+        "value_id": 77
+      },
+      {
+        "source_id": 2,
+        "value_id": 77
+      },
+      {
+        "source_id": 1,
+        "value_id": 78
+      },
+      {
+        "source_id": 2,
+        "value_id": 78
+      },
+      {
+        "source_id": 1,
+        "value_id": 79
+      },
+      {
+        "source_id": 2,
+        "value_id": 79
+      },
+      {
+        "source_id": 1,
+        "value_id": 80
+      },
+      {
+        "source_id": 2,
+        "value_id": 80
+      },
+      {
+        "source_id": 1,
+        "value_id": 81
+      },
+      {
+        "source_id": 2,
+        "value_id": 81
+      },
+      {
+        "source_id": 1,
+        "value_id": 83
+      },
+      {
+        "source_id": 2,
+        "value_id": 83
+      },
+      {
+        "source_id": 1,
+        "value_id": 85
+      },
+      {
+        "source_id": 2,
+        "value_id": 85
+      },
+      {
+        "source_id": 1,
+        "value_id": 87
+      },
+      {
+        "source_id": 2,
+        "value_id": 87
+      },
+      {
+        "source_id": 1,
+        "value_id": 89
+      },
+      {
+        "source_id": 2,
+        "value_id": 89
+      },
+      {
+        "source_id": 1,
+        "value_id": 90
+      },
+      {
+        "source_id": 2,
+        "value_id": 90
+      },
+      {
+        "source_id": 1,
+        "value_id": 91
+      },
+      {
+        "source_id": 2,
+        "value_id": 91
+      },
+      {
+        "source_id": 1,
+        "value_id": 92
+      },
+      {
+        "source_id": 2,
+        "value_id": 92
+      },
+      {
+        "source_id": 1,
+        "value_id": 93
+      },
+      {
+        "source_id": 2,
+        "value_id": 93
+      },
+      {
+        "source_id": 1,
+        "value_id": 94
+      },
+      {
+        "source_id": 2,
+        "value_id": 94
+      },
+      {
+        "source_id": 1,
+        "value_id": 95
+      },
+      {
+        "source_id": 2,
+        "value_id": 95
+      },
+      {
+        "source_id": 1,
+        "value_id": 96
+      },
+      {
+        "source_id": 2,
+        "value_id": 96
+      },
+      {
+        "source_id": 1,
+        "value_id": 97
+      },
+      {
+        "source_id": 2,
+        "value_id": 97
+      },
+      {
+        "source_id": 1,
+        "value_id": 98
+      },
+      {
+        "source_id": 2,
+        "value_id": 98
+      },
+      {
+        "source_id": 1,
+        "value_id": 99
+      },
+      {
+        "source_id": 2,
+        "value_id": 99
+      },
+      {
+        "source_id": 1,
+        "value_id": 100
+      },
+      {
+        "source_id": 2,
+        "value_id": 100
+      },
+      {
+        "source_id": 1,
+        "value_id": 101
+      },
+      {
+        "source_id": 2,
+        "value_id": 101
+      },
+      {
+        "source_id": 1,
+        "value_id": 102
+      },
+      {
+        "source_id": 2,
+        "value_id": 102
+      },
+      {
+        "source_id": 1,
+        "value_id": 103
+      },
+      {
+        "source_id": 2,
+        "value_id": 103
+      },
+      {
+        "source_id": 1,
+        "value_id": 104
+      },
+      {
+        "source_id": 2,
+        "value_id": 104
+      },
+      {
+        "source_id": 1,
+        "value_id": 105
+      },
+      {
+        "source_id": 2,
+        "value_id": 105
+      },
+      {
+        "source_id": 1,
+        "value_id": 106
+      },
+      {
+        "source_id": 2,
+        "value_id": 106
+      },
+      {
+        "source_id": 1,
+        "value_id": 107
+      },
+      {
+        "source_id": 2,
+        "value_id": 107
+      },
+      {
+        "source_id": 1,
+        "value_id": 110
+      },
+      {
+        "source_id": 2,
+        "value_id": 110
+      },
+      {
+        "source_id": 1,
+        "value_id": 111
+      },
+      {
+        "source_id": 2,
+        "value_id": 111
+      },
+      {
+        "source_id": 1,
+        "value_id": 112
+      },
+      {
+        "source_id": 2,
+        "value_id": 112
+      },
+      {
+        "source_id": 1,
+        "value_id": 113
+      },
+      {
+        "source_id": 2,
+        "value_id": 113
+      },
+      {
+        "source_id": 3,
+        "value_id": 114
+      },
+      {
+        "source_id": 3,
+        "value_id": 115
+      },
+      {
+        "source_id": 3,
+        "value_id": 116
+      }
+    ]
+  },
+  "format": "rezhim-package",
+  "schema_version": 2,
+  "version": 2
+}

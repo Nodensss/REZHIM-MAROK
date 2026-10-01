@@ -1,0 +1,94 @@
+{
+  "grades": [
+    {
+      "id": "15803-020",
+      "measurements": [
+        {
+          "ts": "2026-02-11T08:42:01",
+          "line": "A",
+          "values": {
+            "rpm": 803.0,
+            "ex_die": 144.1,
+            "drive_current": 167.27
+          },
+          "extra": [
+            {
+              "tag": "knives_rpm",
+              "label": "Обороты ножей",
+              "value": 664.4,
+              "unit": ""
+            },
+            {
+              "tag": "melt_temperature",
+              "label": "Температура расплава",
+              "value": 239.9,
+              "unit": ""
+            },
+            {
+              "tag": "a436_purge",
+              "label": "Продувка A436",
+              "value": 712.8,
+              "unit": ""
+            },
+            {
+              "tag": "hydrotransport_flow",
+              "label": "Расход гидротранспорта",
+              "value": 298.4,
+              "unit": ""
+            },
+            {
+              "tag": "pneumotransport",
+              "label": "Пневмотранспорт",
+              "value": 113.9,
+              "unit": ""
+            },
+            {
+              "tag": "a402_pressure",
+              "label": "Давление A402",
+              "value": 0.164,
+              "unit": ""
+            },
+            {
+              "tag": "a402_level",
+              "label": "Уровень A402",
+              "value": 40.23,
+              "unit": ""
+            },
+            {
+              "tag": "die_pressure",
+              "label": "Давление на фильеру",
+              "value": 6.171,
+              "unit": ""
+            },
+            {
+              "tag": "a403_pressure",
+              "label": "Давление A403",
+              "value": 0.135,
+              "unit": ""
+            },
+            {
+              "tag": "a403_level",
+              "label": "Уровень A403",
+              "value": 14.99,
+              "unit": ""
+            },
+            {
+              "tag": "a425_discharge_temperature",
+              "label": "Температура нагн. A425",
+              "value": 37.94,
+              "unit": ""
+            },
+            {
+              "tag": "a425_suction_temperature",
+              "label": "Температура на всас A425",
+              "value": 25.07,
+              "unit": ""
+            }
+          ],
+          "note": "Grade assigned by user: all current photos are grade 158. Visual transcription requires review. Panel date grouped with February series; panel clock not visible.",
+          "source_file": "26118F14-B034-4CD7-861C-BB1A552051E2.jpg"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "grades": [
+    {
+      "id": "15803-020",
+      "measurements": [
+        {
+          "ts": "2025-11-19T04:40:07",
+          "line": "A",
+          "screen": "suutp",
+          "recognition_method": "manual_visual_review_from_images",
+          "note": "Кандидаты по таблицам MV/CV СУУТП. Линия А, дата и время прочитаны с экрана. Все числа требуют сверки.",
+          "values": {
+            "initiator1": 43.63,
+            "initiator2": 34.53,
+            "initiator3": 15.82,
+            "suutp_flow1": 43.63,
+            "suutp_flow2": 34.49,
+            "suutp_flow3": 15.81,
+            "hw_f302": 74.56,
+            "hw_f305": 174.65,
+            "hw_f306": 100.48,
+            "mfr_est": 1.957,
+            "dens_est": 0.9236,
+            "t14069": 227.3,
+            "cidx1": 124.36,
+            "cidx2": 127.83,
+            "cidx3": 78.22,
+            "a152_cap": 30.38,
+            "a171_cap": 30.19
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "sha256": "a2911d3d72ed02c4bd32901a39b3c6edc3f03c0c5c7afba2f94dab274097b9de",
+  "prototype_verified": true,
+  "backup": "C:\\MARKI\\data\\backups\\before-data-migration-20260920-203000-295210.sqlite3",
+  "grades": 1,
+  "norms": 28,
+  "recipe_rows": 11,
+  "observations": [
+    {
+      "id": 1,
+      "timestamp": "2026-09-20T07:03:00",
+      "values": 24,
+      "review": 5,
+      "confirmed": 19,
+      "review_without_value": []
+    },
+    {
+      "id": 2,
+      "timestamp": "2026-09-19T07:45:00",
+      "values": 13,
+      "review": 1,
+      "confirmed": 12,
+      "review_without_value": [
+        "hw_pz3"
+      ]
+    },
+    {
+      "id": 3,
+      "timestamp": "2025-09-21T16:19:00",
+      "values": 76,
+      "review": 6,
+      "confirmed": 70,
+      "review_without_value": [
+        "a152_p",
+        "a171_p"
+      ]
+    }
+  ],
+  "values": 113,
+  "confirmed": 101,
+  "review": 12,
+  "warnings": [
+    "2026-09-19T07:45:00: пометка сверки без числа: hw_pz3",
+    "2025-09-21T16:19:00: пометка сверки без числа: a152_p, a171_p"
+  ]
+}

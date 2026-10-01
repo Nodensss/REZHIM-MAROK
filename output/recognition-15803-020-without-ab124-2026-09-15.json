@@ -1,0 +1,12 @@
+{
+  "grades": [{
+    "id": "15803-020",
+    "measurements": [
+      {"ts":"2026-09-15T11:15:13","line":"A","screen":"A general","phase":"without_ab124","note":"Пользователь указал: режим без АБ-124. Время с экрана; все числа требуют сверки.","values":{"drive_current":150.43,"rpm":525.2,"mfr":1.341,"mfr_raw":1.788,"pal":4.56,"vgvd":22.43,"fnd":137.2},"extra":[{"tag":"LC14703","label":"Уровень в ОНД A402","value":40.77,"unit":"%"},{"tag":"L12741","label":"Уровень ПАЛ в A235","value":57.01,"unit":"%"},{"tag":"P16701","label":"Р в A507","value":0.064,"unit":"МПа"},{"tag":"transition_granulation","label":"Перепад грануляция","value":2.94,"unit":""}]},
+      {"ts":"2026-09-15T11:15:21","line":"A","screen":"A-329 panel","phase":"without_ab124","note":"Пользователь указал: режим без АБ-124. Время из EXIF; все числа требуют сверки.","values":{"pal":4.06,"pal_sp":4.00,"z1_t":267,"z1_f":17.47,"z1_out":21.3,"z2_t":265,"z2_f":29.71,"z2_out":36.8,"z3_t":254,"z3_f":13.80,"z3_out":18.8}},
+      {"ts":"2026-09-15T11:15:26","line":"A","screen":"reactor panel A","phase":"without_ab124","note":"Пользователь указал: режим без АБ-124. Время с экрана; все числа требуют сверки.","values":{"t14069":218},"extra":[{"tag":"T14007","label":"T14007","value":140,"unit":"°C"},{"tag":"T14033","label":"T14033","value":163,"unit":"°C"},{"tag":"T14089","label":"T14089","value":199,"unit":"°C"},{"tag":"P14002","label":"P14002","value":1741,"unit":""},{"tag":"P14026","label":"P14026","value":1285,"unit":""},{"tag":"P14049","label":"P14049","value":1748,"unit":""}]},
+      {"ts":"2026-09-15T11:12:03","line":"B","screen":"reactor panel B","phase":"without_ab124","note":"Линия Б видна на экране. Пользователь указал: режим без АБ-124. Все числа требуют сверки.","values":{},"extra":[{"tag":"T24007","label":"T24007","value":139,"unit":"°C"},{"tag":"T24033","label":"T24033","value":149,"unit":"°C"},{"tag":"T24069","label":"T24069","value":216,"unit":"°C"},{"tag":"T24089","label":"T24089","value":204,"unit":"°C"},{"tag":"P24002","label":"P24002","value":1790,"unit":""},{"tag":"P24026","label":"P24026","value":1385,"unit":""},{"tag":"P24049","label":"P24049","value":1798,"unit":""}]},
+      {"ts":"2026-09-15T11:15:38","line":"B","screen":"B-329 panel","phase":"without_ab124","note":"Линия Б видна на панели. Время из EXIF; все числа требуют сверки.","values":{"pal":6.80,"z1_t":274,"z1_f":21.36,"z1_out":34.8,"z2_t":270,"z2_f":30.82,"z2_out":39.0,"z3_t":250,"z3_f":11.08,"z3_out":10.0}}
+    ]
+  }]
+}
