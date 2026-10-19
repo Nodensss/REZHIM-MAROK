@@ -6,188 +6,169 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500&display=swap">
 <style>
-/* Layout: one column — chronology strip on top, chosen pair of modes underneath, detail tables last. */
+/* Layout: a month calendar on top, then a chronological feed — one plain-language card per grade change. */
 :root{
-  --bg:#f2f4f1; --surface:#fcfdfb; --surface-2:#e8ece7; --ink:#101a16; --ink-2:#4a554f; --muted:#7f8a84;
-  --line:#dde2dc; --axis:#bcc4bd; --accent:#123f32; --accent-ink:#f2f4f1; --focus:#2a78d6;
-  --up:#d6453f; --down:#2a78d6; --mid:#e6e9e4;
+  --bg:#f2f4f1; --surface:#fcfdfb; --surface-2:#e9ede8; --ink:#101a16; --ink-2:#47524c; --muted:#7c8781;
+  --line:#dde2dc; --accent:#123f32; --focus:#2a78d6;
+  --up:#c43d37; --down:#2468b8;
   --g1:#2a78d6; --g2:#eb6834; --g3:#1baf7a; --g4:#eda100; --g5:#e87ba4; --g6:#008300; --g7:#6250d6; --g8:#e34948; --g0:#8d958f;
-  --z1:#86b6ef; --z2:#2a78d6; --z3:#184f95;
+  --z1:#86b6ef; --z2:#2a78d6; --z3:#184f95; --z1-ink:#0d366b; --z-ink:#ffffff;
   --warn-bg:#fbf1dc; --warn-ink:#6b4a00;
   --display:"Unbounded","Golos Text",system-ui,sans-serif;
   --body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0e1412; --surface:#161e1b; --surface-2:#202a26; --ink:#eef1ed; --ink-2:#bcc5bf; --muted:#86918b;
-  --line:#28322e; --axis:#3a4540; --accent:#7fc4a8; --accent-ink:#0e1412; --focus:#6da7ec;
-  --up:#e66767; --down:#3987e5; --mid:#2a3430;
+  --bg:#0e1412; --surface:#161e1b; --surface-2:#212b27; --ink:#eef1ed; --ink-2:#bec7c1; --muted:#87928c;
+  --line:#2a3430; --accent:#7fc4a8; --focus:#6da7ec;
+  --up:#ef7a74; --down:#6da7ec;
   --g1:#3987e5; --g2:#d95926; --g3:#199e70; --g4:#c98500; --g5:#d55181; --g6:#008300; --g7:#9085e9; --g8:#e66767; --g0:#6e7771;
-  --z1:#86b6ef; --z2:#3987e5; --z3:#1c5cab;
+  --z1:#86b6ef; --z2:#3987e5; --z3:#1c5cab; --z1-ink:#0d366b; --z-ink:#ffffff;
   --warn-bg:#352a12; --warn-ink:#f3cf7a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0e1412; --surface:#161e1b; --surface-2:#202a26; --ink:#eef1ed; --ink-2:#bcc5bf; --muted:#86918b;
-  --line:#28322e; --axis:#3a4540; --accent:#7fc4a8; --accent-ink:#0e1412; --focus:#6da7ec;
-  --up:#e66767; --down:#3987e5; --mid:#2a3430;
+  --bg:#0e1412; --surface:#161e1b; --surface-2:#212b27; --ink:#eef1ed; --ink-2:#bec7c1; --muted:#87928c;
+  --line:#2a3430; --accent:#7fc4a8; --focus:#6da7ec;
+  --up:#ef7a74; --down:#6da7ec;
   --g1:#3987e5; --g2:#d95926; --g3:#199e70; --g4:#c98500; --g5:#d55181; --g6:#008300; --g7:#9085e9; --g8:#e66767; --g0:#6e7771;
-  --z1:#86b6ef; --z2:#3987e5; --z3:#1c5cab;
+  --z1:#86b6ef; --z2:#3987e5; --z3:#1c5cab; --z1-ink:#0d366b; --z-ink:#ffffff;
   --warn-bg:#352a12; --warn-ink:#f3cf7a; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
-.wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+.wrap{max-width:860px;margin:0 auto;padding-block:24px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 .wrap>*{min-width:0}
 h1,h2,h3{margin:0;text-wrap:balance}
-h1{font:500 clamp(22px,4vw,30px)/1.15 var(--display);letter-spacing:-.01em}
-h2{font-size:17px;font-weight:600}
-h3{font-size:14px;font-weight:600}
+h1{font:500 clamp(24px,5vw,32px)/1.15 var(--display);letter-spacing:-.01em}
+h2.month{font:500 18px/1.2 var(--display);padding-top:10px;scroll-margin-top:12px}
 .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.muted{color:var(--muted)}
-.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.lead{display:grid;gap:8px}
+.lead p{margin:0;color:var(--ink-2);max-width:62ch}
 button,select,input{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-header.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
-header.top .lead{display:grid;gap:6px;min-width:0}
-.facts{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--ink-2);font-size:13px}
-.facts b{color:var(--ink);font-weight:600}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
-.panel>*{min-width:0}
-.row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
-.spread{justify-content:space-between}
+.gp{display:inline-flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap}
+.gp::before{content:"";width:11px;height:11px;border-radius:3px;background:var(--c);flex:none}
+
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.mon{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;display:grid;gap:6px;text-align:left;align-content:start;min-height:70px}
+.mon:disabled{cursor:default;opacity:.55}
+.mon .mname{font-size:14px;font-weight:600;display:grid;gap:0;line-height:1.25}
+.mon .mname span{font-weight:500;color:var(--muted);font-size:12px}
+.mon .seq{display:flex;flex-wrap:wrap;gap:3px 4px;align-items:center;font-size:12px;color:var(--muted)}
+.mon .seq i{display:inline-block;width:14px;height:8px;border-radius:3px;background:var(--c)}
+.mon.has{border-color:var(--ink-2)}
+.mon.has .mname span{color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink-2)}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.controls .lbl{font-size:13px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);font-weight:600}
 .seg{display:inline-flex;background:var(--surface-2);border-radius:8px;padding:3px;gap:2px}
-.seg button{border:0;background:transparent;border-radius:6px;padding:6px 12px;font-size:13px;color:var(--ink-2)}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12);font-weight:600}
+.seg button{border:0;background:transparent;border-radius:6px;padding:5px 11px;font-size:13px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.14);font-weight:600}
 .check{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:var(--ink-2);cursor:pointer}
 .check input{accent-color:var(--accent);width:16px;height:16px}
-.legend{display:flex;flex-wrap:wrap;gap:6px}
-.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px 4px 8px;font-size:13px}
-.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.chip .n{color:var(--muted);font-size:12px}
-.sw{width:10px;height:10px;border-radius:3px;flex:none;display:inline-block}
-.tl{position:relative;min-width:0}
-.tl svg{display:block;width:100%;height:auto;overflow:visible}
-.tl text{font:11px var(--body);fill:var(--muted)}
-.tl .lane{font-weight:600;fill:var(--ink-2)}
-.tl .hit{fill:transparent;cursor:pointer}
-.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.4;padding:6px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));z-index:2}
-.tip[hidden]{display:none}
-.pairs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
-.pair{flex:none;scroll-snap-align:start;display:grid;gap:2px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 10px;min-width:150px}
-.pair .g{display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px}
-.pair .d{font-size:12px;color:var(--muted)}
-.pair[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--surface-2)}
-.pair .flag{font-size:11px;color:var(--warn-ink)}
-.navbtn{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;font-size:16px;flex:none}
-.navbtn:disabled{opacity:.35;cursor:default}
-.versus{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch}
-.side{border-radius:10px;padding:12px 14px;background:var(--surface-2);display:grid;gap:4px;min-width:0;border-top:4px solid var(--c)}
-.side .gname{font:500 20px/1.1 var(--display)}
-.side .meta{font-size:13px;color:var(--ink-2)}
-.gap{display:grid;place-items:center;text-align:center;font-size:12px;color:var(--muted);min-width:64px}
-.gap b{display:block;font-size:13px;color:var(--ink);font-weight:600}
-.gap .arrow{font-size:22px;line-height:1;color:var(--ink-2)}
-.warns{display:grid;gap:6px}
-.warn{background:var(--warn-bg);color:var(--warn-ink);border-radius:8px;padding:8px 12px;font-size:13px;display:flex;gap:8px}
-.warn::before{content:"!";font-weight:700;flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:11px;margin-top:1px}
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
-.tile{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:4px;min-width:0}
-.tile .k{font-size:12px;color:var(--ink-2)}
-.tile .ab{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)}
-.tile .dv{font:500 20px/1.2 var(--mono);font-variant-numeric:tabular-nums}
-.tile .pc{font-size:12px;font-family:var(--mono)}
+
+/* story card */
+.feed{display:grid;gap:14px}
+.story{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px;display:grid;gap:12px;scroll-margin-top:12px}
+.story .when{font-size:13px;color:var(--muted)}
+.story h3{font:500 20px/1.3 var(--display);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.story h3 .arrow{color:var(--muted);font-family:var(--body)}
+.story p{margin:0}
+.sub{font-size:14px;color:var(--ink-2)}
+.main{font-size:15px;background:var(--surface-2);border-radius:8px;padding:10px 12px}
+.main b{font-weight:600}
+.note{font-size:13px;color:var(--warn-ink);background:var(--warn-bg);border-radius:8px;padding:7px 11px}
+.flag{display:inline-block;font-size:12px;color:var(--muted);border:1px dashed var(--muted);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px;font-family:var(--body);font-weight:400}
+.lines{display:grid}
+.ln{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,1.1fr);gap:4px 14px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line)}
+.ln:first-child{border-top:0}
+.ln .nm{font-size:15px}
+.ln .nm small{color:var(--muted);font-size:13px}
+.ln .vals{font-variant-numeric:tabular-nums;font-size:15px;white-space:nowrap}
+.ln .vals .was{color:var(--muted)}
+.ln .vals b{font-weight:600}
+.ch{font-size:14px;font-weight:500}
 .up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)}
-.zones{display:grid;gap:10px}
-.stack-row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;align-items:center}
-.stack-row .lbl{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.stack{display:flex;gap:2px;height:30px}
-.stack div{border-radius:4px;display:flex;align-items:center;justify-content:center;font:500 12px var(--mono);color:#fff;min-width:0;overflow:hidden;white-space:nowrap}
-.stack .z1{background:var(--z1);color:#0d366b}
-.stack .z2{background:var(--z2)}
-.stack .z3{background:var(--z3)}
-.stack .none{background:var(--surface-2);color:var(--muted);font-family:var(--body);flex:1}
-.zkey{display:flex;gap:14px;font-size:12px;color:var(--ink-2);flex-wrap:wrap}
-.zkey span{display:inline-flex;gap:6px;align-items:center}
-.tw{overflow-x:auto;min-width:0}
-table{border-collapse:collapse;width:100%;font-size:13px}
-th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:right;padding:6px 8px;border-bottom:1px solid var(--axis);white-space:nowrap}
-th:first-child{text-align:left}
-td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle;white-space:nowrap}
-td:first-child{text-align:left;white-space:normal;min-width:170px}
-td .tag{display:block;font-size:11px;color:var(--muted);font-family:var(--mono)}
-tr.grp td{background:var(--surface-2);font-weight:600;font-size:12px;color:var(--ink-2);text-align:left;letter-spacing:.02em}
-td.v{font-family:var(--mono);font-variant-numeric:tabular-nums}
-td.na{color:var(--muted);font-size:12px}
-.rv{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;border:1px dashed var(--muted);color:var(--muted);font:600 10px var(--body);margin-left:4px;vertical-align:1px}
-.bar{position:relative;width:120px;height:14px;display:inline-block;vertical-align:middle}
-.bar::before{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--axis)}
-.bar i{position:absolute;top:2px;height:10px;border-radius:3px}
-.bar i.pos{left:50%;background:var(--up)} .bar i.neg{right:50%;background:var(--down)}
-.empty{padding:18px;border:1px dashed var(--axis);border-radius:10px;color:var(--ink-2);font-size:14px}
+.rv{text-decoration:underline dotted var(--muted);text-underline-offset:3px}
+.zrow{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:14px;font-variant-numeric:tabular-nums}
+.zrow span{white-space:nowrap}
+.zrow em{font-style:normal;color:var(--muted)}
+.ln.wide{grid-template-columns:minmax(0,1.25fr) minmax(0,2.1fr)}
+.shares{display:grid;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
+.shares .t{font-size:15px}
+.shares .t small{color:var(--muted);font-size:13px}
+.sbar{display:grid;grid-template-columns:minmax(64px,auto) minmax(0,1fr);gap:10px;align-items:center;font-size:13px}
+.sbar .who{white-space:nowrap}
+.stack{display:flex;gap:2px;height:26px}
+.stack div{border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--z-ink);min-width:0;overflow:hidden;white-space:nowrap}
+.stack .z1{background:var(--z1);color:var(--z1-ink)} .stack .z2{background:var(--z2)} .stack .z3{background:var(--z3)}
+.zkey{display:flex;gap:14px;font-size:12px;color:var(--muted)}
+.zkey i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+details.more summary{cursor:pointer;font-size:14px;color:var(--ink-2);padding:6px 0;list-style-position:inside}
+details.more[open] summary{margin-bottom:4px}
+.empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--ink-2);font-size:15px}
 .free{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:end}
-.free label{display:grid;gap:4px;font-size:12px;color:var(--ink-2);min-width:0}
-.free select{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
-.note{font-size:13px;color:var(--ink-2);max-width:75ch}
-details summary{cursor:pointer;font-weight:600}
+.free label{display:grid;gap:4px;font-size:13px;color:var(--ink-2);min-width:0}
+.free select{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.swap{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:40px;height:40px;font-size:18px}
+.foot{font-size:13px;color:var(--muted);margin:0;max-width:70ch}
 @media (max-width:640px){
-  .versus{grid-template-columns:1fr}
-  .gap{grid-auto-flow:column;gap:8px;justify-content:start}
-  .gap .arrow{transform:rotate(90deg)}
-  .free{grid-template-columns:1fr}
-  .bar{width:56px}
-  td:first-child{min-width:128px}
-  .dcol{display:none}
-  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ln,.ln.wide{grid-template-columns:minmax(0,1fr);gap:2px}
+  .ln .ch{font-size:13px}
+  .free{grid-template-columns:minmax(0,1fr)}
+  .story{padding:16px 14px 12px}
+  .story h3{font-size:18px}
 }
-@media (prefers-reduced-motion:no-preference){.pair,.chip,.seg button{transition:background .15s,box-shadow .15s,border-color .15s}}
 </style>
 
 <div class="wrap">
-  <header class="top">
-    <div class="lead">
-      <span class="eyebrow">УПЭ · хронология режимов</span>
-      <h1>Смены марок</h1>
-      <div class="facts" id="facts"></div>
-    </div>
-    <div class="seg" role="group" aria-label="Что сравнивать">
-      <button id="mode-pair" aria-pressed="true">Соседние смены</button>
-      <button id="mode-free" aria-pressed="false">Любые два замера</button>
-    </div>
+  <header class="lead">
+    <span class="eyebrow">УПЭ · история режимов</span>
+    <h1>Смены марок</h1>
+    <p id="intro"></p>
   </header>
 
-  <section class="panel" aria-label="Хронология">
-    <div class="row spread">
-      <h2>Хронология замеров</h2>
-      <div class="seg" role="group" aria-label="Шкала">
-        <button id="scale-time" aria-pressed="true">По времени</button>
-        <button id="scale-order" aria-pressed="false">По порядку</button>
-      </div>
-    </div>
+  <section aria-label="Календарь марок" style="display:grid;gap:10px">
     <div class="legend" id="legend"></div>
-    <div class="tl" id="tl"><div class="tip" id="tip" hidden></div></div>
-    <p class="note muted" id="tl-hint"></p>
-    <div class="row" id="pair-nav">
-      <button class="navbtn" id="prev" aria-label="Предыдущая смена">←</button>
-      <div class="pairs" id="pairs" style="flex:1;min-width:0"></div>
-      <button class="navbtn" id="next" aria-label="Следующая смена">→</button>
-    </div>
-    <div class="free" id="free" hidden>
-      <label>Замер А<select id="free-a"></select></label>
-      <button class="navbtn" id="swap" aria-label="Поменять местами" title="Поменять местами">⇄</button>
-      <label>Замер Б<select id="free-b"></select></label>
-    </div>
+    <div class="cal" id="cal"></div>
   </section>
 
-  <section class="panel" id="compare" aria-live="polite"></section>
+  <div class="controls">
+    <span class="lbl">Марка</span>
+    <div class="chips" id="chips"></div>
+    <div class="seg" role="group" aria-label="С чем сравнивать">
+      <button id="agg-edge" aria-pressed="true" title="Последние снимки до смены и первые после">Ближайшие снимки</button>
+      <button id="agg-mean" aria-pressed="false" title="Среднее по всем снимкам марки до и после смены">Среднее за период</button>
+    </div>
+    <label class="check"><input type="checkbox" id="only-conf">Только сверенные цифры</label>
+  </div>
 
-  <p class="note muted" id="foot"></p>
+  <section class="feed" id="feed" aria-live="polite"></section>
+
+  <section style="display:grid;gap:12px">
+    <h2 class="month">Сравнить любые два замера</h2>
+    <div class="free">
+      <label>Было<select id="free-a"></select></label>
+      <button class="swap" id="swap" aria-label="Поменять местами" title="Поменять местами">⇄</button>
+      <label>Стало<select id="free-b"></select></label>
+    </div>
+    <div id="free-out"></div>
+  </section>
+
+  <p class="foot" id="foot"></p>
 </div>
 
 <script>
-const D={"generated_at":"2026-10-19T12:19:33+00:00","grades":[{"id":3,"name":"08220"},{"id":1,"name":"15803-020"},{"id":2,"name":"20220"},{"id":4,"name":"40200"},{"id":5,"name":"80210"}],"params":[{"key":"production","name":"Производительность","unit":"т/ч","tag":"","group":"Режим и качество","role":"measurement","precision":2},{"key":"pal","name":"Расход ПАЛ","unit":"кг/ч","tag":"F12740A","group":"Режим и качество","role":"measurement","precision":2},{"key":"propylene","name":"Расход пропилена","unit":"","tag":"","group":"Режим и качество","role":"measurement","precision":2},{"key":"mfi","name":"ПТР","unit":"","tag":"","group":"Режим и качество","role":"lab","precision":2},{"key":"ethylene","name":"Свежий этилен","unit":"","tag":"FIR11004","group":"Свежий этилен","role":"measurement","precision":2},{"key":"drive_current","name":"Ток главного привода","unit":"А","tag":"EIE-A404","group":"Экструзия","role":"measurement","precision":2},{"key":"water_temperature","name":"Температура горячей воды","unit":"°C","tag":"","group":"Горячая вода","role":"measurement","precision":2},{"key":"t14069","name":"Температура T14069","unit":"°C","tag":"T14069","group":"Реактор","role":"measurement","precision":2},{"key":"initiator1","name":"Инициатор, измеренный расход · зона 1","unit":"","tag":"","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"suutp_flow1","name":"Инициатор, расчёт СУУТП · зона 1","unit":"","tag":"","group":"Инициатор по зонам","role":"suutp","precision":2},{"key":"peak1","name":"Максимальная температура · зона 1","unit":"°C","tag":"","group":"Реактор","role":"measurement","precision":2},{"key":"initiator2","name":"Инициатор, измеренный расход · зона 2","unit":"","tag":"","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"suutp_flow2","name":"Инициатор, расчёт СУУТП · зона 2","unit":"","tag":"","group":"Инициатор по зонам","role":"suutp","precision":2},{"key":"peak2","name":"Максимальная температура · зона 2","unit":"°C","tag":"","group":"Реактор","role":"measurement","precision":2},{"key":"initiator3","name":"Инициатор, измеренный расход · зона 3","unit":"","tag":"","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"suutp_flow3","name":"Инициатор, расчёт СУУТП · зона 3","unit":"","tag":"","group":"Инициатор по зонам","role":"suutp","precision":2},{"key":"peak3","name":"Максимальная температура · зона 3","unit":"°C","tag":"","group":"Реактор","role":"measurement","precision":2},{"key":"load","name":"Нагрузка на гл. привод","unit":"","tag":"EIE-A404","group":"Режим и качество","role":"measurement","precision":2},{"key":"prod","name":"Производительность","unit":"т/ч","tag":"техкарта","group":"Режим и качество","role":"measurement","precision":2},{"key":"rpm","name":"Обороты А-404","unit":"об/мин","tag":"SI17711","group":"Режим и качество","role":"measurement","precision":2},{"key":"pal_sp","name":"Уставка ПАЛ","unit":"кг/ч","tag":"FIC12740A","group":"Режим и качество","role":"setpoint","precision":2},{"key":"c3_flow","name":"Расход пропилена","unit":"м³/ч","tag":"FIC10065","group":"Режим и качество","role":"measurement","precision":2},{"key":"mfr","name":"ПТР","unit":"г/10мин","tag":"ПТР428","group":"Режим и качество","role":"measurement","precision":2},{"key":"mfr_raw","name":"ПТР исходный","unit":"г/10мин","tag":"ПТР428","group":"Режим и качество","role":"measurement","precision":3},{"key":"mfr_est","name":"ПТР виртуальный анализатор","unit":"г/10мин","tag":"EST_LA_MI","group":"Режим и качество","role":"suutp","precision":3},{"key":"mfr_lab","name":"ПТР по лаборатории","unit":"г/10мин","tag":"лаб.","group":"Режим и качество","role":"lab","precision":2},{"key":"dens_est","name":"Плотность расчётная","unit":"г/см³","tag":"EST_LA_DEN","group":"Режим и качество","role":"suutp","precision":4},{"key":"vgvd","name":"Давление ВГВД","unit":"МПа","tag":"PC15714","group":"Режим и качество","role":"measurement","precision":2},{"key":"fnd","name":"Расход на ФНД","unit":"","tag":"F10703A","group":"Режим и качество","role":"measurement","precision":2},{"key":"pn_p","name":"Давление пневмотранспорта","unit":"кПа","tag":"PI-51149_A","group":"Режим и качество","role":"measurement","precision":2},{"key":"r_p","name":"Давление в реакторе","unit":"МПа","tag":"P14002","group":"Реактор","role":"measurement","precision":2},{"key":"r_p2","name":"Давление 2-го плунжера","unit":"МПа","tag":"P14026","group":"Реактор","role":"measurement","precision":2},{"key":"valve","name":"Задание клапана выхода","unit":"%","tag":"гл. р-р","group":"Реактор","role":"setpoint","precision":2},{"key":"t_start","name":"Т точки начала реакции","unit":"°C","tag":"T14007","group":"Реактор","role":"measurement","precision":2},{"key":"t_mix","name":"Т в точке смешения","unit":"°C","tag":"TIRCAE14033","group":"Реактор","role":"measurement","precision":2},{"key":"t1_max","name":"Пик 1-й зоны","unit":"°C","tag":"T1A_MAX","group":"Реактор","role":"measurement","precision":2},{"key":"t2_max","name":"Пик 2-й зоны","unit":"°C","tag":"T2A_MAX","group":"Реактор","role":"measurement","precision":2},{"key":"t3_max","name":"Пик 3-й зоны","unit":"°C","tag":"T3A_MAX","group":"Реактор","role":"measurement","precision":2},{"key":"z1_f","name":"Инициатор в 1-ю зону","unit":"кг/ч","tag":"А-302","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z1_sp","name":"Уставка Т 1-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"setpoint","precision":2},{"key":"z1_t","name":"Тмакс 1-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z1_out","name":"Выход клапана 1-й зоны","unit":"%","tag":"А-329","group":"Инициатор по зонам","role":"controller_output","precision":2},{"key":"z2_f","name":"Инициатор во 2-ю зону","unit":"кг/ч","tag":"А-305","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z2_sp","name":"Уставка Т 2-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"setpoint","precision":2},{"key":"z2_t","name":"Тмакс 2-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z2_out","name":"Выход клапана 2-й зоны","unit":"%","tag":"А-329","group":"Инициатор по зонам","role":"controller_output","precision":2},{"key":"z3_f","name":"Инициатор в 3-ю зону","unit":"кг/ч","tag":"А-306","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z3_sp","name":"Уставка Т 3-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"setpoint","precision":2},{"key":"z3_t","name":"Тмакс 3-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z3_out","name":"Выход клапана 3-й зоны","unit":"%","tag":"А-329","group":"Инициатор по зонам","role":"controller_output","precision":2},{"key":"cidx1","name":"Индекс очищенности 1-й зоны","unit":"","tag":"Cindx_A_zone1","group":"Очищенность зон","role":"measurement","precision":2},{"key":"cidx2","name":"Индекс очищенности 2-й зоны","unit":"","tag":"Cindx_A_zone2","group":"Очищенность зон","role":"measurement","precision":2},{"key":"cidx3","name":"Индекс очищенности 3-й зоны","unit":"","tag":"Cindx_A_zone3","group":"Очищенность зон","role":"measurement","precision":2},{"key":"c2_p","name":"Давление свежего этилена","unit":"МПа","tag":"PIR10071","group":"Свежий этилен и возвратный газ","role":"measurement","precision":3},{"key":"c2_flow","name":"Расход свежего этилена","unit":"м³/ч","tag":"FIR11004","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"vg_flow","name":"Возвратный газ из 2 каскада","unit":"м³/ч","tag":"FIR12002","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"o2","name":"Кислород","unit":"ppm","tag":"Q10073","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"ch4","name":"Метан","unit":"ppm","tag":"Q10072","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"c2h6","name":"Этан","unit":"ppm","tag":"Q10072","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"c2h2","name":"Ацетилен","unit":"ppm","tag":"Q10093","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"c3_vgvd","name":"Пропилен в ВГВД","unit":"%","tag":"QR12033","group":"Свежий этилен и возвратный газ","role":"measurement","precision":3},{"key":"c3_vgnd","name":"Пропилен в ВГНД","unit":"%","tag":"Q10022","group":"Свежий этилен и возвратный газ","role":"measurement","precision":3},{"key":"n2_fnd","name":"Азот на ФНД","unit":"м³/ч","tag":"FIRC11001A","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"a124_rpm","name":"Обороты А-124","unit":"об","tag":"100-315 об","group":"Компрессия","role":"measurement","precision":2},{"key":"a124_p3","name":"А-124, 3-я ступень","unit":"МПа","tag":"P11036","group":"Компрессия","role":"measurement","precision":2},{"key":"ab124_rpm","name":"Обороты АБ-124","unit":"об","tag":"100-280 об","group":"Компрессия","role":"measurement","precision":2},{"key":"a103_p3","name":"А-103, 3-я ступень","unit":"МПа","tag":"P10019","group":"Компрессия","role":"measurement","precision":3},{"key":"a152_p","name":"А-152, 2-я ступень","unit":"МПа","tag":"P12126","group":"Компрессия","role":"measurement","precision":2},{"key":"a171_p","name":"А-171, 2-я ступень","unit":"МПа","tag":"P12326","group":"Компрессия","role":"measurement","precision":2},{"key":"a152_cap","name":"Производительность А-152","unit":"","tag":"CP_1A_152","group":"Компрессия","role":"measurement","precision":2},{"key":"a171_cap","name":"Производительность А-171","unit":"","tag":"CP_1A_171","group":"Компрессия","role":"measurement","precision":2},{"key":"hw_f302","name":"Расход воды в 1-ю зону","unit":"м³/ч","tag":"FIRC13032","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f305","name":"Расход воды во 2-ю зону","unit":"м³/ч","tag":"FIRC13033","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f306","name":"Расход воды в 3-ю зону","unit":"м³/ч","tag":"FIRC13034","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f307","name":"Расход на А-307","unit":"м³/ч","tag":"FIRC13035","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f308","name":"Расход на А-308","unit":"м³/ч","tag":"FIRC13036","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_pz1","name":"Давление воды после 1-й зоны","unit":"МПа","tag":"PIR13037","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_pz2","name":"Давление воды после 2-й зоны","unit":"МПа","tag":"PIR13038","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_pz3","name":"Давление воды после 3-й зоны","unit":"МПа","tag":"PIR13030a","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p307","name":"Давление на А-307","unit":"МПа","tag":"PIR13039","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p308","name":"Давление на А-308","unit":"МПа","tag":"PIR13040","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_tz1","name":"Обратная вода 1-й зоны","unit":"°C","tag":"T14091","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_tz2","name":"Обратная вода 2-й зоны","unit":"°C","tag":"T14092","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_tz3","name":"Обратная вода 3-й зоны","unit":"°C","tag":"T14093","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p1","name":"Давление в А-602/1","unit":"МПа","tag":"PIRCA13001","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_l1","name":"Уровень в А-602/1","unit":"мм","tag":"LIRCAE13002","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p2","name":"Давление в А-602/2","unit":"МПа","tag":"PIRCA13029","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_l2","name":"Уровень в А-602/2","unit":"мм","tag":"LIRCAE13030","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t100","name":"Температура на выходе из АВО","unit":"°C","tag":"TIRA13100","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t43","name":"Температура TIR13043","unit":"°C","tag":"TIR13043","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t503","name":"Температура TIRCA13503","unit":"°C","tag":"TIRCA13503","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t504","name":"Температура TIRCA13504","unit":"°C","tag":"TIRCA13504","group":"Горячая вода","role":"measurement","precision":2},{"key":"ovd_p","name":"Давление ОВД","unit":"МПа","tag":"PR14705","group":"Выгрузка и грануляция","role":"measurement","precision":2},{"key":"ond_p","name":"Давление ОНД","unit":"МПа","tag":"P16706","group":"Выгрузка и грануляция","role":"measurement","precision":4},{"key":"a401_t","name":"Температура А-401","unit":"°C","tag":"TI14724","group":"Выгрузка и грануляция","role":"measurement","precision":2},{"key":"lv_pos","name":"Положение LV-14702","unit":"%","tag":"LZI14702","group":"Выгрузка и грануляция","role":"measurement","precision":2},{"key":"ex_c2","name":"Т 2-го цилиндра экструдера","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2},{"key":"ex_c3","name":"Т 3-го цилиндра экструдера","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2},{"key":"ex_c4","name":"Т 4-го цилиндра экструдера","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2},{"key":"ex_die","name":"Температура фильеры","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2}],"observations":[{"id":52,"grade":4,"line":"A","ts":"2025-09-12T09:10:19","doc":null},{"id":47,"grade":5,"line":"A","ts":"2025-09-13T08:42:04","doc":8},{"id":48,"grade":5,"line":"A","ts":"2025-09-13T17:34:51","doc":8},{"id":42,"grade":2,"line":"A","ts":"2025-09-15T20:41:17","doc":null},{"id":43,"grade":2,"line":"A","ts":"2025-09-17T03:12:37","doc":null},{"id":3,"grade":1,"line":"A","ts":"2025-09-21T16:19:00","doc":1},{"id":44,"grade":2,"line":"A","ts":"2025-11-07T09:23:21","doc":null},{"id":4,"grade":1,"line":"A","ts":"2025-11-19T00:00:00","doc":null},{"id":5,"grade":1,"line":"A","ts":"2025-11-19T04:40:07","doc":null},{"id":21,"grade":1,"line":"A","ts":"2025-11-19T19:14:00","doc":1},{"id":27,"grade":1,"line":"A","ts":"2025-11-19T19:19:00","doc":1},{"id":22,"grade":1,"line":"A","ts":"2025-11-19T20:20:30","doc":1},{"id":23,"grade":1,"line":"A","ts":"2025-11-20T16:05:34","doc":1},{"id":24,"grade":1,"line":"A","ts":"2025-11-20T17:14:30","doc":1},{"id":25,"grade":1,"line":"A","ts":"2025-11-20T19:06:06","doc":1},{"id":26,"grade":1,"line":"A","ts":"2025-11-20T20:05:28","doc":1},{"id":45,"grade":2,"line":"A","ts":"2025-12-14T04:47:40","doc":null},{"id":49,"grade":5,"line":"A","ts":"2026-01-10T08:40:51","doc":8},{"id":40,"grade":2,"line":"A","ts":"2026-01-13T21:16:39","doc":null},{"id":41,"grade":2,"line":"A","ts":"2026-01-14T21:10:43","doc":null},{"id":6,"grade":1,"line":"A","ts":"2026-02-11T08:42:01","doc":null},{"id":53,"grade":4,"line":"A","ts":"2026-02-16T05:47:50","doc":null},{"id":12,"grade":1,"line":"A","ts":"2026-02-17T00:43:20","doc":1},{"id":13,"grade":1,"line":"A","ts":"2026-02-17T06:48:50","doc":1},{"id":14,"grade":1,"line":"A","ts":"2026-02-17T08:36:21","doc":1},{"id":15,"grade":1,"line":"A","ts":"2026-02-17T13:33:29","doc":1},{"id":36,"grade":2,"line":"A","ts":"2026-02-19T10:00:09","doc":null},{"id":17,"grade":1,"line":"A","ts":"2026-03-02T06:01:49","doc":1},{"id":18,"grade":1,"line":"A","ts":"2026-03-02T07:23:43","doc":1},{"id":19,"grade":1,"line":"A","ts":"2026-03-02T10:36:48","doc":1},{"id":20,"grade":1,"line":"A","ts":"2026-03-02T13:49:46","doc":1},{"id":16,"grade":1,"line":"A","ts":"2026-03-02T23:33:42","doc":1},{"id":50,"grade":4,"line":"A","ts":"2026-03-07T15:52:55","doc":null},{"id":37,"grade":2,"line":"A","ts":"2026-03-11T02:21:38","doc":null},{"id":38,"grade":2,"line":"A","ts":"2026-04-08T19:40:34","doc":null},{"id":51,"grade":4,"line":"A","ts":"2026-05-06T23:41:25","doc":null},{"id":39,"grade":2,"line":"A","ts":"2026-05-18T15:25:05","doc":null},{"id":33,"grade":2,"line":"A","ts":"2026-05-18T15:25:23","doc":null},{"id":34,"grade":2,"line":"A","ts":"2026-07-05T19:08:07","doc":null},{"id":35,"grade":2,"line":"A","ts":"2026-07-05T19:10:27","doc":null},{"id":7,"grade":1,"line":"A","ts":"2026-07-13T09:54:08","doc":null},{"id":8,"grade":1,"line":"A","ts":"2026-07-13T09:56:17","doc":null},{"id":9,"grade":1,"line":"A","ts":"2026-07-13T10:04:44","doc":null},{"id":46,"grade":3,"line":"A","ts":"2026-07-18T01:06:48","doc":null},{"id":54,"grade":5,"line":"A","ts":"2026-07-18T01:08:50","doc":null},{"id":10,"grade":1,"line":"A","ts":"2026-09-10T20:12:12","doc":null},{"id":11,"grade":1,"line":"A","ts":"2026-09-10T22:33:26","doc":null},{"id":28,"grade":1,"line":"A","ts":"2026-09-15T11:15:13","doc":1},{"id":29,"grade":1,"line":"A","ts":"2026-09-15T11:15:21","doc":1},{"id":30,"grade":1,"line":"A","ts":"2026-09-15T11:15:26","doc":1},{"id":2,"grade":1,"line":"A","ts":"2026-09-19T07:45:00","doc":1},{"id":1,"grade":1,"line":"A","ts":"2026-09-20T07:03:00","doc":1},{"id":31,"grade":1,"line":"B","ts":"2026-09-15T11:12:03","doc":1},{"id":32,"grade":1,"line":"B","ts":"2026-09-15T11:15:38","doc":1}],"values":{"1":{"load":[168.01,"confirmed"],"rpm":[813.3,"confirmed"],"pal":[4.42,"confirmed"],"pal_sp":[5.0,"review"],"mfr":[1.98,"confirmed"],"mfr_raw":[2.048,"confirmed"],"vgvd":[26.18,"confirmed"],"fnd":[313.6,"confirmed"],"pn_p":[102.7,"review"],"z1_sp":[313.0,"confirmed"],"z1_t":[313.0,"confirmed"],"z1_f":[29.94,"confirmed"],"z1_out":[37.5,"review"],"z2_sp":[307.0,"confirmed"],"z2_t":[307.0,"confirmed"],"z2_f":[36.05,"confirmed"],"z2_out":[47.7,"review"],"z3_sp":[283.0,"confirmed"],"z3_t":[283.0,"confirmed"],"z3_f":[16.32,"confirmed"],"z3_out":[20.5,"review"],"ovd_p":[26.97,"confirmed"],"a401_t":[196.7,"confirmed"],"lv_pos":[10.0,"confirmed"]},"2":{"hw_p1":[0.6,"confirmed"],"hw_l1":[1711.0,"confirmed"],"hw_t100":[165.5,"confirmed"],"hw_t43":[169.8,"review"],"hw_f302":[93.86,"confirmed"],"hw_f305":[99.13,"confirmed"],"hw_f306":[137.9,"confirmed"],"hw_f307":[21.39,"confirmed"],"hw_f308":[103.67,"confirmed"],"hw_pz1":[4.4,"confirmed"],"hw_pz2":[4.5,"confirmed"],"hw_p307":[1.8,"confirmed"],"hw_p308":[1.3,"confirmed"]},"3":{"load":[172.03,"confirmed"],"rpm":[892.0,"confirmed"],"pal":[6.6,"confirmed"],"pal_sp":[6.57,"confirmed"],"c3_flow":[33.55,"confirmed"],"mfr":[2.0,"confirmed"],"mfr_raw":[1.682,"confirmed"],"mfr_est":[1.719,"confirmed"],"mfr_lab":[1.75,"confirmed"],"dens_est":[0.9232,"confirmed"],"vgvd":[25.88,"confirmed"],"fnd":[279.3,"confirmed"],"pn_p":[109.9,"confirmed"],"r_p":[228.1,"confirmed"],"r_p2":[191.3,"confirmed"],"valve":[79.42,"confirmed"],"t_start":[133.1,"confirmed"],"t_mix":[146.7,"confirmed"],"t1_max":[310.72,"confirmed"],"t2_max":[305.7,"confirmed"],"t3_max":[283.45,"confirmed"],"z1_f":[29.85,"confirmed"],"z1_sp":[312.0,"confirmed"],"z1_t":[312.0,"confirmed"],"z1_out":[37.8,"confirmed"],"z2_f":[34.19,"confirmed"],"z2_sp":[307.0,"confirmed"],"z2_t":[307.0,"confirmed"],"z2_out":[64.2,"confirmed"],"z3_f":[17.28,"confirmed"],"z3_sp":[283.0,"confirmed"],"z3_t":[283.0,"confirmed"],"z3_out":[54.1,"confirmed"],"cidx1":[116.05,"confirmed"],"cidx2":[115.81,"confirmed"],"cidx3":[68.99,"confirmed"],"c2_p":[1.696,"confirmed"],"c2_flow":[7469.5,"review"],"vg_flow":[27443.2,"review"],"o2":[0.09,"confirmed"],"ch4":[11.7,"confirmed"],"c2h6":[220.0,"confirmed"],"c2h2":[0.87,"confirmed"],"c3_vgvd":[0.531,"confirmed"],"c3_vgnd":[1.438,"review"],"n2_fnd":[36.5,"confirmed"],"a124_p3":[27.09,"confirmed"],"a103_p3":[1.605,"review"],"a152_cap":[30.16,"confirmed"],"hw_f302":[91.49,"confirmed"],"hw_f305":[100.81,"confirmed"],"hw_f306":[146.94,"confirmed"],"hw_f307":[95.24,"confirmed"],"hw_f308":[109.22,"confirmed"],"hw_pz1":[4.42,"confirmed"],"hw_pz2":[4.5,"confirmed"],"hw_pz3":[4.37,"confirmed"],"hw_p307":[1.6,"confirmed"],"hw_p308":[1.4,"confirmed"],"hw_tz1":[187.4,"confirmed"],"hw_tz2":[199.0,"confirmed"],"hw_tz3":[180.3,"confirmed"],"hw_p1":[0.7,"confirmed"],"hw_l1":[1649.0,"confirmed"],"hw_p2":[0.58,"confirmed"],"hw_l2":[1646.0,"confirmed"],"hw_t100":[165.4,"confirmed"],"hw_t43":[174.8,"confirmed"],"hw_t503":[151.6,"review"],"hw_t504":[151.61,"review"],"ovd_p":[25.94,"confirmed"],"ond_p":[0.1269,"confirmed"],"a401_t":[200.1,"confirmed"],"lv_pos":[11.3,"confirmed"],"a171_cap":[29.89,"confirmed"],"a124_rpm":[313.9,"confirmed"],"ab124_rpm":[280.4,"confirmed"],"a152_p":[235.3,"review"],"a171_p":[235.8,"review"]},"5":{"pal":[9.86,"review"],"pal_sp":[9.71,"review"],"z1_sp":[313.0,"review"],"z1_t":[314.0,"review"],"z1_f":[43.55,"review"],"z1_out":[62.5,"review"],"z2_sp":[308.0,"review"],"z2_t":[308.0,"review"],"z2_f":[34.5,"review"],"z2_out":[45.0,"review"],"z3_sp":[283.0,"review"],"z3_t":[283.0,"review"],"z3_f":[15.81,"review"],"z3_out":[21.6,"review"],"initiator1":[43.63,"review"],"initiator2":[34.53,"review"],"initiator3":[15.82,"review"],"suutp_flow1":[43.63,"review"],"suutp_flow2":[34.49,"review"],"suutp_flow3":[15.81,"review"],"hw_f302":[74.56,"review"],"hw_f305":[174.65,"review"],"hw_f306":[100.48,"review"],"mfr_est":[1.957,"review"],"dens_est":[0.9236,"review"],"t14069":[227.3,"review"],"cidx1":[124.36,"review"],"cidx2":[127.83,"review"],"cidx3":[78.22,"review"],"a152_cap":[30.38,"review"],"a171_cap":[30.19,"review"]},"6":{"pal":[7.59,"review"],"pal_sp":[7.74,"review"],"z1_sp":[313.0,"review"],"z1_t":[313.0,"review"],"z1_f":[32.24,"review"],"z1_out":[39.7,"review"],"z2_sp":[307.0,"review"],"z2_t":[307.0,"review"],"z2_f":[35.84,"review"],"z2_out":[50.7,"review"],"z3_sp":[282.0,"review"],"z3_t":[282.0,"review"],"z3_f":[16.26,"review"],"z3_out":[17.5,"review"],"rpm":[803.0,"review"],"ex_die":[144.1,"review"],"drive_current":[167.27,"review"]},"7":{"drive_current":[167.4,"review"],"rpm":[803.3,"review"],"mfr":[2.021,"review"],"mfr_raw":[1.941,"review"],"pal":[5.16,"review"],"vgvd":[26.56,"review"],"fnd":[128.9,"review"]},"8":{"pal":[5.11,"review"],"pal_sp":[5.18,"review"],"z1_sp":[312.0,"review"],"z1_t":[312.0,"review"],"z1_f":[30.55,"review"],"z1_out":[37.9,"review"],"z2_sp":[308.0,"review"],"z2_t":[308.0,"review"],"z2_f":[34.02,"review"],"z2_out":[49.2,"review"],"z3_sp":[283.0,"review"],"z3_t":[283.0,"review"],"z3_f":[18.9,"review"],"z3_out":[46.0,"review"]},"9":{"t14069":[227.5,"review"]},"10":{"drive_current":[167.53,"review"],"rpm":[794.7,"review"],"mfr":[1.976,"review"],"mfr_raw":[2.135,"review"],"pal":[6.38,"review"],"vgvd":[25.89,"review"],"fnd":[106.7,"review"]},"11":{"pal":[6.4,"review"],"pal_sp":[6.59,"review"],"z1_sp":[312.0,"review"],"z1_t":[312.0,"review"],"z1_f":[30.42,"review"],"z1_out":[39.3,"review"],"z2_sp":[308.0,"review"],"z2_t":[308.0,"review"],"z2_f":[36.31,"review"],"z2_out":[48.9,"review"],"z3_sp":[282.0,"review"],"z3_t":[282.0,"review"],"z3_f":[15.06,"review"],"z3_out":[19.6,"review"]},"12":{"drive_current":[174.1,"review"],"pal":[25.67,"review"],"mfr":[1.972,"review"],"t14069":[216.2,"review"],"fnd":[214.2,"review"],"rpm":[668.6,"review"],"a124_rpm":[276.3,"review"],"vgvd":[26.11,"review"],"propylene":[7.2,"review"],"ab124_rpm":[280.4,"review"]},"13":{"drive_current":[187.4,"review"],"pal":[8.8,"review"],"mfr":[-0.955,"review"],"t14069":[220.6,"review"],"fnd":[201.3,"review"],"rpm":[502.4,"review"],"a124_rpm":[314.0,"review"],"vgvd":[25.24,"review"],"propylene":[20.2,"review"],"ab124_rpm":[0.11,"review"]},"14":{"drive_current":[183.5,"review"],"pal":[6.55,"review"],"mfr":[2.004,"review"],"t14069":[218.0,"review"],"fnd":[185.5,"review"],"rpm":[488.3,"review"],"a124_rpm":[272.2,"review"],"vgvd":[26.54,"review"],"propylene":[19.6,"review"],"ab124_rpm":[91.5,"review"]},"15":{"drive_current":[170.8,"review"],"pal":[8.7,"review"],"mfr":[2.036,"review"],"t14069":[239.9,"review"],"fnd":[181.1,"review"],"rpm":[787.7,"review"],"a124_rpm":[288.7,"review"],"vgvd":[26.06,"review"],"propylene":[19.6,"review"],"ab124_rpm":[280.4,"review"]},"16":{"drive_current":[161.8,"review"],"pal":[6.55,"review"],"mfr":[2.09,"review"],"t14069":[240.9,"review"],"fnd":[257.9,"review"],"rpm":[775.2,"review"],"a124_rpm":[288.7,"review"],"vgvd":[25.95,"review"],"propylene":[16.33,"review"],"ab124_rpm":[280.78,"review"]},"17":{"drive_current":[164.1,"review"],"pal":[4.12,"review"],"mfr":[1.975,"review"],"t14069":[232.2,"review"],"fnd":[338.8,"review"],"rpm":[829.8,"review"],"a124_rpm":[314.3,"review"],"vgvd":[26.06,"review"],"propylene":[13.61,"review"],"ab124_rpm":[280.56,"review"]},"18":{"drive_current":[147.0,"review"],"pal":[3.26,"review"],"mfr":[3.621,"review"],"t14069":[226.7,"review"],"fnd":[270.2,"review"],"rpm":[483.8,"review"],"a124_rpm":[314.0,"review"],"vgvd":[23.82,"review"],"propylene":[0.0,"review"],"ab124_rpm":[0.05,"review"]},"19":{"drive_current":[171.7,"review"],"pal":[2.21,"review"],"mfr":[2.352,"review"],"t14069":[221.8,"review"],"fnd":[322.9,"review"],"rpm":[540.3,"review"],"a124_rpm":[314.3,"review"],"vgvd":[24.24,"review"],"propylene":[0.0,"review"],"ab124_rpm":[0.05,"review"]},"20":{"drive_current":[173.3,"review"],"pal":[1.39,"review"],"mfr":[2.015,"review"],"t14069":[218.8,"review"],"fnd":[211.2,"review"],"rpm":[535.2,"review"],"a124_rpm":[314.8,"review"],"vgvd":[24.84,"review"],"propylene":[0.0,"review"],"ab124_rpm":[0.05,"review"]},"21":{"drive_current":[194.24,"review"],"rpm":[532.7,"review"],"mfr":[2.035,"review"],"mfr_raw":[2.18,"review"],"pal":[7.9,"review"],"vgvd":[23.11,"review"],"fnd":[201.7,"review"]},"22":{"pal":[7.96,"review"],"pal_sp":[7.6,"review"],"z1_t":[263.0,"review"],"z1_f":[14.28,"review"],"z1_out":[14.0,"review"],"z2_t":[253.0,"review"],"z2_f":[17.7,"review"],"z2_out":[27.0,"review"],"z3_t":[258.0,"review"],"z3_f":[11.89,"review"],"z3_out":[16.0,"review"]},"23":{"drive_current":[191.4,"review"],"pal":[6.43,"review"],"mfr":[2.053,"review"],"t14069":[216.7,"review"],"fnd":[175.3,"review"],"rpm":[542.0,"review"],"a124_rpm":[314.7,"review"],"vgvd":[24.87,"review"],"propylene":[9.43,"review"],"ab124_rpm":[0.06,"review"]},"24":{"drive_current":[184.9,"review"],"pal":[10.38,"review"],"mfr":[1.959,"review"],"t14069":[238.55,"review"],"fnd":[340.2,"review"],"rpm":[853.2,"review"],"a124_rpm":[249.4,"review"],"vgvd":[25.89,"review"],"propylene":[29.94,"review"],"ab124_rpm":[270.59,"review"]},"25":{"drive_current":[171.2,"review"],"pal":[7.63,"review"],"mfr":[2.03,"review"],"t14069":[246.0,"review"],"fnd":[290.6,"review"],"rpm":[303.9,"review"],"a124_rpm":[246.9,"review"],"vgvd":[25.98,"review"],"propylene":[30.0,"review"],"ab124_rpm":[179.58,"review"]},"26":{"drive_current":[173.0,"review"],"pal":[8.39,"review"],"mfr":[1.993,"review"],"t14069":[248.4,"review"],"fnd":[267.5,"review"],"rpm":[823.1,"review"],"a124_rpm":[253.7,"review"],"vgvd":[25.82,"review"],"propylene":[30.31,"review"],"ab124_rpm":[183.59,"review"]},"27":{"drive_current":[195.11,"review"],"rpm":[531.8,"review"],"ex_die":[150.0,"review"]},"28":{"drive_current":[150.43,"review"],"rpm":[525.2,"review"],"mfr":[1.341,"review"],"mfr_raw":[1.788,"review"],"pal":[4.56,"review"],"vgvd":[22.43,"review"],"fnd":[137.2,"review"]},"29":{"pal":[4.06,"review"],"pal_sp":[4.0,"review"],"z1_t":[267.0,"review"],"z1_f":[17.47,"review"],"z1_out":[21.3,"review"],"z2_t":[265.0,"review"],"z2_f":[29.71,"review"],"z2_out":[36.8,"review"],"z3_t":[254.0,"review"],"z3_f":[13.8,"review"],"z3_out":[18.8,"review"]},"30":{"t14069":[218.0,"review"]},"32":{"pal":[6.8,"review"],"z1_t":[274.0,"review"],"z1_f":[21.36,"review"],"z1_out":[34.8,"review"],"z2_t":[270.0,"review"],"z2_f":[30.82,"review"],"z2_out":[39.0,"review"],"z3_t":[250.0,"review"],"z3_f":[11.08,"review"],"z3_out":[10.0,"review"]},"33":{"drive_current":[177.68,"review"],"rpm":[691.6,"review"],"mfr":[2.01,"review"],"mfr_raw":[1.778,"review"],"pal":[23.54,"review"],"vgvd":[26.38,"review"],"fnd":[162.8,"review"]},"34":{"drive_current":[178.5,"review"],"rpm":[668.9,"review"],"mfr":[2.001,"review"],"mfr_raw":[2.003,"review"],"pal":[24.21,"review"],"vgvd":[26.35,"review"],"fnd":[117.9,"review"]},"35":{"pal_sp":[23.87,"review"],"pal":[24.17,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[17.79,"review"],"z1_out":[22.6,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[21.12,"review"],"z2_out":[27.8,"review"],"z3_sp":[273.0,"review"],"z3_t":[273.0,"review"],"z3_f":[16.88,"review"],"z3_out":[45.2,"review"]},"36":{"pal_sp":[23.43,"review"],"pal":[23.6,"review"],"z1_sp":[287.0,"review"],"z1_t":[286.0,"review"],"z1_f":[16.09,"review"],"z1_out":[24.9,"review"],"z2_sp":[286.0,"review"],"z2_t":[286.0,"review"],"z2_f":[21.58,"review"],"z2_out":[26.6,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[17.17,"review"],"z3_out":[18.6,"review"]},"37":{"pal_sp":[23.87,"review"],"pal":[24.51,"review"],"z1_sp":[287.0,"review"],"z1_t":[286.0,"review"],"z1_f":[15.52,"review"],"z1_out":[22.5,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.58,"review"],"z2_out":[29.1,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[19.54,"review"],"z3_out":[22.0,"review"]},"38":{"pal_sp":[23.31,"review"],"pal":[23.98,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[18.45,"review"],"z1_out":[22.0,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[23.7,"review"],"z2_out":[31.2,"review"],"z3_sp":[273.0,"review"],"z3_t":[273.0,"review"],"z3_f":[18.73,"review"],"z3_out":[45.2,"review"]},"39":{"pal_sp":[23.92,"review"],"pal":[24.59,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[17.74,"review"],"z1_out":[46.5,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.52,"review"],"z2_out":[28.3,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[16.81,"review"],"z3_out":[17.4,"review"]},"40":{"pal_sp":[25.48,"review"],"pal":[24.88,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[18.25,"review"],"z1_out":[24.7,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.65,"review"],"z2_out":[34.7,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[14.24,"review"],"z3_out":[40.1,"review"]},"41":{"pal_sp":[26.43,"review"],"pal":[26.55,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[18.49,"review"],"z1_out":[24.7,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.68,"review"],"z2_out":[34.5,"review"],"z3_sp":[271.0,"review"],"z3_t":[271.0,"review"],"z3_f":[17.04,"review"],"z3_out":[42.4,"review"]},"42":{"pal_sp":[25.2,"review"],"pal":[25.86,"review"],"z1_sp":[286.0,"review"],"z1_t":[286.0,"review"],"z1_f":[16.53,"review"],"z1_out":[22.2,"review"],"z2_sp":[285.0,"review"],"z2_t":[284.0,"review"],"z2_f":[21.6,"review"],"z2_out":[50.1,"review"],"z3_sp":[272.0,"review"],"z3_t":[273.0,"review"],"z3_f":[11.45,"review"],"z3_out":[45.8,"review"]},"43":{"pal_sp":[25.2,"review"],"pal":[25.68,"review"],"z1_sp":[287.0,"review"],"z1_t":[287.0,"review"],"z1_f":[16.14,"review"],"z1_out":[23.1,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.09,"review"],"z2_out":[48.7,"review"],"z3_sp":[271.0,"review"],"z3_t":[271.0,"review"],"z3_f":[12.52,"review"],"z3_out":[47.7,"review"]},"44":{"pal_sp":[27.46,"review"],"pal":[27.46,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[19.26,"review"],"z1_out":[46.6,"review"],"z2_sp":[286.0,"review"],"z2_t":[286.0,"review"],"z2_f":[22.69,"review"],"z2_out":[27.7,"review"],"z3_sp":[271.0,"review"],"z3_t":[271.0,"review"],"z3_f":[15.29,"review"],"z3_out":[23.1,"review"]},"45":{"pal_sp":[23.85,"review"],"pal":[24.0,"review"],"z1_sp":[287.0,"review"],"z1_t":[287.0,"review"],"z1_f":[16.08,"review"],"z1_out":[24.3,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[20.27,"review"],"z2_out":[30.0,"review"],"z3_sp":[273.0,"review"],"z3_t":[273.0,"review"],"z3_f":[16.16,"review"],"z3_out":[40.9,"review"]},"46":{"pal_sp":[4.3,"review"],"pal":[4.32,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[32.4,"review"],"z1_out":[41.6,"review"],"z2_sp":[317.0,"review"],"z2_t":[317.0,"review"],"z2_f":[42.31,"review"],"z2_out":[64.5,"review"],"z3_sp":[295.0,"review"],"z3_t":[296.0,"review"],"z3_f":[32.56,"review"],"z3_out":[63.6,"review"]},"47":{"pal_sp":[7.4,"review"],"pal":[7.46,"review"],"z1_sp":[316.0,"review"],"z1_t":[317.0,"review"],"z1_f":[33.58,"review"],"z1_out":[43.0,"review"],"z2_sp":[315.0,"review"],"z2_t":[316.0,"review"],"z2_f":[45.48,"review"],"z2_out":[81.9,"review"],"z3_sp":[295.0,"review"],"z3_t":[295.0,"review"],"z3_f":[29.4,"review"],"z3_out":[67.8,"review"]},"48":{"pal_sp":[5.8,"review"],"pal":[5.72,"review"],"z1_sp":[318.0,"review"],"z1_t":[317.0,"review"],"z1_f":[35.91,"review"],"z1_out":[48.4,"review"],"z2_sp":[316.0,"review"],"z2_t":[316.0,"review"],"z2_f":[46.83,"review"],"z2_out":[84.2,"review"],"z3_sp":[294.0,"review"],"z3_t":[295.0,"review"],"z3_f":[29.54,"review"],"z3_out":[67.5,"review"]},"49":{"pal_sp":[8.4,"review"],"pal":[8.53,"review"],"z1_sp":[316.0,"review"],"z1_t":[317.0,"review"],"z1_f":[32.93,"review"],"z1_out":[43.8,"review"],"z2_sp":[315.0,"review"],"z2_t":[316.0,"review"],"z2_f":[43.63,"review"],"z2_out":[61.0,"review"],"z3_sp":[295.0,"review"],"z3_t":[296.0,"review"],"z3_f":[35.61,"review"],"z3_out":[65.8,"review"]},"50":{"pal_sp":[2.16,"review"],"pal":[2.31,"review"],"z1_sp":[316.0,"review"],"z1_t":[316.0,"review"],"z1_f":[31.98,"review"],"z1_out":[61.7,"review"],"z2_sp":[314.0,"review"],"z2_t":[314.0,"review"],"z2_f":[39.23,"review"],"z2_out":[56.5,"review"],"z3_sp":[297.0,"review"],"z3_t":[297.0,"review"],"z3_f":[33.57,"review"],"z3_out":[42.6,"review"]},"51":{"pal_sp":[2.67,"review"],"pal":[2.52,"review"],"z1_sp":[317.0,"review"],"z1_t":[317.0,"review"],"z1_f":[33.02,"review"],"z1_out":[43.8,"review"],"z2_sp":[314.0,"review"],"z2_t":[314.0,"review"],"z2_f":[45.88,"review"],"z2_out":[69.1,"review"],"z3_sp":[290.0,"review"],"z3_t":[289.0,"review"],"z3_f":[25.28,"review"],"z3_out":[58.9,"review"]},"52":{"pal_sp":[3.55,"review"],"pal":[3.52,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[35.19,"review"],"z1_out":[45.8,"review"],"z2_sp":[316.0,"review"],"z2_t":[316.0,"review"],"z2_f":[34.3,"review"],"z2_out":[80.1,"review"],"z3_sp":[291.0,"review"],"z3_t":[291.0,"review"],"z3_f":[22.88,"review"],"z3_out":[59.2,"review"]},"53":{"pal_sp":[3.68,"review"],"pal":[3.53,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[32.47,"review"],"z1_out":[62.4,"review"],"z2_sp":[315.0,"review"],"z2_t":[315.0,"review"],"z2_f":[40.05,"review"],"z2_out":[58.3,"review"],"z3_sp":[296.0,"review"],"z3_t":[296.0,"review"],"z3_f":[35.63,"review"],"z3_out":[46.7,"review"]},"54":{"pal_sp":[4.3,"review"],"pal":[4.32,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[32.4,"review"],"z1_out":[41.6,"review"],"z2_sp":[317.0,"review"],"z2_t":[317.0,"review"],"z2_f":[42.31,"review"],"z2_out":[64.5,"review"],"z3_sp":[295.0,"review"],"z3_t":[296.0,"review"],"z3_f":[32.56,"review"],"z3_out":[63.6,"review"]}},"docs":[{"id":1,"grade":1,"version":"54.2","from":"2025-05-16","to":null},{"id":2,"grade":2,"version":"24.1","from":"2024-03-18","to":"2024-05-28"},{"id":3,"grade":2,"version":"24.3","from":"2024-05-29","to":null},{"id":4,"grade":3,"version":"1.2","from":"2025-09-10","to":null},{"id":6,"grade":4,"version":"16.9","from":"2025-04-04","to":"2026-03-29"},{"id":5,"grade":4,"version":"16.9.1","from":"2026-03-30","to":null},{"id":8,"grade":5,"version":"1.2","from":"2025-09-10","to":"2026-05-06"},{"id":7,"grade":5,"version":"1.3","from":"2026-05-07","to":null}],"norms":[{"doc":1,"key":"prod","lo":17.0,"target":null,"hi":18.5},{"doc":1,"key":"mfr","lo":1.5,"target":null,"hi":2.5},{"doc":1,"key":"mfr_est","lo":1.8,"target":2.0,"hi":2.2},{"doc":1,"key":"mfr_raw","lo":1.8,"target":2.0,"hi":2.2},{"doc":1,"key":"dens_est","lo":0.92,"target":null,"hi":0.924},{"doc":1,"key":"t_start","lo":131.0,"target":133.0,"hi":135.0},{"doc":1,"key":"t1_max","lo":306.0,"target":311.0,"hi":316.0},{"doc":1,"key":"t2_max","lo":302.0,"target":306.0,"hi":310.0},{"doc":1,"key":"t3_max","lo":277.0,"target":282.0,"hi":287.0},{"doc":1,"key":"r_p","lo":227.0,"target":229.0,"hi":231.0},{"doc":1,"key":"pal","lo":1.5,"target":null,"hi":15.0},{"doc":1,"key":"c3_flow","lo":5.0,"target":null,"hi":60.0},{"doc":1,"key":"z1_f","lo":10.0,"target":null,"hi":40.0},{"doc":1,"key":"z2_f","lo":10.0,"target":null,"hi":42.0},{"doc":1,"key":"z3_f","lo":5.0,"target":null,"hi":40.0},{"doc":1,"key":"ex_c2","lo":170.0,"target":null,"hi":200.0},{"doc":1,"key":"ex_c3","lo":170.0,"target":null,"hi":200.0},{"doc":1,"key":"ex_c4","lo":170.0,"target":null,"hi":200.0},{"doc":1,"key":"ex_die","lo":125.0,"target":null,"hi":150.0},{"doc":1,"key":"cidx1","lo":110.0,"target":null,"hi":160.0},{"doc":1,"key":"cidx2","lo":100.0,"target":null,"hi":160.0},{"doc":1,"key":"cidx3","lo":60.0,"target":null,"hi":120.0},{"doc":1,"key":"hw_tz1","lo":175.0,"target":null,"hi":210.0},{"doc":1,"key":"hw_tz2","lo":175.0,"target":null,"hi":210.0},{"doc":1,"key":"hw_tz3","lo":175.0,"target":null,"hi":210.0},{"doc":1,"key":"hw_pz1","lo":2.4,"target":null,"hi":4.9},{"doc":1,"key":"hw_pz2","lo":2.4,"target":null,"hi":4.9},{"doc":1,"key":"hw_pz3","lo":2.4,"target":null,"hi":4.9},{"doc":2,"key":"mfr","lo":1.8,"target":2.0,"hi":2.2},{"doc":2,"key":"z1_t","lo":282.0,"target":286.0,"hi":290.0},{"doc":2,"key":"z2_t","lo":280.0,"target":284.0,"hi":288.0},{"doc":2,"key":"z3_t","lo":268.0,"target":272.0,"hi":276.0},{"doc":3,"key":"mfr","lo":1.8,"target":2.0,"hi":2.2},{"doc":3,"key":"z1_t","lo":282.0,"target":286.0,"hi":290.0},{"doc":3,"key":"z2_t","lo":280.0,"target":284.0,"hi":288.0},{"doc":3,"key":"z3_t","lo":268.0,"target":272.0,"hi":276.0},{"doc":4,"key":"mfr","lo":7.0,"target":8.0,"hi":8.7},{"doc":4,"key":"z1_t","lo":312.0,"target":315.0,"hi":318.0},{"doc":4,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":4,"key":"z3_t","lo":290.0,"target":295.0,"hi":300.0},{"doc":5,"key":"mfr","lo":3.5,"target":4.0,"hi":4.5},{"doc":5,"key":"z1_t","lo":312.0,"target":316.0,"hi":320.0},{"doc":5,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":5,"key":"z3_t","lo":300.0,"target":305.0,"hi":310.0},{"doc":6,"key":"mfr","lo":3.5,"target":4.0,"hi":4.5},{"doc":6,"key":"z1_t","lo":312.0,"target":316.0,"hi":320.0},{"doc":6,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":6,"key":"z3_t","lo":300.0,"target":305.0,"hi":310.0},{"doc":7,"key":"mfr","lo":7.0,"target":8.0,"hi":8.7},{"doc":7,"key":"z1_t","lo":312.0,"target":315.0,"hi":318.0},{"doc":7,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":7,"key":"z3_t","lo":290.0,"target":295.0,"hi":300.0},{"doc":8,"key":"mfr","lo":7.0,"target":8.0,"hi":8.7},{"doc":8,"key":"z1_t","lo":312.0,"target":315.0,"hi":318.0},{"doc":8,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":8,"key":"z3_t","lo":290.0,"target":295.0,"hi":300.0}]};
+const D={"generated_at":"2026-10-19T12:42:09+00:00","grades":[{"id":3,"name":"08220"},{"id":1,"name":"15803-020"},{"id":2,"name":"20220"},{"id":4,"name":"40200"},{"id":5,"name":"80210"}],"params":[{"key":"production","name":"Производительность","unit":"т/ч","tag":"","group":"Режим и качество","role":"measurement","precision":2},{"key":"pal","name":"Расход ПАЛ","unit":"кг/ч","tag":"F12740A","group":"Режим и качество","role":"measurement","precision":2},{"key":"propylene","name":"Расход пропилена","unit":"","tag":"","group":"Режим и качество","role":"measurement","precision":2},{"key":"mfi","name":"ПТР","unit":"","tag":"","group":"Режим и качество","role":"lab","precision":2},{"key":"ethylene","name":"Свежий этилен","unit":"","tag":"FIR11004","group":"Свежий этилен","role":"measurement","precision":2},{"key":"drive_current","name":"Ток главного привода","unit":"А","tag":"EIE-A404","group":"Экструзия","role":"measurement","precision":2},{"key":"water_temperature","name":"Температура горячей воды","unit":"°C","tag":"","group":"Горячая вода","role":"measurement","precision":2},{"key":"t14069","name":"Температура T14069","unit":"°C","tag":"T14069","group":"Реактор","role":"measurement","precision":2},{"key":"initiator1","name":"Инициатор, измеренный расход · зона 1","unit":"","tag":"","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"suutp_flow1","name":"Инициатор, расчёт СУУТП · зона 1","unit":"","tag":"","group":"Инициатор по зонам","role":"suutp","precision":2},{"key":"peak1","name":"Максимальная температура · зона 1","unit":"°C","tag":"","group":"Реактор","role":"measurement","precision":2},{"key":"initiator2","name":"Инициатор, измеренный расход · зона 2","unit":"","tag":"","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"suutp_flow2","name":"Инициатор, расчёт СУУТП · зона 2","unit":"","tag":"","group":"Инициатор по зонам","role":"suutp","precision":2},{"key":"peak2","name":"Максимальная температура · зона 2","unit":"°C","tag":"","group":"Реактор","role":"measurement","precision":2},{"key":"initiator3","name":"Инициатор, измеренный расход · зона 3","unit":"","tag":"","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"suutp_flow3","name":"Инициатор, расчёт СУУТП · зона 3","unit":"","tag":"","group":"Инициатор по зонам","role":"suutp","precision":2},{"key":"peak3","name":"Максимальная температура · зона 3","unit":"°C","tag":"","group":"Реактор","role":"measurement","precision":2},{"key":"load","name":"Нагрузка на гл. привод","unit":"","tag":"EIE-A404","group":"Режим и качество","role":"measurement","precision":2},{"key":"prod","name":"Производительность","unit":"т/ч","tag":"техкарта","group":"Режим и качество","role":"measurement","precision":2},{"key":"rpm","name":"Обороты А-404","unit":"об/мин","tag":"SI17711","group":"Режим и качество","role":"measurement","precision":2},{"key":"pal_sp","name":"Уставка ПАЛ","unit":"кг/ч","tag":"FIC12740A","group":"Режим и качество","role":"setpoint","precision":2},{"key":"c3_flow","name":"Расход пропилена","unit":"м³/ч","tag":"FIC10065","group":"Режим и качество","role":"measurement","precision":2},{"key":"mfr","name":"ПТР","unit":"г/10мин","tag":"ПТР428","group":"Режим и качество","role":"measurement","precision":2},{"key":"mfr_raw","name":"ПТР исходный","unit":"г/10мин","tag":"ПТР428","group":"Режим и качество","role":"measurement","precision":3},{"key":"mfr_est","name":"ПТР виртуальный анализатор","unit":"г/10мин","tag":"EST_LA_MI","group":"Режим и качество","role":"suutp","precision":3},{"key":"mfr_lab","name":"ПТР по лаборатории","unit":"г/10мин","tag":"лаб.","group":"Режим и качество","role":"lab","precision":2},{"key":"dens_est","name":"Плотность расчётная","unit":"г/см³","tag":"EST_LA_DEN","group":"Режим и качество","role":"suutp","precision":4},{"key":"vgvd","name":"Давление ВГВД","unit":"МПа","tag":"PC15714","group":"Режим и качество","role":"measurement","precision":2},{"key":"fnd","name":"Расход на ФНД","unit":"","tag":"F10703A","group":"Режим и качество","role":"measurement","precision":2},{"key":"pn_p","name":"Давление пневмотранспорта","unit":"кПа","tag":"PI-51149_A","group":"Режим и качество","role":"measurement","precision":2},{"key":"r_p","name":"Давление в реакторе","unit":"МПа","tag":"P14002","group":"Реактор","role":"measurement","precision":2},{"key":"r_p2","name":"Давление 2-го плунжера","unit":"МПа","tag":"P14026","group":"Реактор","role":"measurement","precision":2},{"key":"valve","name":"Задание клапана выхода","unit":"%","tag":"гл. р-р","group":"Реактор","role":"setpoint","precision":2},{"key":"t_start","name":"Т точки начала реакции","unit":"°C","tag":"T14007","group":"Реактор","role":"measurement","precision":2},{"key":"t_mix","name":"Т в точке смешения","unit":"°C","tag":"TIRCAE14033","group":"Реактор","role":"measurement","precision":2},{"key":"t1_max","name":"Пик 1-й зоны","unit":"°C","tag":"T1A_MAX","group":"Реактор","role":"measurement","precision":2},{"key":"t2_max","name":"Пик 2-й зоны","unit":"°C","tag":"T2A_MAX","group":"Реактор","role":"measurement","precision":2},{"key":"t3_max","name":"Пик 3-й зоны","unit":"°C","tag":"T3A_MAX","group":"Реактор","role":"measurement","precision":2},{"key":"z1_f","name":"Инициатор в 1-ю зону","unit":"кг/ч","tag":"А-302","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z1_sp","name":"Уставка Т 1-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"setpoint","precision":2},{"key":"z1_t","name":"Тмакс 1-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z1_out","name":"Выход клапана 1-й зоны","unit":"%","tag":"А-329","group":"Инициатор по зонам","role":"controller_output","precision":2},{"key":"z2_f","name":"Инициатор во 2-ю зону","unit":"кг/ч","tag":"А-305","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z2_sp","name":"Уставка Т 2-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"setpoint","precision":2},{"key":"z2_t","name":"Тмакс 2-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z2_out","name":"Выход клапана 2-й зоны","unit":"%","tag":"А-329","group":"Инициатор по зонам","role":"controller_output","precision":2},{"key":"z3_f","name":"Инициатор в 3-ю зону","unit":"кг/ч","tag":"А-306","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z3_sp","name":"Уставка Т 3-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"setpoint","precision":2},{"key":"z3_t","name":"Тмакс 3-й зоны","unit":"°C","tag":"А-329","group":"Инициатор по зонам","role":"measurement","precision":2},{"key":"z3_out","name":"Выход клапана 3-й зоны","unit":"%","tag":"А-329","group":"Инициатор по зонам","role":"controller_output","precision":2},{"key":"cidx1","name":"Индекс очищенности 1-й зоны","unit":"","tag":"Cindx_A_zone1","group":"Очищенность зон","role":"measurement","precision":2},{"key":"cidx2","name":"Индекс очищенности 2-й зоны","unit":"","tag":"Cindx_A_zone2","group":"Очищенность зон","role":"measurement","precision":2},{"key":"cidx3","name":"Индекс очищенности 3-й зоны","unit":"","tag":"Cindx_A_zone3","group":"Очищенность зон","role":"measurement","precision":2},{"key":"c2_p","name":"Давление свежего этилена","unit":"МПа","tag":"PIR10071","group":"Свежий этилен и возвратный газ","role":"measurement","precision":3},{"key":"c2_flow","name":"Расход свежего этилена","unit":"м³/ч","tag":"FIR11004","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"vg_flow","name":"Возвратный газ из 2 каскада","unit":"м³/ч","tag":"FIR12002","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"o2","name":"Кислород","unit":"ppm","tag":"Q10073","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"ch4","name":"Метан","unit":"ppm","tag":"Q10072","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"c2h6","name":"Этан","unit":"ppm","tag":"Q10072","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"c2h2","name":"Ацетилен","unit":"ppm","tag":"Q10093","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"c3_vgvd","name":"Пропилен в ВГВД","unit":"%","tag":"QR12033","group":"Свежий этилен и возвратный газ","role":"measurement","precision":3},{"key":"c3_vgnd","name":"Пропилен в ВГНД","unit":"%","tag":"Q10022","group":"Свежий этилен и возвратный газ","role":"measurement","precision":3},{"key":"n2_fnd","name":"Азот на ФНД","unit":"м³/ч","tag":"FIRC11001A","group":"Свежий этилен и возвратный газ","role":"measurement","precision":2},{"key":"a124_rpm","name":"Обороты А-124","unit":"об","tag":"100-315 об","group":"Компрессия","role":"measurement","precision":2},{"key":"a124_p3","name":"А-124, 3-я ступень","unit":"МПа","tag":"P11036","group":"Компрессия","role":"measurement","precision":2},{"key":"ab124_rpm","name":"Обороты АБ-124","unit":"об","tag":"100-280 об","group":"Компрессия","role":"measurement","precision":2},{"key":"a103_p3","name":"А-103, 3-я ступень","unit":"МПа","tag":"P10019","group":"Компрессия","role":"measurement","precision":3},{"key":"a152_p","name":"А-152, 2-я ступень","unit":"МПа","tag":"P12126","group":"Компрессия","role":"measurement","precision":2},{"key":"a171_p","name":"А-171, 2-я ступень","unit":"МПа","tag":"P12326","group":"Компрессия","role":"measurement","precision":2},{"key":"a152_cap","name":"Производительность А-152","unit":"","tag":"CP_1A_152","group":"Компрессия","role":"measurement","precision":2},{"key":"a171_cap","name":"Производительность А-171","unit":"","tag":"CP_1A_171","group":"Компрессия","role":"measurement","precision":2},{"key":"hw_f302","name":"Расход воды в 1-ю зону","unit":"м³/ч","tag":"FIRC13032","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f305","name":"Расход воды во 2-ю зону","unit":"м³/ч","tag":"FIRC13033","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f306","name":"Расход воды в 3-ю зону","unit":"м³/ч","tag":"FIRC13034","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f307","name":"Расход на А-307","unit":"м³/ч","tag":"FIRC13035","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_f308","name":"Расход на А-308","unit":"м³/ч","tag":"FIRC13036","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_pz1","name":"Давление воды после 1-й зоны","unit":"МПа","tag":"PIR13037","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_pz2","name":"Давление воды после 2-й зоны","unit":"МПа","tag":"PIR13038","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_pz3","name":"Давление воды после 3-й зоны","unit":"МПа","tag":"PIR13030a","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p307","name":"Давление на А-307","unit":"МПа","tag":"PIR13039","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p308","name":"Давление на А-308","unit":"МПа","tag":"PIR13040","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_tz1","name":"Обратная вода 1-й зоны","unit":"°C","tag":"T14091","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_tz2","name":"Обратная вода 2-й зоны","unit":"°C","tag":"T14092","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_tz3","name":"Обратная вода 3-й зоны","unit":"°C","tag":"T14093","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p1","name":"Давление в А-602/1","unit":"МПа","tag":"PIRCA13001","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_l1","name":"Уровень в А-602/1","unit":"мм","tag":"LIRCAE13002","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_p2","name":"Давление в А-602/2","unit":"МПа","tag":"PIRCA13029","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_l2","name":"Уровень в А-602/2","unit":"мм","tag":"LIRCAE13030","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t100","name":"Температура на выходе из АВО","unit":"°C","tag":"TIRA13100","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t43","name":"Температура TIR13043","unit":"°C","tag":"TIR13043","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t503","name":"Температура TIRCA13503","unit":"°C","tag":"TIRCA13503","group":"Горячая вода","role":"measurement","precision":2},{"key":"hw_t504","name":"Температура TIRCA13504","unit":"°C","tag":"TIRCA13504","group":"Горячая вода","role":"measurement","precision":2},{"key":"ovd_p","name":"Давление ОВД","unit":"МПа","tag":"PR14705","group":"Выгрузка и грануляция","role":"measurement","precision":2},{"key":"ond_p","name":"Давление ОНД","unit":"МПа","tag":"P16706","group":"Выгрузка и грануляция","role":"measurement","precision":4},{"key":"a401_t","name":"Температура А-401","unit":"°C","tag":"TI14724","group":"Выгрузка и грануляция","role":"measurement","precision":2},{"key":"lv_pos","name":"Положение LV-14702","unit":"%","tag":"LZI14702","group":"Выгрузка и грануляция","role":"measurement","precision":2},{"key":"ex_c2","name":"Т 2-го цилиндра экструдера","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2},{"key":"ex_c3","name":"Т 3-го цилиндра экструдера","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2},{"key":"ex_c4","name":"Т 4-го цилиндра экструдера","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2},{"key":"ex_die","name":"Температура фильеры","unit":"°C","tag":"экструзия","group":"Экструзия","role":"measurement","precision":2}],"observations":[{"id":52,"grade":4,"line":"A","ts":"2025-09-12T09:10:19","doc":null},{"id":47,"grade":5,"line":"A","ts":"2025-09-13T08:42:04","doc":8},{"id":48,"grade":5,"line":"A","ts":"2025-09-13T17:34:51","doc":8},{"id":42,"grade":2,"line":"A","ts":"2025-09-15T20:41:17","doc":null},{"id":43,"grade":2,"line":"A","ts":"2025-09-17T03:12:37","doc":null},{"id":3,"grade":1,"line":"A","ts":"2025-09-21T16:19:00","doc":1},{"id":44,"grade":2,"line":"A","ts":"2025-11-07T09:23:21","doc":null},{"id":4,"grade":1,"line":"A","ts":"2025-11-19T00:00:00","doc":null},{"id":5,"grade":1,"line":"A","ts":"2025-11-19T04:40:07","doc":null},{"id":21,"grade":1,"line":"A","ts":"2025-11-19T19:14:00","doc":1},{"id":27,"grade":1,"line":"A","ts":"2025-11-19T19:19:00","doc":1},{"id":22,"grade":1,"line":"A","ts":"2025-11-19T20:20:30","doc":1},{"id":23,"grade":1,"line":"A","ts":"2025-11-20T16:05:34","doc":1},{"id":24,"grade":1,"line":"A","ts":"2025-11-20T17:14:30","doc":1},{"id":25,"grade":1,"line":"A","ts":"2025-11-20T19:06:06","doc":1},{"id":26,"grade":1,"line":"A","ts":"2025-11-20T20:05:28","doc":1},{"id":45,"grade":2,"line":"A","ts":"2025-12-14T04:47:40","doc":null},{"id":49,"grade":5,"line":"A","ts":"2026-01-10T08:40:51","doc":8},{"id":40,"grade":2,"line":"A","ts":"2026-01-13T21:16:39","doc":null},{"id":41,"grade":2,"line":"A","ts":"2026-01-14T21:10:43","doc":null},{"id":6,"grade":1,"line":"A","ts":"2026-02-11T08:42:01","doc":null},{"id":53,"grade":4,"line":"A","ts":"2026-02-16T05:47:50","doc":null},{"id":12,"grade":1,"line":"A","ts":"2026-02-17T00:43:20","doc":1},{"id":13,"grade":1,"line":"A","ts":"2026-02-17T06:48:50","doc":1},{"id":14,"grade":1,"line":"A","ts":"2026-02-17T08:36:21","doc":1},{"id":15,"grade":1,"line":"A","ts":"2026-02-17T13:33:29","doc":1},{"id":36,"grade":2,"line":"A","ts":"2026-02-19T10:00:09","doc":null},{"id":17,"grade":1,"line":"A","ts":"2026-03-02T06:01:49","doc":1},{"id":18,"grade":1,"line":"A","ts":"2026-03-02T07:23:43","doc":1},{"id":19,"grade":1,"line":"A","ts":"2026-03-02T10:36:48","doc":1},{"id":20,"grade":1,"line":"A","ts":"2026-03-02T13:49:46","doc":1},{"id":16,"grade":1,"line":"A","ts":"2026-03-02T23:33:42","doc":1},{"id":50,"grade":4,"line":"A","ts":"2026-03-07T15:52:55","doc":null},{"id":37,"grade":2,"line":"A","ts":"2026-03-11T02:21:38","doc":null},{"id":38,"grade":2,"line":"A","ts":"2026-04-08T19:40:34","doc":null},{"id":51,"grade":4,"line":"A","ts":"2026-05-06T23:41:25","doc":null},{"id":39,"grade":2,"line":"A","ts":"2026-05-18T15:25:05","doc":null},{"id":33,"grade":2,"line":"A","ts":"2026-05-18T15:25:23","doc":null},{"id":34,"grade":2,"line":"A","ts":"2026-07-05T19:08:07","doc":null},{"id":35,"grade":2,"line":"A","ts":"2026-07-05T19:10:27","doc":null},{"id":7,"grade":1,"line":"A","ts":"2026-07-13T09:54:08","doc":null},{"id":8,"grade":1,"line":"A","ts":"2026-07-13T09:56:17","doc":null},{"id":9,"grade":1,"line":"A","ts":"2026-07-13T10:04:44","doc":null},{"id":46,"grade":3,"line":"A","ts":"2026-07-18T01:06:48","doc":null},{"id":54,"grade":5,"line":"A","ts":"2026-07-18T01:08:50","doc":null},{"id":10,"grade":1,"line":"A","ts":"2026-09-10T20:12:12","doc":null},{"id":11,"grade":1,"line":"A","ts":"2026-09-10T22:33:26","doc":null},{"id":28,"grade":1,"line":"A","ts":"2026-09-15T11:15:13","doc":1},{"id":29,"grade":1,"line":"A","ts":"2026-09-15T11:15:21","doc":1},{"id":30,"grade":1,"line":"A","ts":"2026-09-15T11:15:26","doc":1},{"id":2,"grade":1,"line":"A","ts":"2026-09-19T07:45:00","doc":1},{"id":1,"grade":1,"line":"A","ts":"2026-09-20T07:03:00","doc":1},{"id":31,"grade":1,"line":"B","ts":"2026-09-15T11:12:03","doc":1},{"id":32,"grade":1,"line":"B","ts":"2026-09-15T11:15:38","doc":1}],"values":{"1":{"load":[168.01,"confirmed"],"rpm":[813.3,"confirmed"],"pal":[4.42,"confirmed"],"pal_sp":[5.0,"review"],"mfr":[1.98,"confirmed"],"mfr_raw":[2.048,"confirmed"],"vgvd":[26.18,"confirmed"],"fnd":[313.6,"confirmed"],"pn_p":[102.7,"review"],"z1_sp":[313.0,"confirmed"],"z1_t":[313.0,"confirmed"],"z1_f":[29.94,"confirmed"],"z1_out":[37.5,"review"],"z2_sp":[307.0,"confirmed"],"z2_t":[307.0,"confirmed"],"z2_f":[36.05,"confirmed"],"z2_out":[47.7,"review"],"z3_sp":[283.0,"confirmed"],"z3_t":[283.0,"confirmed"],"z3_f":[16.32,"confirmed"],"z3_out":[20.5,"review"],"ovd_p":[26.97,"confirmed"],"a401_t":[196.7,"confirmed"],"lv_pos":[10.0,"confirmed"]},"2":{"hw_p1":[0.6,"confirmed"],"hw_l1":[1711.0,"confirmed"],"hw_t100":[165.5,"confirmed"],"hw_t43":[169.8,"review"],"hw_f302":[93.86,"confirmed"],"hw_f305":[99.13,"confirmed"],"hw_f306":[137.9,"confirmed"],"hw_f307":[21.39,"confirmed"],"hw_f308":[103.67,"confirmed"],"hw_pz1":[4.4,"confirmed"],"hw_pz2":[4.5,"confirmed"],"hw_p307":[1.8,"confirmed"],"hw_p308":[1.3,"confirmed"]},"3":{"load":[172.03,"confirmed"],"rpm":[892.0,"confirmed"],"pal":[6.6,"confirmed"],"pal_sp":[6.57,"confirmed"],"c3_flow":[33.55,"confirmed"],"mfr":[2.0,"confirmed"],"mfr_raw":[1.682,"confirmed"],"mfr_est":[1.719,"confirmed"],"mfr_lab":[1.75,"confirmed"],"dens_est":[0.9232,"confirmed"],"vgvd":[25.88,"confirmed"],"fnd":[279.3,"confirmed"],"pn_p":[109.9,"confirmed"],"r_p":[228.1,"confirmed"],"r_p2":[191.3,"confirmed"],"valve":[79.42,"confirmed"],"t_start":[133.1,"confirmed"],"t_mix":[146.7,"confirmed"],"t1_max":[310.72,"confirmed"],"t2_max":[305.7,"confirmed"],"t3_max":[283.45,"confirmed"],"z1_f":[29.85,"confirmed"],"z1_sp":[312.0,"confirmed"],"z1_t":[312.0,"confirmed"],"z1_out":[37.8,"confirmed"],"z2_f":[34.19,"confirmed"],"z2_sp":[307.0,"confirmed"],"z2_t":[307.0,"confirmed"],"z2_out":[64.2,"confirmed"],"z3_f":[17.28,"confirmed"],"z3_sp":[283.0,"confirmed"],"z3_t":[283.0,"confirmed"],"z3_out":[54.1,"confirmed"],"cidx1":[116.05,"confirmed"],"cidx2":[115.81,"confirmed"],"cidx3":[68.99,"confirmed"],"c2_p":[1.696,"confirmed"],"c2_flow":[7469.5,"review"],"vg_flow":[27443.2,"review"],"o2":[0.09,"confirmed"],"ch4":[11.7,"confirmed"],"c2h6":[220.0,"confirmed"],"c2h2":[0.87,"confirmed"],"c3_vgvd":[0.531,"confirmed"],"c3_vgnd":[1.438,"review"],"n2_fnd":[36.5,"confirmed"],"a124_p3":[27.09,"confirmed"],"a103_p3":[1.605,"review"],"a152_cap":[30.16,"confirmed"],"hw_f302":[91.49,"confirmed"],"hw_f305":[100.81,"confirmed"],"hw_f306":[146.94,"confirmed"],"hw_f307":[95.24,"confirmed"],"hw_f308":[109.22,"confirmed"],"hw_pz1":[4.42,"confirmed"],"hw_pz2":[4.5,"confirmed"],"hw_pz3":[4.37,"confirmed"],"hw_p307":[1.6,"confirmed"],"hw_p308":[1.4,"confirmed"],"hw_tz1":[187.4,"confirmed"],"hw_tz2":[199.0,"confirmed"],"hw_tz3":[180.3,"confirmed"],"hw_p1":[0.7,"confirmed"],"hw_l1":[1649.0,"confirmed"],"hw_p2":[0.58,"confirmed"],"hw_l2":[1646.0,"confirmed"],"hw_t100":[165.4,"confirmed"],"hw_t43":[174.8,"confirmed"],"hw_t503":[151.6,"review"],"hw_t504":[151.61,"review"],"ovd_p":[25.94,"confirmed"],"ond_p":[0.1269,"confirmed"],"a401_t":[200.1,"confirmed"],"lv_pos":[11.3,"confirmed"],"a171_cap":[29.89,"confirmed"],"a124_rpm":[313.9,"confirmed"],"ab124_rpm":[280.4,"confirmed"],"a152_p":[235.3,"review"],"a171_p":[235.8,"review"]},"5":{"pal":[9.86,"review"],"pal_sp":[9.71,"review"],"z1_sp":[313.0,"review"],"z1_t":[314.0,"review"],"z1_f":[43.55,"review"],"z1_out":[62.5,"review"],"z2_sp":[308.0,"review"],"z2_t":[308.0,"review"],"z2_f":[34.5,"review"],"z2_out":[45.0,"review"],"z3_sp":[283.0,"review"],"z3_t":[283.0,"review"],"z3_f":[15.81,"review"],"z3_out":[21.6,"review"],"initiator1":[43.63,"review"],"initiator2":[34.53,"review"],"initiator3":[15.82,"review"],"suutp_flow1":[43.63,"review"],"suutp_flow2":[34.49,"review"],"suutp_flow3":[15.81,"review"],"hw_f302":[74.56,"review"],"hw_f305":[174.65,"review"],"hw_f306":[100.48,"review"],"mfr_est":[1.957,"review"],"dens_est":[0.9236,"review"],"t14069":[227.3,"review"],"cidx1":[124.36,"review"],"cidx2":[127.83,"review"],"cidx3":[78.22,"review"],"a152_cap":[30.38,"review"],"a171_cap":[30.19,"review"]},"6":{"pal":[7.59,"review"],"pal_sp":[7.74,"review"],"z1_sp":[313.0,"review"],"z1_t":[313.0,"review"],"z1_f":[32.24,"review"],"z1_out":[39.7,"review"],"z2_sp":[307.0,"review"],"z2_t":[307.0,"review"],"z2_f":[35.84,"review"],"z2_out":[50.7,"review"],"z3_sp":[282.0,"review"],"z3_t":[282.0,"review"],"z3_f":[16.26,"review"],"z3_out":[17.5,"review"],"rpm":[803.0,"review"],"ex_die":[144.1,"review"],"drive_current":[167.27,"review"]},"7":{"drive_current":[167.4,"review"],"rpm":[803.3,"review"],"mfr":[2.021,"review"],"mfr_raw":[1.941,"review"],"pal":[5.16,"review"],"vgvd":[26.56,"review"],"fnd":[128.9,"review"]},"8":{"pal":[5.11,"review"],"pal_sp":[5.18,"review"],"z1_sp":[312.0,"review"],"z1_t":[312.0,"review"],"z1_f":[30.55,"review"],"z1_out":[37.9,"review"],"z2_sp":[308.0,"review"],"z2_t":[308.0,"review"],"z2_f":[34.02,"review"],"z2_out":[49.2,"review"],"z3_sp":[283.0,"review"],"z3_t":[283.0,"review"],"z3_f":[18.9,"review"],"z3_out":[46.0,"review"]},"9":{"t14069":[227.5,"review"]},"10":{"drive_current":[167.53,"review"],"rpm":[794.7,"review"],"mfr":[1.976,"review"],"mfr_raw":[2.135,"review"],"pal":[6.38,"review"],"vgvd":[25.89,"review"],"fnd":[106.7,"review"]},"11":{"pal":[6.4,"review"],"pal_sp":[6.59,"review"],"z1_sp":[312.0,"review"],"z1_t":[312.0,"review"],"z1_f":[30.42,"review"],"z1_out":[39.3,"review"],"z2_sp":[308.0,"review"],"z2_t":[308.0,"review"],"z2_f":[36.31,"review"],"z2_out":[48.9,"review"],"z3_sp":[282.0,"review"],"z3_t":[282.0,"review"],"z3_f":[15.06,"review"],"z3_out":[19.6,"review"]},"12":{"drive_current":[174.1,"review"],"pal":[25.67,"review"],"mfr":[1.972,"review"],"t14069":[216.2,"review"],"fnd":[214.2,"review"],"rpm":[668.6,"review"],"a124_rpm":[276.3,"review"],"vgvd":[26.11,"review"],"propylene":[7.2,"review"],"ab124_rpm":[280.4,"review"]},"13":{"drive_current":[187.4,"review"],"pal":[8.8,"review"],"mfr":[-0.955,"review"],"t14069":[220.6,"review"],"fnd":[201.3,"review"],"rpm":[502.4,"review"],"a124_rpm":[314.0,"review"],"vgvd":[25.24,"review"],"propylene":[20.2,"review"],"ab124_rpm":[0.11,"review"]},"14":{"drive_current":[183.5,"review"],"pal":[6.55,"review"],"mfr":[2.004,"review"],"t14069":[218.0,"review"],"fnd":[185.5,"review"],"rpm":[488.3,"review"],"a124_rpm":[272.2,"review"],"vgvd":[26.54,"review"],"propylene":[19.6,"review"],"ab124_rpm":[91.5,"review"]},"15":{"drive_current":[170.8,"review"],"pal":[8.7,"review"],"mfr":[2.036,"review"],"t14069":[239.9,"review"],"fnd":[181.1,"review"],"rpm":[787.7,"review"],"a124_rpm":[288.7,"review"],"vgvd":[26.06,"review"],"propylene":[19.6,"review"],"ab124_rpm":[280.4,"review"]},"16":{"drive_current":[161.8,"review"],"pal":[6.55,"review"],"mfr":[2.09,"review"],"t14069":[240.9,"review"],"fnd":[257.9,"review"],"rpm":[775.2,"review"],"a124_rpm":[288.7,"review"],"vgvd":[25.95,"review"],"propylene":[16.33,"review"],"ab124_rpm":[280.78,"review"]},"17":{"drive_current":[164.1,"review"],"pal":[4.12,"review"],"mfr":[1.975,"review"],"t14069":[232.2,"review"],"fnd":[338.8,"review"],"rpm":[829.8,"review"],"a124_rpm":[314.3,"review"],"vgvd":[26.06,"review"],"propylene":[13.61,"review"],"ab124_rpm":[280.56,"review"]},"18":{"drive_current":[147.0,"review"],"pal":[3.26,"review"],"mfr":[3.621,"review"],"t14069":[226.7,"review"],"fnd":[270.2,"review"],"rpm":[483.8,"review"],"a124_rpm":[314.0,"review"],"vgvd":[23.82,"review"],"propylene":[0.0,"review"],"ab124_rpm":[0.05,"review"]},"19":{"drive_current":[171.7,"review"],"pal":[2.21,"review"],"mfr":[2.352,"review"],"t14069":[221.8,"review"],"fnd":[322.9,"review"],"rpm":[540.3,"review"],"a124_rpm":[314.3,"review"],"vgvd":[24.24,"review"],"propylene":[0.0,"review"],"ab124_rpm":[0.05,"review"]},"20":{"drive_current":[173.3,"review"],"pal":[1.39,"review"],"mfr":[2.015,"review"],"t14069":[218.8,"review"],"fnd":[211.2,"review"],"rpm":[535.2,"review"],"a124_rpm":[314.8,"review"],"vgvd":[24.84,"review"],"propylene":[0.0,"review"],"ab124_rpm":[0.05,"review"]},"21":{"drive_current":[194.24,"review"],"rpm":[532.7,"review"],"mfr":[2.035,"review"],"mfr_raw":[2.18,"review"],"pal":[7.9,"review"],"vgvd":[23.11,"review"],"fnd":[201.7,"review"]},"22":{"pal":[7.96,"review"],"pal_sp":[7.6,"review"],"z1_t":[263.0,"review"],"z1_f":[14.28,"review"],"z1_out":[14.0,"review"],"z2_t":[253.0,"review"],"z2_f":[17.7,"review"],"z2_out":[27.0,"review"],"z3_t":[258.0,"review"],"z3_f":[11.89,"review"],"z3_out":[16.0,"review"]},"23":{"drive_current":[191.4,"review"],"pal":[6.43,"review"],"mfr":[2.053,"review"],"t14069":[216.7,"review"],"fnd":[175.3,"review"],"rpm":[542.0,"review"],"a124_rpm":[314.7,"review"],"vgvd":[24.87,"review"],"propylene":[9.43,"review"],"ab124_rpm":[0.06,"review"]},"24":{"drive_current":[184.9,"review"],"pal":[10.38,"review"],"mfr":[1.959,"review"],"t14069":[238.55,"review"],"fnd":[340.2,"review"],"rpm":[853.2,"review"],"a124_rpm":[249.4,"review"],"vgvd":[25.89,"review"],"propylene":[29.94,"review"],"ab124_rpm":[270.59,"review"]},"25":{"drive_current":[171.2,"review"],"pal":[7.63,"review"],"mfr":[2.03,"review"],"t14069":[246.0,"review"],"fnd":[290.6,"review"],"rpm":[303.9,"review"],"a124_rpm":[246.9,"review"],"vgvd":[25.98,"review"],"propylene":[30.0,"review"],"ab124_rpm":[179.58,"review"]},"26":{"drive_current":[173.0,"review"],"pal":[8.39,"review"],"mfr":[1.993,"review"],"t14069":[248.4,"review"],"fnd":[267.5,"review"],"rpm":[823.1,"review"],"a124_rpm":[253.7,"review"],"vgvd":[25.82,"review"],"propylene":[30.31,"review"],"ab124_rpm":[183.59,"review"]},"27":{"drive_current":[195.11,"review"],"rpm":[531.8,"review"],"ex_die":[150.0,"review"]},"28":{"drive_current":[150.43,"review"],"rpm":[525.2,"review"],"mfr":[1.341,"review"],"mfr_raw":[1.788,"review"],"pal":[4.56,"review"],"vgvd":[22.43,"review"],"fnd":[137.2,"review"]},"29":{"pal":[4.06,"review"],"pal_sp":[4.0,"review"],"z1_t":[267.0,"review"],"z1_f":[17.47,"review"],"z1_out":[21.3,"review"],"z2_t":[265.0,"review"],"z2_f":[29.71,"review"],"z2_out":[36.8,"review"],"z3_t":[254.0,"review"],"z3_f":[13.8,"review"],"z3_out":[18.8,"review"]},"30":{"t14069":[218.0,"review"]},"32":{"pal":[6.8,"review"],"z1_t":[274.0,"review"],"z1_f":[21.36,"review"],"z1_out":[34.8,"review"],"z2_t":[270.0,"review"],"z2_f":[30.82,"review"],"z2_out":[39.0,"review"],"z3_t":[250.0,"review"],"z3_f":[11.08,"review"],"z3_out":[10.0,"review"]},"33":{"drive_current":[177.68,"review"],"rpm":[691.6,"review"],"mfr":[2.01,"review"],"mfr_raw":[1.778,"review"],"pal":[23.54,"review"],"vgvd":[26.38,"review"],"fnd":[162.8,"review"]},"34":{"drive_current":[178.5,"review"],"rpm":[668.9,"review"],"mfr":[2.001,"review"],"mfr_raw":[2.003,"review"],"pal":[24.21,"review"],"vgvd":[26.35,"review"],"fnd":[117.9,"review"]},"35":{"pal_sp":[23.87,"review"],"pal":[24.17,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[17.79,"review"],"z1_out":[22.6,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[21.12,"review"],"z2_out":[27.8,"review"],"z3_sp":[273.0,"review"],"z3_t":[273.0,"review"],"z3_f":[16.88,"review"],"z3_out":[45.2,"review"]},"36":{"pal_sp":[23.43,"review"],"pal":[23.6,"review"],"z1_sp":[287.0,"review"],"z1_t":[286.0,"review"],"z1_f":[16.09,"review"],"z1_out":[24.9,"review"],"z2_sp":[286.0,"review"],"z2_t":[286.0,"review"],"z2_f":[21.58,"review"],"z2_out":[26.6,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[17.17,"review"],"z3_out":[18.6,"review"]},"37":{"pal_sp":[23.87,"review"],"pal":[24.51,"review"],"z1_sp":[287.0,"review"],"z1_t":[286.0,"review"],"z1_f":[15.52,"review"],"z1_out":[22.5,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.58,"review"],"z2_out":[29.1,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[19.54,"review"],"z3_out":[22.0,"review"]},"38":{"pal_sp":[23.31,"review"],"pal":[23.98,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[18.45,"review"],"z1_out":[22.0,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[23.7,"review"],"z2_out":[31.2,"review"],"z3_sp":[273.0,"review"],"z3_t":[273.0,"review"],"z3_f":[18.73,"review"],"z3_out":[45.2,"review"]},"39":{"pal_sp":[23.92,"review"],"pal":[24.59,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[17.74,"review"],"z1_out":[46.5,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.52,"review"],"z2_out":[28.3,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[16.81,"review"],"z3_out":[17.4,"review"]},"40":{"pal_sp":[25.48,"review"],"pal":[24.88,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[18.25,"review"],"z1_out":[24.7,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.65,"review"],"z2_out":[34.7,"review"],"z3_sp":[272.0,"review"],"z3_t":[272.0,"review"],"z3_f":[14.24,"review"],"z3_out":[40.1,"review"]},"41":{"pal_sp":[26.43,"review"],"pal":[26.55,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[18.49,"review"],"z1_out":[24.7,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.68,"review"],"z2_out":[34.5,"review"],"z3_sp":[271.0,"review"],"z3_t":[271.0,"review"],"z3_f":[17.04,"review"],"z3_out":[42.4,"review"]},"42":{"pal_sp":[25.2,"review"],"pal":[25.86,"review"],"z1_sp":[286.0,"review"],"z1_t":[286.0,"review"],"z1_f":[16.53,"review"],"z1_out":[22.2,"review"],"z2_sp":[285.0,"review"],"z2_t":[284.0,"review"],"z2_f":[21.6,"review"],"z2_out":[50.1,"review"],"z3_sp":[272.0,"review"],"z3_t":[273.0,"review"],"z3_f":[11.45,"review"],"z3_out":[45.8,"review"]},"43":{"pal_sp":[25.2,"review"],"pal":[25.68,"review"],"z1_sp":[287.0,"review"],"z1_t":[287.0,"review"],"z1_f":[16.14,"review"],"z1_out":[23.1,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[22.09,"review"],"z2_out":[48.7,"review"],"z3_sp":[271.0,"review"],"z3_t":[271.0,"review"],"z3_f":[12.52,"review"],"z3_out":[47.7,"review"]},"44":{"pal_sp":[27.46,"review"],"pal":[27.46,"review"],"z1_sp":[288.0,"review"],"z1_t":[288.0,"review"],"z1_f":[19.26,"review"],"z1_out":[46.6,"review"],"z2_sp":[286.0,"review"],"z2_t":[286.0,"review"],"z2_f":[22.69,"review"],"z2_out":[27.7,"review"],"z3_sp":[271.0,"review"],"z3_t":[271.0,"review"],"z3_f":[15.29,"review"],"z3_out":[23.1,"review"]},"45":{"pal_sp":[23.85,"review"],"pal":[24.0,"review"],"z1_sp":[287.0,"review"],"z1_t":[287.0,"review"],"z1_f":[16.08,"review"],"z1_out":[24.3,"review"],"z2_sp":[285.0,"review"],"z2_t":[285.0,"review"],"z2_f":[20.27,"review"],"z2_out":[30.0,"review"],"z3_sp":[273.0,"review"],"z3_t":[273.0,"review"],"z3_f":[16.16,"review"],"z3_out":[40.9,"review"]},"46":{"pal_sp":[4.3,"review"],"pal":[4.32,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[32.4,"review"],"z1_out":[41.6,"review"],"z2_sp":[317.0,"review"],"z2_t":[317.0,"review"],"z2_f":[42.31,"review"],"z2_out":[64.5,"review"],"z3_sp":[295.0,"review"],"z3_t":[296.0,"review"],"z3_f":[32.56,"review"],"z3_out":[63.6,"review"]},"47":{"pal_sp":[7.4,"review"],"pal":[7.46,"review"],"z1_sp":[316.0,"review"],"z1_t":[317.0,"review"],"z1_f":[33.58,"review"],"z1_out":[43.0,"review"],"z2_sp":[315.0,"review"],"z2_t":[316.0,"review"],"z2_f":[45.48,"review"],"z2_out":[81.9,"review"],"z3_sp":[295.0,"review"],"z3_t":[295.0,"review"],"z3_f":[29.4,"review"],"z3_out":[67.8,"review"]},"48":{"pal_sp":[5.8,"review"],"pal":[5.72,"review"],"z1_sp":[318.0,"review"],"z1_t":[317.0,"review"],"z1_f":[35.91,"review"],"z1_out":[48.4,"review"],"z2_sp":[316.0,"review"],"z2_t":[316.0,"review"],"z2_f":[46.83,"review"],"z2_out":[84.2,"review"],"z3_sp":[294.0,"review"],"z3_t":[295.0,"review"],"z3_f":[29.54,"review"],"z3_out":[67.5,"review"]},"49":{"pal_sp":[8.4,"review"],"pal":[8.53,"review"],"z1_sp":[316.0,"review"],"z1_t":[317.0,"review"],"z1_f":[32.93,"review"],"z1_out":[43.8,"review"],"z2_sp":[315.0,"review"],"z2_t":[316.0,"review"],"z2_f":[43.63,"review"],"z2_out":[61.0,"review"],"z3_sp":[295.0,"review"],"z3_t":[296.0,"review"],"z3_f":[35.61,"review"],"z3_out":[65.8,"review"]},"50":{"pal_sp":[2.16,"review"],"pal":[2.31,"review"],"z1_sp":[316.0,"review"],"z1_t":[316.0,"review"],"z1_f":[31.98,"review"],"z1_out":[61.7,"review"],"z2_sp":[314.0,"review"],"z2_t":[314.0,"review"],"z2_f":[39.23,"review"],"z2_out":[56.5,"review"],"z3_sp":[297.0,"review"],"z3_t":[297.0,"review"],"z3_f":[33.57,"review"],"z3_out":[42.6,"review"]},"51":{"pal_sp":[2.67,"review"],"pal":[2.52,"review"],"z1_sp":[317.0,"review"],"z1_t":[317.0,"review"],"z1_f":[33.02,"review"],"z1_out":[43.8,"review"],"z2_sp":[314.0,"review"],"z2_t":[314.0,"review"],"z2_f":[45.88,"review"],"z2_out":[69.1,"review"],"z3_sp":[290.0,"review"],"z3_t":[289.0,"review"],"z3_f":[25.28,"review"],"z3_out":[58.9,"review"]},"52":{"pal_sp":[3.55,"review"],"pal":[3.52,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[35.19,"review"],"z1_out":[45.8,"review"],"z2_sp":[316.0,"review"],"z2_t":[316.0,"review"],"z2_f":[34.3,"review"],"z2_out":[80.1,"review"],"z3_sp":[291.0,"review"],"z3_t":[291.0,"review"],"z3_f":[22.88,"review"],"z3_out":[59.2,"review"]},"53":{"pal_sp":[3.68,"review"],"pal":[3.53,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[32.47,"review"],"z1_out":[62.4,"review"],"z2_sp":[315.0,"review"],"z2_t":[315.0,"review"],"z2_f":[40.05,"review"],"z2_out":[58.3,"review"],"z3_sp":[296.0,"review"],"z3_t":[296.0,"review"],"z3_f":[35.63,"review"],"z3_out":[46.7,"review"]},"54":{"pal_sp":[4.3,"review"],"pal":[4.32,"review"],"z1_sp":[318.0,"review"],"z1_t":[318.0,"review"],"z1_f":[32.4,"review"],"z1_out":[41.6,"review"],"z2_sp":[317.0,"review"],"z2_t":[317.0,"review"],"z2_f":[42.31,"review"],"z2_out":[64.5,"review"],"z3_sp":[295.0,"review"],"z3_t":[296.0,"review"],"z3_f":[32.56,"review"],"z3_out":[63.6,"review"]}},"docs":[{"id":1,"grade":1,"version":"54.2","from":"2025-05-16","to":null},{"id":2,"grade":2,"version":"24.1","from":"2024-03-18","to":"2024-05-28"},{"id":3,"grade":2,"version":"24.3","from":"2024-05-29","to":null},{"id":4,"grade":3,"version":"1.2","from":"2025-09-10","to":null},{"id":6,"grade":4,"version":"16.9","from":"2025-04-04","to":"2026-03-29"},{"id":5,"grade":4,"version":"16.9.1","from":"2026-03-30","to":null},{"id":8,"grade":5,"version":"1.2","from":"2025-09-10","to":"2026-05-06"},{"id":7,"grade":5,"version":"1.3","from":"2026-05-07","to":null}],"norms":[{"doc":1,"key":"prod","lo":17.0,"target":null,"hi":18.5},{"doc":1,"key":"mfr","lo":1.5,"target":null,"hi":2.5},{"doc":1,"key":"mfr_est","lo":1.8,"target":2.0,"hi":2.2},{"doc":1,"key":"mfr_raw","lo":1.8,"target":2.0,"hi":2.2},{"doc":1,"key":"dens_est","lo":0.92,"target":null,"hi":0.924},{"doc":1,"key":"t_start","lo":131.0,"target":133.0,"hi":135.0},{"doc":1,"key":"t1_max","lo":306.0,"target":311.0,"hi":316.0},{"doc":1,"key":"t2_max","lo":302.0,"target":306.0,"hi":310.0},{"doc":1,"key":"t3_max","lo":277.0,"target":282.0,"hi":287.0},{"doc":1,"key":"r_p","lo":227.0,"target":229.0,"hi":231.0},{"doc":1,"key":"pal","lo":1.5,"target":null,"hi":15.0},{"doc":1,"key":"c3_flow","lo":5.0,"target":null,"hi":60.0},{"doc":1,"key":"z1_f","lo":10.0,"target":null,"hi":40.0},{"doc":1,"key":"z2_f","lo":10.0,"target":null,"hi":42.0},{"doc":1,"key":"z3_f","lo":5.0,"target":null,"hi":40.0},{"doc":1,"key":"ex_c2","lo":170.0,"target":null,"hi":200.0},{"doc":1,"key":"ex_c3","lo":170.0,"target":null,"hi":200.0},{"doc":1,"key":"ex_c4","lo":170.0,"target":null,"hi":200.0},{"doc":1,"key":"ex_die","lo":125.0,"target":null,"hi":150.0},{"doc":1,"key":"cidx1","lo":110.0,"target":null,"hi":160.0},{"doc":1,"key":"cidx2","lo":100.0,"target":null,"hi":160.0},{"doc":1,"key":"cidx3","lo":60.0,"target":null,"hi":120.0},{"doc":1,"key":"hw_tz1","lo":175.0,"target":null,"hi":210.0},{"doc":1,"key":"hw_tz2","lo":175.0,"target":null,"hi":210.0},{"doc":1,"key":"hw_tz3","lo":175.0,"target":null,"hi":210.0},{"doc":1,"key":"hw_pz1","lo":2.4,"target":null,"hi":4.9},{"doc":1,"key":"hw_pz2","lo":2.4,"target":null,"hi":4.9},{"doc":1,"key":"hw_pz3","lo":2.4,"target":null,"hi":4.9},{"doc":2,"key":"mfr","lo":1.8,"target":2.0,"hi":2.2},{"doc":2,"key":"z1_t","lo":282.0,"target":286.0,"hi":290.0},{"doc":2,"key":"z2_t","lo":280.0,"target":284.0,"hi":288.0},{"doc":2,"key":"z3_t","lo":268.0,"target":272.0,"hi":276.0},{"doc":3,"key":"mfr","lo":1.8,"target":2.0,"hi":2.2},{"doc":3,"key":"z1_t","lo":282.0,"target":286.0,"hi":290.0},{"doc":3,"key":"z2_t","lo":280.0,"target":284.0,"hi":288.0},{"doc":3,"key":"z3_t","lo":268.0,"target":272.0,"hi":276.0},{"doc":4,"key":"mfr","lo":7.0,"target":8.0,"hi":8.7},{"doc":4,"key":"z1_t","lo":312.0,"target":315.0,"hi":318.0},{"doc":4,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":4,"key":"z3_t","lo":290.0,"target":295.0,"hi":300.0},{"doc":5,"key":"mfr","lo":3.5,"target":4.0,"hi":4.5},{"doc":5,"key":"z1_t","lo":312.0,"target":316.0,"hi":320.0},{"doc":5,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":5,"key":"z3_t","lo":300.0,"target":305.0,"hi":310.0},{"doc":6,"key":"mfr","lo":3.5,"target":4.0,"hi":4.5},{"doc":6,"key":"z1_t","lo":312.0,"target":316.0,"hi":320.0},{"doc":6,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":6,"key":"z3_t","lo":300.0,"target":305.0,"hi":310.0},{"doc":7,"key":"mfr","lo":7.0,"target":8.0,"hi":8.7},{"doc":7,"key":"z1_t","lo":312.0,"target":315.0,"hi":318.0},{"doc":7,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":7,"key":"z3_t","lo":290.0,"target":295.0,"hi":300.0},{"doc":8,"key":"mfr","lo":7.0,"target":8.0,"hi":8.7},{"doc":8,"key":"z1_t","lo":312.0,"target":315.0,"hi":318.0},{"doc":8,"key":"z2_t","lo":310.0,"target":314.0,"hi":318.0},{"doc":8,"key":"z3_t","lo":290.0,"target":295.0,"hi":300.0}]};
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
@@ -197,316 +178,222 @@ const P=Object.fromEntries(D.params.map(p=>[p.key,p]));
 const PORDER=Object.fromEntries(D.params.map((p,i)=>[p.key,i]));
 const G=Object.fromEntries(D.grades.map(g=>[g.id,g]));
 const LINE={A:'А',B:'Б'};
-const MON=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
-const MONS=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+const M_NOM=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const M_GEN=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const M_SH=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
 
-/* Observations, chronologically per line; time is plant-local, kept as written. */
+/* ---------- data ---------- */
 const obs=D.observations.map(o=>({...o,t:Date.parse(o.ts+'Z'),vals:D.values[o.id]||{}})).sort((a,b)=>a.t-b.t||a.line.localeCompare(b.line));
-obs.forEach((o,i)=>o.order=i);
 const byId=Object.fromEntries(obs.map(o=>[o.id,o]));
-/* Colour follows the grade: slots by number of observations, then name; stable for this base. */
 const counts={};obs.forEach(o=>counts[o.grade]=(counts[o.grade]||0)+1);
-const gradeSlot={};D.grades.slice().sort((a,b)=>(counts[b.id]||0)-(counts[a.id]||0)||a.name.localeCompare(b.name)).forEach((g,i)=>gradeSlot[g.id]=i<8?i+1:0);
-const gc=id=>`var(--g${gradeSlot[id]??0})`;
+/* Colour follows the grade: slots by number of observations, then name. */
+const slot={};D.grades.slice().sort((a,b)=>(counts[b.id]||0)-(counts[a.id]||0)||a.name.localeCompare(b.name)).forEach((g,i)=>slot[g.id]=i<8?i+1:0);
+const gc=id=>`var(--g${slot[id]??0})`;
+const gp=id=>`<span class="gp" style="--c:${gc(id)}">${esc(G[id]?.name??'?')}</span>`;
 const lines=[...new Set(obs.map(o=>o.line))].sort();
-
-/* Runs: consecutive observations of one grade on one line. A change between runs is a candidate. */
+/* Runs of one grade on one line; the border between two runs is a grade change seen on neighbouring photos. */
 const runs=[],pairs=[];
-for(const line of lines){
-  let cur=null;
-  for(const o of obs.filter(x=>x.line===line)){
-    if(!cur||cur.grade!==o.grade){cur={line,grade:o.grade,items:[]};runs.push(cur);}
-    cur.items.push(o);
-  }
-}
-for(const line of lines){
-  const rs=runs.filter(r=>r.line===line);
-  for(let i=1;i<rs.length;i++)pairs.push({from:rs[i-1],to:rs[i]});
-}
+for(const line of lines){let cur=null;for(const o of obs.filter(x=>x.line===line)){if(!cur||cur.grade!==o.grade){cur={line,grade:o.grade,items:[]};runs.push(cur);}cur.items.push(o);}}
+for(const line of lines){const rs=runs.filter(r=>r.line===line);for(let i=1;i<rs.length;i++)pairs.push({from:rs[i-1],to:rs[i]});}
 pairs.sort((a,b)=>a.to.items[0].t-b.to.items[0].t);
-pairs.forEach((p,i)=>{p.i=i;p.gapH=(p.to.items[0].t-p.from.items.at(-1).t)/36e5;p.dup=duplicate(p.from.items.at(-1),p.to.items[0]);});
+pairs.forEach((p,i)=>{p.i=i;p.gapH=(p.to.items[0].t-p.from.items.at(-1).t)/36e5;p.dup=duplicate(p.from.items.at(-1),p.to.items[0]);const d=new Date(p.to.items[0].t);p.ym=d.getUTCFullYear()*12+d.getUTCMonth();});
+function duplicate(a,b){const keys=Object.keys(a.vals).filter(k=>k in b.vals);return keys.length>=5&&keys.every(k=>a.vals[k][0]===b.vals[k][0])?keys.length:0;}
 
-function duplicate(a,b){
-  const keys=Object.keys(a.vals).filter(k=>k in b.vals);
-  return keys.length>=5&&keys.every(k=>a.vals[k][0]===b.vals[k][0])?keys.length:0;
-}
-
-/* ---------- formatting ---------- */
+/* ---------- words and numbers ---------- */
 const two=n=>String(n).padStart(2,'0');
-function dt(t,withYear=true){const d=new Date(t);return `${two(d.getUTCDate())}.${two(d.getUTCMonth()+1)}${withYear?'.'+d.getUTCFullYear():''} ${two(d.getUTCHours())}:${two(d.getUTCMinutes())}`;}
-function dShort(t){const d=new Date(t);return `${d.getUTCDate()} ${MON[d.getUTCMonth()]} ${String(d.getUTCFullYear()).slice(2)}`;}
-function gapText(h){
-  if(h<1)return `${Math.max(1,Math.round(h*60))} мин`;
-  if(h<48)return `${Math.round(h)} ч`;
-  const d=Math.round(h/24);return `${d} ${plural(d,'сутки','суток','суток')}`;
-}
+const ymName=ym=>`${M_NOM[ym%12]} ${Math.floor(ym/12)}`;
+function day(t,year=true){const d=new Date(t);return `${d.getUTCDate()} ${M_GEN[d.getUTCMonth()]}${year?' '+d.getUTCFullYear():''}, ${two(d.getUTCHours())}:${two(d.getUTCMinutes())}`;}
 function plural(n,one,few,many){const a=Math.abs(n)%100,b=a%10;return a>10&&a<20?many:b===1?one:b>1&&b<5?few:many;}
-function fmt(n,p=2){if(n===null||n===undefined||!Number.isFinite(n))return '—';return n.toLocaleString('ru-RU',{minimumFractionDigits:p,maximumFractionDigits:p}).replace(/ /g,' ');}
-function prec(key,v){const p=P[key]?.precision;if(Number.isInteger(p))return p;return Math.abs(v)>=100?1:Math.abs(v)>=10?2:3;}
-const unit=key=>P[key]?.unit||'';
-function delta(a,b,p){
-  if(a==null||b==null)return {html:'',cls:'flat',pct:null};
-  const d=b-a,pct=a!==0?100*d/Math.abs(a):null,cls=Math.abs(d)<1e-9?'flat':d>0?'up':'down';
-  const sign=d>0?'+':d<0?'−':'±';
-  return {d,pct,cls,html:`${sign}${fmt(Math.abs(d),p)}`,pctHtml:pct===null?'—':`${pct>0?'+':pct<0?'−':'±'}${fmt(Math.abs(pct),1)} %`};
+function gapText(h){if(h<1)return `${Math.max(1,Math.round(h*60))} мин`;if(h<48){const n=Math.round(h);return `${n} ${plural(n,'час','часа','часов')}`;}const d=Math.round(h/24);return `${d} ${plural(d,'день','дня','дней')}`;}
+function num(v,p=2){if(v==null||!Number.isFinite(v))return '—';const a=Math.abs(v),q=a>=100?Math.min(p,1):p;return v.toLocaleString('ru-RU',{minimumFractionDigits:0,maximumFractionDigits:q}).replace(/ /g,' ');}
+const prec=k=>Number.isInteger(P[k]?.precision)?P[k].precision:2;
+const unitOf=k=>P[k]?.unit||'';
+/* Plain-language change: temperatures and percentages in absolute terms, flows as «в N раза» or «на N %». */
+function change(a,b,u,p){
+  const d=b-a,abs=u==='°C'||u==='%',temp=u==='°C';
+  const more=temp?'выше':'больше',less=temp?'ниже':'меньше';
+  if(Math.abs(d)<1e-9)return {cls:'flat',text:'без изменений',score:0};
+  const cls=d>0?'up':'down',arrow=d>0?'▲':'▼',word=d>0?more:less;
+  if(abs)return {cls,text:`${arrow} ${word} на ${num(Math.abs(d),p)}${u==='°C'?' °C':''}`,score:temp?Math.abs(d)*2:Math.abs(d)};
+  if(a===0)return {cls,text:`${arrow} ${word}`,score:100};
+  const pct=100*d/Math.abs(a),r=b/a;
+  if(Math.abs(pct)<1)return {cls:'flat',text:'почти без изменений',score:0};
+  if(r>=1.5)return {cls,text:`${arrow} ${word} в ${num(r,1)} раза`,score:Math.abs(pct)};
+  if(r>0&&r<=1/1.5)return {cls,text:`${arrow} ${word} в ${num(1/r,1)} раза`,score:Math.abs(pct)};
+  return {cls,text:`${arrow} ${word} на ${num(Math.abs(pct),0)} %`,score:Math.abs(pct)};
 }
-const rv=status=>status==='review'?'<span class="rv" title="Требует сверки">?</span>':'';
+const SHORT={pal:'ПАЛ',pal_sp:'уставка ПАЛ',sum:'инициатор всего',mfr:'ПТР',mfr_raw:'исходный ПТР',c3_flow:'пропилен',propylene:'пропилен',drive_current:'ток привода',rpm:'обороты А-404',vgvd:'давление ВГВД',load:'нагрузка привода'};
+for(const z of [1,2,3]){SHORT['z'+z+'_f']=`инициатор в ${z}-ю зону`;SHORT['z'+z+'_sp']=`уставка Т ${z}-й зоны`;SHORT['z'+z+'_t']=`Тмакс ${z}-й зоны`;}
 
 /* ---------- state ---------- */
-const S={
-  mode:store.get('mode','pair'),scale:store.get('scale','time'),agg:store.get('agg','edge'),
-  confirmed:store.get('confirmed',false),singles:store.get('singles',false),grade:null,
-  pair:Math.max(0,pairs.length-1),freeA:null,freeB:null,nextSlot:'B'
-};
-{const last=obs.filter(o=>Object.keys(o.vals).length);S.freeA=last.at(-2)?.id??obs[0]?.id;S.freeB=last.at(-1)?.id??obs[0]?.id;}
-const visiblePairs=()=>pairs.filter(p=>S.grade===null||p.from.grade===S.grade||p.to.grade===S.grade);
+const S={agg:store.get('agg','edge'),confirmed:store.get('confirmed',false),grade:null};
+{const withVals=obs.filter(o=>Object.keys(o.vals).length);S.freeA=withVals.at(-2)?.id??obs[0]?.id;S.freeB=withVals.at(-1)?.id??obs[0]?.id;}
 
-/* ---------- values of a side ---------- */
-function sideValues(items,fromEnd){
-  const seq=fromEnd?[...items].reverse():items,out={};
-  const ok=v=>!S.confirmed||v[1]==='confirmed';
-  if(S.agg==='mean'&&S.mode==='pair'){
-    const acc={};
-    for(const o of seq)for(const [k,v] of Object.entries(o.vals))if(ok(v))(acc[k]??=[]).push({v,o});
-    for(const [k,list] of Object.entries(acc))out[k]={v:list.reduce((s,x)=>s+x.v[0],0)/list.length,status:list.every(x=>x.v[1]==='confirmed')?'confirmed':'review',n:list.length,obs:list.map(x=>x.o)};
-  }else{
-    for(const o of seq)for(const [k,v] of Object.entries(o.vals))if(!(k in out)&&ok(v))out[k]={v:v[0],status:v[1],n:1,obs:[o]};
-  }
-  return out;
-}
-/* Proportions observed on one side: arithmetic on the shown numbers, not a recipe. */
-function derived(vals){
-  const st=list=>list.every(x=>x.status==='confirmed')?'confirmed':'review';
-  const f=[1,2,3].map(i=>vals['z'+i+'_f']||vals['initiator'+i]||null),out={f};
+function sideValues(items,fromEnd,agg){
+  const seq=fromEnd?[...items].reverse():items,out={},ok=v=>!S.confirmed||v[1]==='confirmed';
+  if(agg==='mean'){
+    const acc={};for(const o of seq)for(const [k,v] of Object.entries(o.vals))if(ok(v))(acc[k]??=[]).push(v);
+    for(const [k,l] of Object.entries(acc))out[k]={v:l.reduce((s,x)=>s+x[0],0)/l.length,status:l.every(x=>x[1]==='confirmed')?'confirmed':'review',n:l.length};
+  }else for(const o of seq)for(const [k,v] of Object.entries(o.vals))if(!(k in out)&&ok(v))out[k]={v:v[0],status:v[1],n:1};
+  const f=[1,2,3].map(z=>out['z'+z+'_f']||out['initiator'+z]);
   if(f.every(Boolean)){
-    const sum=f.reduce((s,x)=>s+x.v,0);
-    out.sum={v:sum,status:st(f)};
-    if(sum>0){out.share=f.map(x=>({v:100*x.v/sum,status:st(f)}));if(vals.pal)out.palSum={v:vals.pal.v/sum,status:st([...f,vals.pal])};}
+    const sum=f.reduce((s,x)=>s+x.v,0),st=f.every(x=>x.status==='confirmed')?'confirmed':'review';
+    out.sum={v:sum,status:st};
+    if(sum>0){out.share=f.map(x=>({v:100*x.v/sum,status:st}));if(out.pal)out.palSum={v:out.pal.v/sum,status:out.pal.status==='confirmed'?st:'review'};}
+    f.forEach((x,i)=>out['z'+(i+1)+'_f']??=x);
   }
-  if(vals.pal&&vals.c3_flow&&vals.c3_flow.v>0)out.palC3={v:vals.pal.v/vals.c3_flow.v,status:st([vals.pal,vals.c3_flow])};
+  if(out.pal&&out.c3_flow&&out.c3_flow.v>0)out.palC3={v:out.pal.v/out.c3_flow.v,status:out.pal.status==='confirmed'&&out.c3_flow.status==='confirmed'?'confirmed':'review'};
   return out;
 }
-function docFor(o){
-  if(!o)return null;
-  if(o.doc)return D.docs.find(d=>d.id===o.doc)||null;
-  const day=o.ts.slice(0,10);
-  return D.docs.find(d=>d.grade===o.grade&&d.from<=day&&(!d.to||day<=d.to))||null;
-}
+function docFor(o){if(!o)return null;if(o.doc)return D.docs.find(d=>d.id===o.doc)||null;const day=o.ts.slice(0,10);return D.docs.find(d=>d.grade===o.grade&&d.from<=day&&(!d.to||day<=d.to))||null;}
 
-/* ---------- header ---------- */
-function renderFacts(){
-  const all=Object.values(D.values).flatMap(v=>Object.values(v));
-  const conf=all.filter(v=>v[1]==='confirmed').length;
-  const first=obs[0],last=obs.at(-1);
-  $('facts').innerHTML=`<span><b>${obs.length}</b> ${plural(obs.length,'замер','замера','замеров')}</span><span><b>${D.grades.length}</b> ${plural(D.grades.length,'марка','марки','марок')}</span><span><b>${pairs.length}</b> соседних ${plural(pairs.length,'смена','смены','смен')} марки</span><span>${first?dShort(first.t)+' — '+dShort(last.t):''}</span><span>сверено <b>${conf}</b> из ${all.length} значений</span>`;
-  $('foot').textContent=`Данные из рабочей базы на ${D.generated_at.slice(0,10).split('-').reverse().join('.')}. Время замеров — как на экране или в EXIF фото. Отклонённые варианты не показываются. Страница только читает базу.`;
+/* ---------- one story ---------- */
+let MIXED=false;
+const val=(x,p)=>MIXED&&x.status==='review'?`<span class="rv" title="Не сверено с фото">${num(x.v,p)}</span>`:num(x.v,p);
+function line(name,u,a,b,p){
+  const c=change(a.v,b.v,u,p);
+  return `<div class="ln"><span class="nm">${esc(name)}${u?` <small>${esc(u)}</small>`:''}</span><span class="vals"><span class="was">${val(a,p)}</span> → <b>${val(b,p)}</b></span><span class="ch ${c.cls}">${c.text}</span></div>`;
 }
-function renderLegend(){
-  $('legend').innerHTML=D.grades.filter(g=>counts[g.id]).sort((a,b)=>gradeSlot[a.id]-gradeSlot[b.id]).map(g=>`<button class="chip" data-grade="${g.id}" aria-pressed="${S.grade===g.id}" title="Показать только смены с этой маркой"><span class="sw" style="background:${gc(g.id)}"></span>${esc(g.name)}<span class="n">${counts[g.id]}</span></button>`).join('');
+function zoneLine(name,u,suffix,A,B){
+  const parts=[1,2,3].map(z=>{const k='z'+z+'_'+suffix,a=A[k],b=B[k];if(!a||!b)return '';const p=prec(k),c=change(a.v,b.v,u,p);return `<span><em>${z}-я</em> ${val(a,p)} → <b>${val(b,p)}</b> <span class="${c.cls}">${c.cls==='flat'?'=':c.cls==='up'?'▲':'▼'}</span></span>`;}).filter(Boolean);
+  if(!parts.length)return '';
+  return `<div class="ln wide"><span class="nm">${esc(name)} <small>${esc(u)}</small></span><div class="zrow">${parts.join('')}</div></div>`;
 }
-
-/* ---------- timeline ---------- */
-let geom=null;
-function renderTimeline(){
-  const box=$('tl'),W=Math.max(300,box.clientWidth),left=30,right=14,top=22,laneH=46,H=top+lines.length*laneH+18;
-  const ts=obs.map(o=>o.t),t0=Math.min(...ts),t1=Math.max(...ts),span=Math.max(1,t1-t0),pad=span*.02;
-  const x=o=>S.scale==='time'?left+(o.t-t0+pad)/(span+2*pad)*(W-left-right):left+(o.order+.5)/obs.length*(W-left-right);
-  const laneY=l=>top+lines.indexOf(l)*laneH+laneH/2;
-  let s='';
-  // month ticks (time scale only)
-  if(S.scale==='time'){
-    const d=new Date(t0);d.setUTCDate(1);d.setUTCHours(0,0,0,0);
-    const ticks=[];while(d.getTime()<=t1+pad){if(d.getTime()>=t0-pad)ticks.push(d.getTime());d.setUTCMonth(d.getUTCMonth()+1);}
-    const step=Math.ceil(ticks.length/Math.max(2,Math.floor((W-left)/52)));
-    ticks.forEach((t,i)=>{const X=left+(t-t0+pad)/(span+2*pad)*(W-left-right);s+=`<line x1="${X}" x2="${X}" y1="${top-6}" y2="${H-14}" stroke="var(--line)"/>`;if(i%step===0){const m=new Date(t);s+=`<text x="${X+3}" y="${top-8}">${MONS[m.getUTCMonth()]}${m.getUTCMonth()===0||i===0?' '+String(m.getUTCFullYear()).slice(2):''}</text>`;}});
-  }else s+=`<text x="${left}" y="${top-8}">каждый замер — равный шаг, слева направо по времени</text>`;
-  for(const l of lines){const y=laneY(l);s+=`<line x1="${left}" x2="${W-right}" y1="${y}" y2="${y}" stroke="var(--axis)"/><text class="lane" x="4" y="${y+4}">${LINE[l]}</text>`;}
-  const vis=new Set(visiblePairs().map(p=>p.i));
-  // runs
-  for(const r of runs){
-    const y=laneY(r.line),x0=x(r.items[0]),x1=x(r.items.at(-1)),w=Math.max(8,x1-x0+8);
-    const dim=S.grade!==null&&r.grade!==S.grade?' opacity=".3"':'';
-    s+=`<rect x="${(x0+x1)/2-w/2}" y="${y-7}" width="${w}" height="14" rx="4" fill="${gc(r.grade)}"${dim}/>`;
+function sharesBlock(A,B,ga,gb,la,lb){
+  if(!A.share&&!B.share)return '';
+  const bar=(s,who,g)=>`<div class="sbar"><span class="who"><span class="gp" style="--c:${gc(g)}">${esc(who)}</span></span><div class="stack">${s?s.map((x,i)=>`<div class="z${i+1}" style="flex:${x.v}" title="Зона ${i+1}: ${num(x.v,1)} %">${x.v>=10?num(x.v,0)+' %':''}</div>`).join(''):'<div style="flex:1;background:var(--surface-2);color:var(--muted);font-weight:400">нет всех трёх зон</div>'}</div></div>`;
+  let words='';
+  if(A.share&&B.share){
+    const d=[0,1,2].map(i=>B.share[i].v-A.share[i].v),i=d.reduce((m,x,j)=>x>d[m]?j:m,0);
+    words=d[i]>=3?` Больше инициатора стало уходить в ${i+1}-ю зону: ${num(A.share[i].v,0)} % → ${num(B.share[i].v,0)} %.`:' Распределение почти не изменилось.';
   }
-  // change markers
-  const cur=S.mode==='pair'?pairs[S.pair]:null;
-  for(const p of pairs){
-    const y=laneY(p.from.line),X=(x(p.from.items.at(-1))+x(p.to.items[0]))/2,on=cur===p;
-    if(!vis.has(p.i))continue;
-    s+=`<line x1="${X}" x2="${X}" y1="${y-15}" y2="${y+15}" stroke="${on?'var(--ink)':'var(--ink-2)'}" stroke-width="${on?2.5:1}" ${on?'':'stroke-dasharray="2 2"'}/>`;
-    if(on)s+=`<path d="M${X-5} ${y-21} L${X+5} ${y-21} L${X} ${y-15}Z" fill="var(--ink)"/>`;
-    s+=`<rect class="hit" data-pair="${p.i}" x="${X-8}" y="${y-20}" width="16" height="40"><title>${esc(G[p.from.grade].name)} → ${esc(G[p.to.grade].name)}</title></rect>`;
+  return `<div class="shares"><span class="t">Как инициатор делится по зонам<small> · доля от суммы трёх зон</small>${words?`<br><small style="font-size:14px;color:var(--ink-2)">${words.trim()}</small>`:''}</span>${bar(A.share,la,ga)}${bar(B.share,lb,gb)}<div class="zkey"><span><i style="background:var(--z1)"></i>1-я зона</span><span><i style="background:var(--z2)"></i>2-я</span><span><i style="background:var(--z3)"></i>3-я</span></div></div>`;
+}
+const MAIN=['pal','sum','#f','#share','#sp','mfr','c3_flow','propylene','drive_current','rpm'];
+function story(o){
+  const {itemsA,itemsB,A,B,ga,gb}=o;
+  const shown=[...Object.entries(A),...Object.entries(B)].filter(([k,x])=>B[k]&&A[k]&&x&&x.status),rev=shown.filter(([,x])=>x.status==='review').length;
+  MIXED=rev>0&&rev<shown.length;
+  const check=!shown.length?'':rev===shown.length?' Цифры ещё не сверены с фото.':rev?' Подчёркнутые пунктиром цифры ещё не сверены с фото.':' Все цифры сверены с фото.';
+  const flags=o.warn||[];
+  const both=k=>A[k]&&B[k];
+  /* «Главное»: up to three biggest changes, in words. */
+  const cands=['pal','sum','mfr','c3_flow','propylene','drive_current','rpm','z1_sp','z2_sp','z3_sp','z1_f','z2_f','z3_f'].filter(both).map(k=>{const u=k==='sum'?unitOf('z1_f'):unitOf(k);return {k,c:change(A[k].v,B[k].v,u,k==='sum'?2:prec(k))};}).filter(x=>x.c.score>=10).sort((a,b)=>b.c.score-a.c.score).slice(0,3);
+  const common=Object.keys(A).filter(k=>B[k]&&!['share'].includes(k));
+  let main;
+  if(!common.length)main=`<p class="main">Сравнить нечего: до и после смены сняты разные экраны пульта, общих цифр нет.${S.agg==='edge'?' Попробуйте «Среднее за период».':''}</p>`;
+  else if(!cands.length)main=`<p class="main"><b>Главное:</b> крупных изменений нет — общие цифры сдвинулись меньше чем на 10 %.</p>`;
+  else main=`<p class="main"><b>Главное:</b> ${cands.map(x=>`${SHORT[x.k]||P[x.k]?.name||x.k} — <span class="${x.c.cls}">${x.c.text.replace(/^[▲▼] /,'')}</span>`).join('; ')}.</p>`;
+
+  const used=new Set(['share','palSum','palC3']);
+  const parts=[];
+  const add=(k,name,u,p)=>{if(both(k)){parts.push(line(name,u,A[k],B[k],p));}used.add(k);};
+  for(const m of MAIN){
+    if(m==='#f'){parts.push(zoneLine('Инициатор по зонам',unitOf('z1_f')||'кг/ч','f',A,B));[1,2,3].forEach(z=>{used.add('z'+z+'_f');used.add('initiator'+z);});}
+    else if(m==='#share')parts.push(sharesBlock(A,B,ga,gb,o.la,o.lb));
+    else if(m==='#sp'){parts.push(zoneLine('Уставки температуры зон','°C','sp',A,B));[1,2,3].forEach(z=>used.add('z'+z+'_sp'));}
+    else if(m==='sum')add('sum','Инициатор, всего',unitOf('z1_f')||'кг/ч',2);
+    else add(m,P[m]?.name||m,unitOf(m),prec(m));
   }
-  // observation dots
-  const sel=S.mode==='free'?[S.freeA,S.freeB]:cur?[cur.from.items.at(-1).id,cur.to.items[0].id]:[];
-  geom=obs.map(o=>({o,X:x(o),Y:laneY(o.line)}));
-  for(const g of geom){
-    const on=sel.includes(g.o.id),empty=!Object.keys(g.o.vals).length;
-    s+=`<circle cx="${g.X}" cy="${g.Y}" r="${on?5.5:3.5}" fill="${empty?'var(--surface)':on?'var(--ink)':'var(--surface)'}" stroke="${on?'var(--surface)':'var(--ink)'}" stroke-width="${on?2:1.2}"/>`;
-    if(S.mode==='free'&&on)s+=`<text x="${g.X}" y="${g.Y+22}" text-anchor="middle" style="fill:var(--ink);font-weight:600">${g.o.id===S.freeA?'А':'Б'}</text>`;
-  }
-  box.querySelector('svg')?.remove();
-  box.insertAdjacentHTML('afterbegin',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Хронология замеров по линиям, цвет — марка">${s}</svg>`);
-  $('tl-hint').textContent=S.mode==='pair'?'Пунктир — смена марки между соседними снимками. Нажмите на пунктир или на точку замера, чтобы открыть сравнение.':'Нажимайте на точки: выбор чередуется между замером А и Б.';
-}
-function nearest(ev){
-  const svg=$('tl').querySelector('svg');if(!svg||!geom)return null;
-  const r=svg.getBoundingClientRect(),k=svg.viewBox.baseVal.width/r.width,mx=(ev.clientX-r.left)*k,my=(ev.clientY-r.top)*k;
-  let best=null,bd=18*k;
-  for(const g of geom){const d=Math.hypot(g.X-mx,(g.Y-my)*1.6);if(d<bd){bd=d;best=g;}}
-  return best&&{...best,px:best.X/k,py:best.Y/k};
-}
-$('tl').addEventListener('pointermove',ev=>{
-  const n=nearest(ev),tip=$('tip');
-  if(!n){tip.hidden=true;return;}
-  const vals=Object.values(n.o.vals),c=vals.filter(v=>v[1]==='confirmed').length;
-  tip.innerHTML=`<b>${esc(G[n.o.grade].name)}</b> · линия ${LINE[n.o.line]}<br>${dt(n.o.t)}<br>${vals.length?`${vals.length} знач. · сверено ${c}`:'значений нет'}`;
-  tip.style.left=n.px+'px';tip.style.top=n.py+'px';tip.hidden=false;
-});
-$('tl').addEventListener('pointerleave',()=>$('tip').hidden=true);
-$('tl').addEventListener('click',ev=>{
-  const hit=ev.target.closest('[data-pair]');
-  if(hit&&S.mode==='pair'){S.pair=Number(hit.dataset.pair);return render(true);}
-  const n=nearest(ev);if(!n)return;
-  if(S.mode==='free'){if(S.nextSlot==='A'){S.freeA=n.o.id;S.nextSlot='B';}else{S.freeB=n.o.id;S.nextSlot='A';}return render();}
-  const vp=visiblePairs(),p=vp.find(p=>p.to.items.includes(n.o))||vp.find(p=>p.from.items.includes(n.o));
-  if(p){S.pair=p.i;render(true);}
-});
+  /* the rest, folded */
+  const rest=[];
+  rest.push(zoneLine('Тмакс зон','°C','t',A,B));[1,2,3].forEach(z=>used.add('z'+z+'_t'));
+  rest.push(zoneLine('Открытие клапанов инициатора','%','out',A,B));[1,2,3].forEach(z=>used.add('z'+z+'_out'));
+  if(both('palSum'))rest.push(line('ПАЛ на 1 кг инициатора','кг',A.palSum,B.palSum,3));
+  if(both('palC3'))rest.push(line('ПАЛ на 1 м³ пропилена','кг',A.palC3,B.palC3,4));
+  Object.keys(A).filter(k=>B[k]&&!used.has(k)).sort((a,b)=>(PORDER[a]??999)-(PORDER[b]??999)).forEach(k=>rest.push(line(P[k]?.name||k,unitOf(k),A[k],B[k],prec(k))));
+  const restHtml=rest.filter(Boolean);
+  const onlyOne=[...new Set([...Object.keys(A),...Object.keys(B)])].filter(k=>!(A[k]&&B[k])&&P[k]);
+  const da=docFor(itemsA.at(-1)),db=docFor(itemsB[0]);
+  const normLines=normsWords(da,db);
 
-/* ---------- pair list / free selects ---------- */
-function renderNav(){
-  $('pair-nav').hidden=S.mode!=='pair';$('free').hidden=S.mode!=='free';
-  if(S.mode==='pair'){
-    const vp=visiblePairs();
-    if(vp.length&&!vp.includes(pairs[S.pair]))S.pair=vp.at(-1).i;
-    $('pairs').innerHTML=vp.map(p=>`<button class="pair" data-pair="${p.i}" aria-pressed="${p.i===S.pair}"><span class="g"><span class="sw" style="background:${gc(p.from.grade)}"></span>${esc(G[p.from.grade].name)} → <span class="sw" style="background:${gc(p.to.grade)}"></span>${esc(G[p.to.grade].name)}</span><span class="d">${dShort(p.to.items[0].t)} · линия ${LINE[p.from.line]} · через ${gapText(p.gapH)}</span>${p.dup?'<span class="flag">совпадают значения</span>':''}</button>`).join('')||'<span class="muted">Нет смен с этой маркой</span>';
-    const idx=vp.indexOf(pairs[S.pair]);$('prev').disabled=idx<=0;$('next').disabled=idx<0||idx>=vp.length-1;
-  }else{
-    const opts=sel=>obs.map(o=>`<option value="${o.id}" ${o.id===sel?'selected':''}>${dt(o.t)} · ${esc(G[o.grade].name)} · ${LINE[o.line]} · ${Object.keys(o.vals).length} знач.</option>`).join('');
-    $('free-a').innerHTML=opts(S.freeA);$('free-b').innerHTML=opts(S.freeB);
-  }
+
+  return `<article class="story" ${o.id?`id="${o.id}"`:''}>
+    <span class="when">${o.when}</span>
+    <h3>${gp(ga)}<span class="arrow">→</span>${gp(gb)}${o.badge||''}</h3>
+    <p class="sub">${o.sub}${check}</p>
+    ${flags.map(f=>`<p class="note">${f}</p>`).join('')}
+    ${main}
+    ${common.length?`<div class="lines">${parts.filter(Boolean).join('')}</div>`:''}
+    ${restHtml.length||normLines||onlyOne.length?`<details class="more"><summary>Подробнее${restHtml.length?`: ещё ${restHtml.length} ${plural(restHtml.length,'показатель','показателя','показателей')}`:''}${normLines?', нормы техкарт':''}</summary>${restHtml.length?`<div class="lines">${restHtml.join('')}</div>`:''}${normLines}${onlyOne.length?`<p class="sub" style="margin-top:8px">Есть только с одной стороны, сравнить нельзя: ${onlyOne.map(k=>esc(P[k].name)).join(', ')}.</p>`:''}</details>`:''}
+  </article>`;
 }
-function scrollPair(){const box=$('pairs'),b=box.querySelector('[aria-pressed="true"]');if(!b)return;const left=b.offsetLeft-box.offsetLeft-(box.clientWidth-b.offsetWidth)/2;box.scrollTo({left:Math.max(0,left),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}
-
-/* ---------- comparison ---------- */
-function sideCard(items,label,vals){
-  const g=items[0].grade,first=items[0],last=items.at(-1),n=items.length;
-  const doc=docFor(label==='before'?last:first);
-  const when=n>1?`${dt(first.t)} — ${dt(last.t,true)}`:dt(first.t);
-  return `<div class="side" style="--c:${gc(g)}"><span class="eyebrow">${label==='before'?'До смены':label==='after'?'После смены':label}</span><span class="gname">${esc(G[g].name)}</span><span class="meta">Линия ${LINE[first.line]} · ${when}</span><span class="meta">${n} ${plural(n,'замер','замера','замеров')} · ${Object.keys(vals).length} параметров${doc?` · техкарта ${esc(doc.version)}`:''}</span></div>`;
-}
-function renderCompare(){
-  const el=$('compare');
-  let A,B,itemsA,itemsB,head,warns=[];
-  if(S.mode==='pair'){
-    const p=pairs[S.pair];
-    if(!p||!visiblePairs().includes(p)){el.innerHTML='<div class="empty">Соседних смен марки в базе нет. Перейдите в режим «Любые два замера».</div>';return;}
-    itemsA=p.from.items;itemsB=p.to.items;A=sideValues(itemsA,true);B=sideValues(itemsB,false);
-    head=`<div class="versus">${sideCard(itemsA,'before',A)}<div class="gap"><span class="arrow">→</span><span><b>${gapText(p.gapH)}</b>между снимками</span></div>${sideCard(itemsB,'after',B)}</div>`;
-    if(p.gapH>12)warns.push(`Между последним снимком ${esc(G[p.from.grade].name)} и первым снимком ${esc(G[p.to.grade].name)} прошло ${gapText(p.gapH)}. В этом промежутке могли быть другие марки и режимы, поэтому разница ниже — сравнение снимков, а не доказанный переход.`);
-    if(p.dup)warns.push(`На соседних снимках совпадают все ${p.dup} общих значений, хотя марки разные. Вероятно, один и тот же экран записан на две марки — проверьте привязку марки.`);
-  }else{
-    const a=byId[S.freeA],b=byId[S.freeB];
-    if(!a||!b){el.innerHTML='<div class="empty">Выберите два замера.</div>';return;}
-    itemsA=[a];itemsB=[b];A=sideValues(itemsA,false);B=sideValues(itemsB,false);
-    const h=Math.abs(b.t-a.t)/36e5;
-    head=`<div class="versus">${sideCard(itemsA,'Замер А',A)}<div class="gap"><span class="arrow">→</span><span><b>${gapText(h)}</b>${b.t<a.t?'Б раньше А':'между замерами'}</span></div>${sideCard(itemsB,'Замер Б',B)}</div>`;
-    if(a.id===b.id)warns.push('Выбран один и тот же замер.');
-    if(a.line!==b.line)warns.push('Замеры с разных линий: условия могут быть несопоставимы.');
-    const d=duplicate(a,b);if(d&&a.grade!==b.grade)warns.push(`Совпадают все ${d} общих значений при разных марках — вероятно, дубль одного экрана.`);
-  }
-  const all=[...Object.values(A),...Object.values(B)],rev=all.filter(v=>v.status==='review').length;
-  if(!S.confirmed&&rev)warns.push(`${rev} из ${all.length} значений ещё не сверены с фото (отмечены знаком <span class="rv">?</span>). Включите «Только сверенные», чтобы скрыть их.`);
-  if(S.confirmed&&!all.length)warns.push('Сверенных значений на этих снимках нет. Снимите флажок «Только сверенные».');
-
-  const controls=`<div class="row spread"><h2>Что изменилось</h2><div class="row">${S.mode==='pair'?`<div class="seg" role="group" aria-label="Какое значение брать"><button data-agg="edge" aria-pressed="${S.agg==='edge'}" title="Последний снимок до смены и первый после">Ближайшие к смене</button><button data-agg="mean" aria-pressed="${S.agg==='mean'}" title="Среднее по всем снимкам периода">Среднее за период</button></div>`:''}<label class="check"><input type="checkbox" id="only-conf" ${S.confirmed?'checked':''}>Только сверенные</label></div></div>`;
-
-  el.innerHTML=controls+head+(warns.length?`<div class="warns">${warns.map(w=>`<div class="warn"><span>${w}</span></div>`).join('')}</div>`:'')+tiles(A,B)+zones(A,B)+table(A,B)+norms(itemsA,itemsB);
-}
-
-function tiles(A,B){
-  const dA=derived(A),dB=derived(B);
-  const cand=[
-    ['pal','Расход ПАЛ',A.pal,B.pal,unit('pal'),2],
-    ['sum','Инициатор, сумма 3 зон',dA.sum,dB.sum,'кг/ч',2],
-    ['palSum','ПАЛ / сумма инициатора',dA.palSum,dB.palSum,'кг/кг',3],
-    ['palC3','ПАЛ / пропилен',dA.palC3,dB.palC3,'кг/м³',4],
-    ['mfr','ПТР',A.mfr,B.mfr,unit('mfr'),3],
-    ['drive_current','Ток главного привода',A.drive_current,B.drive_current,unit('drive_current'),1],
-    ['rpm','Обороты А-404',A.rpm,B.rpm,unit('rpm'),1],
-    ['vgvd','Давление ВГВД',A.vgvd,B.vgvd,unit('vgvd'),2],
-    ['pal_sp','Уставка ПАЛ',A.pal_sp,B.pal_sp,unit('pal_sp'),2],
-  ].filter(c=>c[2]&&c[3]).slice(0,6);
-  if(!cand.length)return `<div class="empty">На этих снимках нет общих ключевых показателей (ПАЛ, инициаторы, ПТР, привод). Ниже — всё, что снято с каждой стороны.</div>`;
-  return `<div><h3 style="margin-bottom:8px">Ключевые показатели</h3><div class="tiles">${cand.map(([k,name,a,b,u,p])=>{const d=delta(a.v,b.v,p);return `<div class="tile"><span class="k">${esc(name)}${u?`, ${esc(u)}`:''}</span><span class="ab">${fmt(a.v,p)}${rv(a.status)} → ${fmt(b.v,p)}${rv(b.status)}</span><span class="dv ${d.cls}">${d.html}</span><span class="pc ${d.cls}">${d.pctHtml}</span></div>`;}).join('')}</div>${cand.some(c=>c[0]==='palSum'||c[0]==='palC3')?'<p class="note muted" style="margin-top:8px">Пропорции — отношение наблюдаемых расходов на снимке, а не рецепт марки. ПАЛ/пропилен в кг/м³ не является массовой долей.</p>':''}</div>`;
-}
-
-function zones(A,B){
-  const dA=derived(A),dB=derived(B);
-  if(!dA.f.some(Boolean)&&!dB.f.some(Boolean))return '';
-  const bar=(d,name,g)=>`<div class="stack-row"><span class="lbl"><span class="sw" style="background:${gc(g)}"></span>${esc(name)}</span><div class="stack">${d.share?d.share.map((s,i)=>`<div class="z${i+1}" style="flex:${s.v}" title="Зона ${i+1}: ${fmt(d.f[i].v,2)} кг/ч, ${fmt(s.v,1)} %">${s.v>=9?fmt(s.v,1)+' %':''}</div>`).join(''):'<div class="none">нет всех трёх расходов</div>'}</div></div>`;
-  const gA=S.mode==='pair'?pairs[S.pair].from.grade:byId[S.freeA].grade,gB=S.mode==='pair'?pairs[S.pair].to.grade:byId[S.freeB].grade;
-  const nA=S.mode==='pair'?G[gA].name:'А · '+G[gA].name,nB=S.mode==='pair'?G[gB].name:'Б · '+G[gB].name;
-  const rows=[['Уставка Т','sp'],['Тмакс','t'],['Инициатор','f'],['Доля','share'],['Выход клапана','out']];
-  const cell=(a,b,p,u)=>{if(!a&&!b)return '<td class="na">—</td>';const d=delta(a?.v,b?.v,p);return `<td class="v">${a?fmt(a.v,p)+rv(a.status):'—'} → ${b?fmt(b.v,p)+rv(b.status):'—'}${a&&b?` <span class="${d.cls}">(${d.html}${u})</span>`:''}</td>`;};
-  const body=rows.map(([name,k])=>`<tr><td>${name}${k==='share'?', %':k==='f'?', кг/ч':k==='out'?', %':', °C'}</td>${[1,2,3].map(z=>{
-    if(k==='share')return cell(dA.share?.[z-1],dB.share?.[z-1],1,' п.п.');
-    if(k==='f')return cell(dA.f[z-1],dB.f[z-1],2,'');
-    const key='z'+z+'_'+k;return cell(A[key],B[key],prec(key,(A[key]||B[key])?.v??0),'');
-  }).join('')}</tr>`).join('');
-  return `<div class="zones"><h3>Инициатор по зонам реактора</h3><div class="zkey"><span><i class="sw" style="background:var(--z1)"></i>Зона 1</span><span><i class="sw" style="background:var(--z2)"></i>Зона 2</span><span><i class="sw" style="background:var(--z3)"></i>Зона 3</span></div>${bar(dA,nA,gA)}${bar(dB,nB,gB)}<div class="tw"><table><thead><tr><th></th><th>Зона 1</th><th>Зона 2</th><th>Зона 3</th></tr></thead><tbody>${body}</tbody></table></div></div>`;
-}
-
-function table(A,B){
-  const keys=[...new Set([...Object.keys(A),...Object.keys(B)])].sort((a,b)=>(PORDER[a]??999)-(PORDER[b]??999));
-  const both=keys.filter(k=>A[k]&&B[k]),single=keys.length-both.length,show=S.singles?keys:both;
+function normsWords(da,db){
+  if(!da&&!db)return '';
+  const nr=d=>Object.fromEntries(D.norms.filter(n=>n.doc===d?.id).map(n=>[n.key,n]));
+  const na=nr(da),nb=nr(db),keys=[...new Set([...Object.keys(na),...Object.keys(nb)])].sort((a,b)=>(PORDER[a]??999)-(PORDER[b]??999));
   if(!keys.length)return '';
-  const groups={};for(const k of show)(groups[P[k]?.group||'Прочее']??=[]).push(k);
-  const meanNote=v=>v&&v.n>1?` title="Среднее по ${v.n} снимкам"`:v?` title="${dt(v.obs[0].t)}"`:'';
-  const rows=Object.entries(groups).map(([g,ks])=>`<tr class="grp"><td colspan="5">${esc(g)}</td></tr>`+ks.map(k=>{
-    const a=A[k],b=B[k],p=prec(k,(a||b).v),d=delta(a?.v,b?.v,p),u=unit(k);
-    const w=d.pct===null||d.pct===undefined?0:Math.min(50,Math.abs(d.pct))/50*50;
-    return `<tr><td>${esc(P[k]?.name||k)}${u?`, ${esc(u)}`:''}<span class="tag">${esc(P[k]?.tag||k)}</span></td><td class="v"${meanNote(a)}>${a?fmt(a.v,p)+rv(a.status):'<span class="muted">нет на снимке</span>'}</td><td class="v"${meanNote(b)}>${b?fmt(b.v,p)+rv(b.status):'<span class="muted">нет на снимке</span>'}</td><td class="v dcol ${d.cls}">${d.html||''}</td><td>${a&&b?`<span class="bar" title="${d.pctHtml}">${w?`<i class="${d.pct>0?'pos':'neg'}" style="width:${w}%"></i>`:''}</span> <span class="num ${d.cls}" style="display:inline-block;min-width:64px">${d.pctHtml}</span>`:''}</td></tr>`;
-  }).join('')).join('');
-  const hA=S.mode==='pair'?'До':'А',hB=S.mode==='pair'?'После':'Б';
-  return `<div style="display:grid;gap:8px;min-width:0"><div class="row spread"><h3>Все параметры · ${both.length} общих</h3>${single?`<label class="check"><input type="checkbox" id="singles" ${S.singles?'checked':''}>Показать снятые только с одной стороны (${single})</label>`:''}</div>${show.length?`<div class="tw"><table><thead><tr><th>Параметр</th><th>${hA}</th><th>${hB}</th><th class="dcol">Δ</th><th>Изменение, %</th></tr></thead><tbody>${rows}</tbody></table></div>`:'<div class="empty">Общих параметров нет: снимки сделаны с разных экранов. Включите показ параметров одной стороны.</div>'}<p class="note muted">Полоска показывает относительное изменение, шкала ограничена ±50 %. Красный — рост, синий — снижение; это направление, а не оценка «хорошо/плохо».</p></div>`;
+  const r=n=>n?(n.lo!==null&&n.hi!==null?`${num(n.lo,3)}–${num(n.hi,3)}`:n.lo!==null?`не менее ${num(n.lo,3)}`:n.hi!==null?`не более ${num(n.hi,3)}`:'без границ'):'нет';
+  const ga=da?.grade,gb=db?.grade;
+  return `<div class="lines" style="margin-top:6px"><p class="sub" style="padding:6px 0">Нормы по техкартам${da?`: ${esc(G[ga].name)} — версия ${esc(da.version)}`:''}${db?`, ${esc(G[gb].name)} — версия ${esc(db.version)}`:''}</p>${keys.map(k=>`<div class="ln"><span class="nm">${esc(P[k]?.name||k)}${unitOf(k)?` <small>${esc(unitOf(k))}</small>`:''}</span><span class="vals"><span class="was">${r(na[k])}</span> → <b>${r(nb[k])}</b></span><span class="ch ${JSON.stringify(na[k]&&[na[k].lo,na[k].hi])===JSON.stringify(nb[k]&&[nb[k].lo,nb[k].hi])?'flat':''}">${JSON.stringify(na[k]&&[na[k].lo,na[k].hi])===JSON.stringify(nb[k]&&[nb[k].lo,nb[k].hi])?'норма та же':'норма другая'}</span></div>`).join('')}</div>`;
+}
+function pairStory(p){
+  const A=sideValues(p.from.items,true,S.agg),B=sideValues(p.to.items,false,S.agg);
+  const a=p.from.items,b=p.to.items,na=G[p.from.grade].name,nb=G[p.to.grade].name;
+  const sub=S.agg==='edge'
+    ?`Линия ${LINE[p.from.line]}. Было: ${esc(na)}, последний снимок ${day(a.at(-1).t)}. Стало: ${esc(nb)}, первый снимок ${day(b[0].t)}. Между снимками ${gapText(p.gapH)}.`
+    :`Линия ${LINE[p.from.line]}. Сравниваются средние: ${esc(na)} — ${a.length} ${plural(a.length,'снимок','снимка','снимков')} (${day(a[0].t,false)} — ${day(a.at(-1).t)}), ${esc(nb)} — ${b.length} ${plural(b.length,'снимок','снимка','снимков')} (${day(b[0].t,false)} — ${day(b.at(-1).t)}).`;
+  const warn=[];
+  if(p.gapH>72)warn.push(`Между снимками ${gapText(p.gapH)} — за это время могли быть и другие марки.`);
+  if(p.dup)warn.push(`Похоже на ошибку в базе: у обеих марок совпадают все ${p.dup} общих цифр. Возможно, один и тот же снимок записан на две марки.`);
+  return story({id:'p'+p.i,itemsA:a,itemsB:b,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:nb,
+    when:`${ymName(p.ym)} · смена №${p.i+1} из ${pairs.length}`,sub,warn});
 }
 
-function norms(itemsA,itemsB){
-  const da=docFor(S.mode==='pair'?itemsA.at(-1):itemsA[0]),db=docFor(itemsB[0]);
-  if(!da&&!db)return `<p class="note muted">Действующие техкарты для этих снимков в базе не найдены.</p>`;
-  const na=D.norms.filter(n=>n.doc===da?.id),nb=D.norms.filter(n=>n.doc===db?.id);
-  const keys=[...new Set([...na,...nb].map(n=>n.key))].sort((a,b)=>(PORDER[a]??999)-(PORDER[b]??999));
-  const rng=n=>n?`${n.lo===null?'…':fmt(n.lo,prec(n.key,n.lo))} — ${n.hi===null?'…':fmt(n.hi,prec(n.key,n.hi))}${n.target!==null?` (цель ${fmt(n.target,prec(n.key,n.target))})`:''}`:'—';
-  const name=(d,items)=>d?`${esc(G[d.grade].name)} · ${esc(d.version)}`:`${esc(G[items[0].grade].name)} · нет техкарты`;
-  return `<details><summary>Нормы техкарт · ${name(da,itemsA)} и ${name(db,itemsB)}</summary><div class="tw" style="margin-top:8px"><table><thead><tr><th>Параметр</th><th>${name(da,itemsA)}</th><th>${name(db,itemsB)}</th></tr></thead><tbody>${keys.map(k=>`<tr><td>${esc(P[k]?.name||k)}${unit(k)?', '+esc(unit(k)):''}</td><td class="v">${rng(na.find(n=>n.key===k))}</td><td class="v">${rng(nb.find(n=>n.key===k))}</td></tr>`).join('')}</tbody></table></div></details>`;
+/* ---------- page ---------- */
+function renderIntro(){
+  const all=Object.values(D.values).flatMap(v=>Object.values(v)),conf=all.filter(v=>v[1]==='confirmed').length;
+  $('intro').innerHTML=obs.length?`Что менялось в режиме, когда линия переходила с одной марки на другую. В базе ${obs.length} ${plural(obs.length,'замер','замера','замеров')} с ${day(obs[0].t,true).split(',')[0]} по ${day(obs.at(-1).t,true).split(',')[0]}, найдено <b>${pairs.length}</b> ${plural(pairs.length,'смена','смены','смен')} марки. Сверено с фото ${conf} из ${all.length} цифр, остальные предварительные. Точный момент перехода неизвестен: сравниваются снимки до и после смены.`:'В базе пока нет замеров.';
+  $('foot').textContent=`Смена марки определяется по соседним снимкам в базе, точный момент перехода неизвестен. Данные из рабочей базы на ${D.generated_at.slice(0,10).split('-').reverse().join('.')}; отклонённые варианты цифр не показываются.`;
 }
+function renderCalendar(){
+  if(!obs.length){$('cal').innerHTML='';return;}
+  const ymOf=t=>{const d=new Date(t);return d.getUTCFullYear()*12+d.getUTCMonth();};
+  const y0=ymOf(obs[0].t),y1=ymOf(obs.at(-1).t),tiles=[];
+  for(let ym=y0;ym<=y1;ym++){
+    const inM=obs.filter(o=>ymOf(o.t)===ym),ch=pairs.filter(p=>p.ym===ym&&vis(p)).length;
+    const seq=[];for(const l of lines){const s=[];for(const o of inM.filter(o=>o.line===l))if(s.at(-1)!==o.grade)s.push(o.grade);if(s.length)seq.push((lines.length>1?`<span>${LINE[l]}</span>`:'')+s.map(g=>`<i style="--c:${gc(g)}" title="${esc(G[g].name)}"></i>`).join(''));}
+    tiles.push(`<button class="mon ${ch?'has':''}" data-ym="${ym}" ${ch?'':'disabled'} title="${ch?'Показать смены этого месяца':'Смен марки в этом месяце нет'}"><span class="mname">${M_SH[ym%12]} ${String(Math.floor(ym/12)).slice(2)}<span>${ch?`${ch} ${plural(ch,'смена','смены','смен')}`:inM.length?'':'нет снимков'}</span></span><span class="seq">${seq.join('<br>')}</span></button>`);
+  }
+  $('cal').innerHTML=tiles.join('');
+  $('legend').innerHTML=D.grades.filter(g=>counts[g.id]).sort((a,b)=>slot[a.id]-slot[b.id]).map(g=>gp(g.id)).join('');
+}
+const vis=p=>S.grade===null||p.from.grade===S.grade||p.to.grade===S.grade;
+function renderChips(){
+  $('chips').innerHTML=`<button class="chip" data-g="" aria-pressed="${S.grade===null}">Все</button>`+D.grades.filter(g=>counts[g.id]).sort((a,b)=>slot[a.id]-slot[b.id]).map(g=>`<button class="chip" data-g="${g.id}" aria-pressed="${S.grade===g.id}">${esc(g.name)}</button>`).join('');
+  $('agg-edge').setAttribute('aria-pressed',S.agg==='edge');$('agg-mean').setAttribute('aria-pressed',S.agg==='mean');
+  $('only-conf').checked=S.confirmed;
+}
+function renderFeed(){
+  const list=pairs.filter(vis);
+  if(!list.length){$('feed').innerHTML=`<div class="empty">${pairs.length?'С этой маркой смен не найдено.':'Соседних снимков разных марок в базе пока нет. Сравните два любых замера ниже.'}</div>`;return;}
+  let html='',ym=null;
+  for(const p of list){if(p.ym!==ym){ym=p.ym;html+=`<h2 class="month" id="m${ym}">${ymName(ym)}</h2>`;}html+=pairStory(p);}
+  $('feed').innerHTML=html;
+}
+function renderFree(){
+  const opts=sel=>obs.map(o=>`<option value="${o.id}" ${o.id===sel?'selected':''}>${day(o.t)} · ${esc(G[o.grade].name)} · линия ${LINE[o.line]}</option>`).join('');
+  $('free-a').innerHTML=opts(S.freeA);$('free-b').innerHTML=opts(S.freeB);
+  const a=byId[S.freeA],b=byId[S.freeB];
+  if(!a||!b){$('free-out').innerHTML='';return;}
+  const warn=[];
+  if(a.id===b.id)warn.push('Выбран один и тот же замер.');
+  if(a.line!==b.line)warn.push('Замеры с разных линий — условия могут быть несопоставимы.');
+  const d=duplicate(a,b);if(d&&a.grade!==b.grade)warn.push(`У разных марок совпадают все ${d} общих цифр — возможно, один снимок записан на две марки.`);
+  const h=Math.abs(b.t-a.t)/36e5;
+  $('free-out').innerHTML=story({itemsA:[a],itemsB:[b],A:sideValues([a],false,'edge'),B:sideValues([b],false,'edge'),ga:a.grade,gb:b.grade,la:G[a.grade].name,lb:G[b.grade].name,
+    when:'Свой выбор',sub:`Было: ${esc(G[a.grade].name)}, линия ${LINE[a.line]}, ${day(a.t)}. Стало: ${esc(G[b.grade].name)}, линия ${LINE[b.line]}, ${day(b.t)}. ${b.t<a.t?'«Стало» снято раньше, чем «было»':'Между замерами'} — ${gapText(h)}.`,warn});
+}
+function renderAll(){renderChips();renderCalendar();renderFeed();renderFree();}
 
-/* ---------- wiring ---------- */
-function render(scroll){
-  $('mode-pair').setAttribute('aria-pressed',S.mode==='pair');$('mode-free').setAttribute('aria-pressed',S.mode==='free');
-  $('scale-time').setAttribute('aria-pressed',S.scale==='time');$('scale-order').setAttribute('aria-pressed',S.scale==='order');
-  renderLegend();renderNav();renderTimeline();renderCompare();
-  if(scroll)scrollPair();
-}
-$('mode-pair').onclick=()=>{S.mode='pair';store.set('mode',S.mode);render(true);};
-$('mode-free').onclick=()=>{S.mode='free';store.set('mode',S.mode);render();};
-$('scale-time').onclick=()=>{S.scale='time';store.set('scale',S.scale);renderTimeline();};
-$('scale-order').onclick=()=>{S.scale='order';store.set('scale',S.scale);renderTimeline();};
-$('legend').onclick=e=>{const b=e.target.closest('[data-grade]');if(!b)return;const g=Number(b.dataset.grade);S.grade=S.grade===g?null:g;if(S.mode!=='pair')S.mode='pair';render(true);};
-$('pairs').onclick=e=>{const b=e.target.closest('[data-pair]');if(b){S.pair=Number(b.dataset.pair);render(true);}};
-function step(dir){const vp=visiblePairs(),i=vp.indexOf(pairs[S.pair]),n=vp[i+dir];if(n){S.pair=n.i;render(true);}}
-$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
-document.addEventListener('keydown',e=>{if(S.mode!=='pair'||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1);});
-$('free-a').onchange=e=>{S.freeA=Number(e.target.value);render();};
-$('free-b').onchange=e=>{S.freeB=Number(e.target.value);render();};
-$('swap').onclick=()=>{[S.freeA,S.freeB]=[S.freeB,S.freeA];render();};
-$('compare').addEventListener('click',e=>{const b=e.target.closest('[data-agg]');if(b){S.agg=b.dataset.agg;store.set('agg',S.agg);renderCompare();}});
-$('compare').addEventListener('change',e=>{
-  if(e.target.id==='only-conf'){S.confirmed=e.target.checked;store.set('confirmed',S.confirmed);renderCompare();}
-  if(e.target.id==='singles'){S.singles=e.target.checked;store.set('singles',S.singles);renderCompare();}
-});
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(renderTimeline,120);});
-renderFacts();render(true);
+$('chips').onclick=e=>{const b=e.target.closest('[data-g]');if(!b)return;S.grade=b.dataset.g===''?null:Number(b.dataset.g);renderAll();};
+$('agg-edge').onclick=()=>{S.agg='edge';store.set('agg','edge');renderAll();};
+$('agg-mean').onclick=()=>{S.agg='mean';store.set('agg','mean');renderAll();};
+$('only-conf').onchange=e=>{S.confirmed=e.target.checked;store.set('confirmed',S.confirmed);renderAll();};
+$('cal').onclick=e=>{const b=e.target.closest('[data-ym]');if(b&&!b.disabled)$('m'+b.dataset.ym)?.scrollIntoView({block:'start'});};
+$('free-a').onchange=e=>{S.freeA=Number(e.target.value);renderFree();};
+$('free-b').onchange=e=>{S.freeB=Number(e.target.value);renderFree();};
+$('swap').onclick=()=>{[S.freeA,S.freeB]=[S.freeB,S.freeA];renderFree();};
+renderIntro();renderAll();
 })();
 </script>
