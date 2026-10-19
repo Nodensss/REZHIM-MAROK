@@ -13,6 +13,7 @@ from werkzeug.exceptions import HTTPException
 
 from .catalog import PARAMS
 from .ocr_engine import installation_status
+from .smeny_page import render as render_smeny
 from .upgrades import allow_unknown_steady
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -118,6 +119,11 @@ def create_app(data_dir=None):
     @app.get('/mobile/')
     def mobile():
         return send_from_directory(ROOT / 'mobile', 'index.html')
+
+    @app.get('/smeny/')
+    def smeny():
+        with db() as conn:
+            return render_smeny(conn), 200, {'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache'}
 
     @app.get('/mobile/<path:name>')
     def mobile_assets(name):

@@ -1,0 +1,510 @@
+<title>Смены марок УПЭ</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@500&display=swap">
+<style>
+/* Layout: one column — chronology strip on top, chosen pair of modes underneath, detail tables last. */
+:root{
+  --bg:#f2f4f1; --surface:#fcfdfb; --surface-2:#e8ece7; --ink:#101a16; --ink-2:#4a554f; --muted:#7f8a84;
+  --line:#dde2dc; --axis:#bcc4bd; --accent:#123f32; --accent-ink:#f2f4f1; --focus:#2a78d6;
+  --up:#d6453f; --down:#2a78d6; --mid:#e6e9e4;
+  --g1:#2a78d6; --g2:#eb6834; --g3:#1baf7a; --g4:#eda100; --g5:#e87ba4; --g6:#008300; --g7:#6250d6; --g8:#e34948; --g0:#8d958f;
+  --z1:#86b6ef; --z2:#2a78d6; --z3:#184f95;
+  --warn-bg:#fbf1dc; --warn-ink:#6b4a00;
+  --display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1412; --surface:#161e1b; --surface-2:#202a26; --ink:#eef1ed; --ink-2:#bcc5bf; --muted:#86918b;
+  --line:#28322e; --axis:#3a4540; --accent:#7fc4a8; --accent-ink:#0e1412; --focus:#6da7ec;
+  --up:#e66767; --down:#3987e5; --mid:#2a3430;
+  --g1:#3987e5; --g2:#d95926; --g3:#199e70; --g4:#c98500; --g5:#d55181; --g6:#008300; --g7:#9085e9; --g8:#e66767; --g0:#6e7771;
+  --z1:#86b6ef; --z2:#3987e5; --z3:#1c5cab;
+  --warn-bg:#352a12; --warn-ink:#f3cf7a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1412; --surface:#161e1b; --surface-2:#202a26; --ink:#eef1ed; --ink-2:#bcc5bf; --muted:#86918b;
+  --line:#28322e; --axis:#3a4540; --accent:#7fc4a8; --accent-ink:#0e1412; --focus:#6da7ec;
+  --up:#e66767; --down:#3987e5; --mid:#2a3430;
+  --g1:#3987e5; --g2:#d95926; --g3:#199e70; --g4:#c98500; --g5:#d55181; --g6:#008300; --g7:#9085e9; --g8:#e66767; --g0:#6e7771;
+  --z1:#86b6ef; --z2:#3987e5; --z3:#1c5cab;
+  --warn-bg:#352a12; --warn-ink:#f3cf7a; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+.wrap>*{min-width:0}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font:500 clamp(22px,4vw,30px)/1.15 var(--display);letter-spacing:-.01em}
+h2{font-size:17px;font-weight:600}
+h3{font-size:14px;font-weight:600}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+header.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+header.top .lead{display:grid;gap:6px;min-width:0}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--ink-2);font-size:13px}
+.facts b{color:var(--ink);font-weight:600}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;min-width:0}
+.panel>*{min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.spread{justify-content:space-between}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:8px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;border-radius:6px;padding:6px 12px;font-size:13px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12);font-weight:600}
+.check{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:var(--ink-2);cursor:pointer}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+.legend{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px 4px 8px;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.chip .n{color:var(--muted);font-size:12px}
+.sw{width:10px;height:10px;border-radius:3px;flex:none;display:inline-block}
+.tl{position:relative;min-width:0}
+.tl svg{display:block;width:100%;height:auto;overflow:visible}
+.tl text{font:11px var(--body);fill:var(--muted)}
+.tl .lane{font-weight:600;fill:var(--ink-2)}
+.tl .hit{fill:transparent;cursor:pointer}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.4;padding:6px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));z-index:2}
+.tip[hidden]{display:none}
+.pairs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.pair{flex:none;scroll-snap-align:start;display:grid;gap:2px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 10px;min-width:150px}
+.pair .g{display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px}
+.pair .d{font-size:12px;color:var(--muted)}
+.pair[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--surface-2)}
+.pair .flag{font-size:11px;color:var(--warn-ink)}
+.navbtn{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;font-size:16px;flex:none}
+.navbtn:disabled{opacity:.35;cursor:default}
+.versus{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch}
+.side{border-radius:10px;padding:12px 14px;background:var(--surface-2);display:grid;gap:4px;min-width:0;border-top:4px solid var(--c)}
+.side .gname{font:500 20px/1.1 var(--display)}
+.side .meta{font-size:13px;color:var(--ink-2)}
+.gap{display:grid;place-items:center;text-align:center;font-size:12px;color:var(--muted);min-width:64px}
+.gap b{display:block;font-size:13px;color:var(--ink);font-weight:600}
+.gap .arrow{font-size:22px;line-height:1;color:var(--ink-2)}
+.warns{display:grid;gap:6px}
+.warn{background:var(--warn-bg);color:var(--warn-ink);border-radius:8px;padding:8px 12px;font-size:13px;display:flex;gap:8px}
+.warn::before{content:"!";font-weight:700;flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:11px;margin-top:1px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.tile{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:4px;min-width:0}
+.tile .k{font-size:12px;color:var(--ink-2)}
+.tile .ab{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)}
+.tile .dv{font:500 20px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.tile .pc{font-size:12px;font-family:var(--mono)}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)}
+.zones{display:grid;gap:10px}
+.stack-row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;align-items:center}
+.stack-row .lbl{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stack{display:flex;gap:2px;height:30px}
+.stack div{border-radius:4px;display:flex;align-items:center;justify-content:center;font:500 12px var(--mono);color:#fff;min-width:0;overflow:hidden;white-space:nowrap}
+.stack .z1{background:var(--z1);color:#0d366b}
+.stack .z2{background:var(--z2)}
+.stack .z3{background:var(--z3)}
+.stack .none{background:var(--surface-2);color:var(--muted);font-family:var(--body);flex:1}
+.zkey{display:flex;gap:14px;font-size:12px;color:var(--ink-2);flex-wrap:wrap}
+.zkey span{display:inline-flex;gap:6px;align-items:center}
+.tw{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:right;padding:6px 8px;border-bottom:1px solid var(--axis);white-space:nowrap}
+th:first-child{text-align:left}
+td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle;white-space:nowrap}
+td:first-child{text-align:left;white-space:normal;min-width:170px}
+td .tag{display:block;font-size:11px;color:var(--muted);font-family:var(--mono)}
+tr.grp td{background:var(--surface-2);font-weight:600;font-size:12px;color:var(--ink-2);text-align:left;letter-spacing:.02em}
+td.v{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td.na{color:var(--muted);font-size:12px}
+.rv{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;border:1px dashed var(--muted);color:var(--muted);font:600 10px var(--body);margin-left:4px;vertical-align:1px}
+.bar{position:relative;width:120px;height:14px;display:inline-block;vertical-align:middle}
+.bar::before{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--axis)}
+.bar i{position:absolute;top:2px;height:10px;border-radius:3px}
+.bar i.pos{left:50%;background:var(--up)} .bar i.neg{right:50%;background:var(--down)}
+.empty{padding:18px;border:1px dashed var(--axis);border-radius:10px;color:var(--ink-2);font-size:14px}
+.free{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:end}
+.free label{display:grid;gap:4px;font-size:12px;color:var(--ink-2);min-width:0}
+.free select{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.note{font-size:13px;color:var(--ink-2);max-width:75ch}
+details summary{cursor:pointer;font-weight:600}
+@media (max-width:640px){
+  .versus{grid-template-columns:1fr}
+  .gap{grid-auto-flow:column;gap:8px;justify-content:start}
+  .gap .arrow{transform:rotate(90deg)}
+  .free{grid-template-columns:1fr}
+  .bar{width:56px}
+  td:first-child{min-width:128px}
+  .dcol{display:none}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){.pair,.chip,.seg button{transition:background .15s,box-shadow .15s,border-color .15s}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="lead">
+      <span class="eyebrow">УПЭ · хронология режимов</span>
+      <h1>Смены марок</h1>
+      <div class="facts" id="facts"></div>
+    </div>
+    <div class="seg" role="group" aria-label="Что сравнивать">
+      <button id="mode-pair" aria-pressed="true">Соседние смены</button>
+      <button id="mode-free" aria-pressed="false">Любые два замера</button>
+    </div>
+  </header>
+
+  <section class="panel" aria-label="Хронология">
+    <div class="row spread">
+      <h2>Хронология замеров</h2>
+      <div class="seg" role="group" aria-label="Шкала">
+        <button id="scale-time" aria-pressed="true">По времени</button>
+        <button id="scale-order" aria-pressed="false">По порядку</button>
+      </div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="tl" id="tl"><div class="tip" id="tip" hidden></div></div>
+    <p class="note muted" id="tl-hint"></p>
+    <div class="row" id="pair-nav">
+      <button class="navbtn" id="prev" aria-label="Предыдущая смена">←</button>
+      <div class="pairs" id="pairs" style="flex:1;min-width:0"></div>
+      <button class="navbtn" id="next" aria-label="Следующая смена">→</button>
+    </div>
+    <div class="free" id="free" hidden>
+      <label>Замер А<select id="free-a"></select></label>
+      <button class="navbtn" id="swap" aria-label="Поменять местами" title="Поменять местами">⇄</button>
+      <label>Замер Б<select id="free-b"></select></label>
+    </div>
+  </section>
+
+  <section class="panel" id="compare" aria-live="polite"></section>
+
+  <p class="note muted" id="foot"></p>
+</div>
+
+<script>
+const D=/*__SMENY_DATA__*/null;
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem('smeny:'+k);return v===null?d:JSON.parse(v);}catch{return d;}},set(k,v){try{localStorage.setItem('smeny:'+k,JSON.stringify(v));}catch{}}};
+const P=Object.fromEntries(D.params.map(p=>[p.key,p]));
+const PORDER=Object.fromEntries(D.params.map((p,i)=>[p.key,i]));
+const G=Object.fromEntries(D.grades.map(g=>[g.id,g]));
+const LINE={A:'А',B:'Б'};
+const MON=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+const MONS=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+
+/* Observations, chronologically per line; time is plant-local, kept as written. */
+const obs=D.observations.map(o=>({...o,t:Date.parse(o.ts+'Z'),vals:D.values[o.id]||{}})).sort((a,b)=>a.t-b.t||a.line.localeCompare(b.line));
+obs.forEach((o,i)=>o.order=i);
+const byId=Object.fromEntries(obs.map(o=>[o.id,o]));
+/* Colour follows the grade: slots by number of observations, then name; stable for this base. */
+const counts={};obs.forEach(o=>counts[o.grade]=(counts[o.grade]||0)+1);
+const gradeSlot={};D.grades.slice().sort((a,b)=>(counts[b.id]||0)-(counts[a.id]||0)||a.name.localeCompare(b.name)).forEach((g,i)=>gradeSlot[g.id]=i<8?i+1:0);
+const gc=id=>`var(--g${gradeSlot[id]??0})`;
+const lines=[...new Set(obs.map(o=>o.line))].sort();
+
+/* Runs: consecutive observations of one grade on one line. A change between runs is a candidate. */
+const runs=[],pairs=[];
+for(const line of lines){
+  let cur=null;
+  for(const o of obs.filter(x=>x.line===line)){
+    if(!cur||cur.grade!==o.grade){cur={line,grade:o.grade,items:[]};runs.push(cur);}
+    cur.items.push(o);
+  }
+}
+for(const line of lines){
+  const rs=runs.filter(r=>r.line===line);
+  for(let i=1;i<rs.length;i++)pairs.push({from:rs[i-1],to:rs[i]});
+}
+pairs.sort((a,b)=>a.to.items[0].t-b.to.items[0].t);
+pairs.forEach((p,i)=>{p.i=i;p.gapH=(p.to.items[0].t-p.from.items.at(-1).t)/36e5;p.dup=duplicate(p.from.items.at(-1),p.to.items[0]);});
+
+function duplicate(a,b){
+  const keys=Object.keys(a.vals).filter(k=>k in b.vals);
+  return keys.length>=5&&keys.every(k=>a.vals[k][0]===b.vals[k][0])?keys.length:0;
+}
+
+/* ---------- formatting ---------- */
+const two=n=>String(n).padStart(2,'0');
+function dt(t,withYear=true){const d=new Date(t);return `${two(d.getUTCDate())}.${two(d.getUTCMonth()+1)}${withYear?'.'+d.getUTCFullYear():''} ${two(d.getUTCHours())}:${two(d.getUTCMinutes())}`;}
+function dShort(t){const d=new Date(t);return `${d.getUTCDate()} ${MON[d.getUTCMonth()]} ${String(d.getUTCFullYear()).slice(2)}`;}
+function gapText(h){
+  if(h<1)return `${Math.max(1,Math.round(h*60))} мин`;
+  if(h<48)return `${Math.round(h)} ч`;
+  const d=Math.round(h/24);return `${d} ${plural(d,'сутки','суток','суток')}`;
+}
+function plural(n,one,few,many){const a=Math.abs(n)%100,b=a%10;return a>10&&a<20?many:b===1?one:b>1&&b<5?few:many;}
+function fmt(n,p=2){if(n===null||n===undefined||!Number.isFinite(n))return '—';return n.toLocaleString('ru-RU',{minimumFractionDigits:p,maximumFractionDigits:p}).replace(/ /g,' ');}
+function prec(key,v){const p=P[key]?.precision;if(Number.isInteger(p))return p;return Math.abs(v)>=100?1:Math.abs(v)>=10?2:3;}
+const unit=key=>P[key]?.unit||'';
+function delta(a,b,p){
+  if(a==null||b==null)return {html:'',cls:'flat',pct:null};
+  const d=b-a,pct=a!==0?100*d/Math.abs(a):null,cls=Math.abs(d)<1e-9?'flat':d>0?'up':'down';
+  const sign=d>0?'+':d<0?'−':'±';
+  return {d,pct,cls,html:`${sign}${fmt(Math.abs(d),p)}`,pctHtml:pct===null?'—':`${pct>0?'+':pct<0?'−':'±'}${fmt(Math.abs(pct),1)} %`};
+}
+const rv=status=>status==='review'?'<span class="rv" title="Требует сверки">?</span>':'';
+
+/* ---------- state ---------- */
+const S={
+  mode:store.get('mode','pair'),scale:store.get('scale','time'),agg:store.get('agg','edge'),
+  confirmed:store.get('confirmed',false),singles:store.get('singles',false),grade:null,
+  pair:Math.max(0,pairs.length-1),freeA:null,freeB:null,nextSlot:'B'
+};
+{const last=obs.filter(o=>Object.keys(o.vals).length);S.freeA=last.at(-2)?.id??obs[0]?.id;S.freeB=last.at(-1)?.id??obs[0]?.id;}
+const visiblePairs=()=>pairs.filter(p=>S.grade===null||p.from.grade===S.grade||p.to.grade===S.grade);
+
+/* ---------- values of a side ---------- */
+function sideValues(items,fromEnd){
+  const seq=fromEnd?[...items].reverse():items,out={};
+  const ok=v=>!S.confirmed||v[1]==='confirmed';
+  if(S.agg==='mean'&&S.mode==='pair'){
+    const acc={};
+    for(const o of seq)for(const [k,v] of Object.entries(o.vals))if(ok(v))(acc[k]??=[]).push({v,o});
+    for(const [k,list] of Object.entries(acc))out[k]={v:list.reduce((s,x)=>s+x.v[0],0)/list.length,status:list.every(x=>x.v[1]==='confirmed')?'confirmed':'review',n:list.length,obs:list.map(x=>x.o)};
+  }else{
+    for(const o of seq)for(const [k,v] of Object.entries(o.vals))if(!(k in out)&&ok(v))out[k]={v:v[0],status:v[1],n:1,obs:[o]};
+  }
+  return out;
+}
+/* Proportions observed on one side: arithmetic on the shown numbers, not a recipe. */
+function derived(vals){
+  const st=list=>list.every(x=>x.status==='confirmed')?'confirmed':'review';
+  const f=[1,2,3].map(i=>vals['z'+i+'_f']||vals['initiator'+i]||null),out={f};
+  if(f.every(Boolean)){
+    const sum=f.reduce((s,x)=>s+x.v,0);
+    out.sum={v:sum,status:st(f)};
+    if(sum>0){out.share=f.map(x=>({v:100*x.v/sum,status:st(f)}));if(vals.pal)out.palSum={v:vals.pal.v/sum,status:st([...f,vals.pal])};}
+  }
+  if(vals.pal&&vals.c3_flow&&vals.c3_flow.v>0)out.palC3={v:vals.pal.v/vals.c3_flow.v,status:st([vals.pal,vals.c3_flow])};
+  return out;
+}
+function docFor(o){
+  if(!o)return null;
+  if(o.doc)return D.docs.find(d=>d.id===o.doc)||null;
+  const day=o.ts.slice(0,10);
+  return D.docs.find(d=>d.grade===o.grade&&d.from<=day&&(!d.to||day<=d.to))||null;
+}
+
+/* ---------- header ---------- */
+function renderFacts(){
+  const all=Object.values(D.values).flatMap(v=>Object.values(v));
+  const conf=all.filter(v=>v[1]==='confirmed').length;
+  const first=obs[0],last=obs.at(-1);
+  $('facts').innerHTML=`<span><b>${obs.length}</b> ${plural(obs.length,'замер','замера','замеров')}</span><span><b>${D.grades.length}</b> ${plural(D.grades.length,'марка','марки','марок')}</span><span><b>${pairs.length}</b> соседних ${plural(pairs.length,'смена','смены','смен')} марки</span><span>${first?dShort(first.t)+' — '+dShort(last.t):''}</span><span>сверено <b>${conf}</b> из ${all.length} значений</span>`;
+  $('foot').textContent=`Данные из рабочей базы на ${D.generated_at.slice(0,10).split('-').reverse().join('.')}. Время замеров — как на экране или в EXIF фото. Отклонённые варианты не показываются. Страница только читает базу.`;
+}
+function renderLegend(){
+  $('legend').innerHTML=D.grades.filter(g=>counts[g.id]).sort((a,b)=>gradeSlot[a.id]-gradeSlot[b.id]).map(g=>`<button class="chip" data-grade="${g.id}" aria-pressed="${S.grade===g.id}" title="Показать только смены с этой маркой"><span class="sw" style="background:${gc(g.id)}"></span>${esc(g.name)}<span class="n">${counts[g.id]}</span></button>`).join('');
+}
+
+/* ---------- timeline ---------- */
+let geom=null;
+function renderTimeline(){
+  const box=$('tl'),W=Math.max(300,box.clientWidth),left=30,right=14,top=22,laneH=46,H=top+lines.length*laneH+18;
+  const ts=obs.map(o=>o.t),t0=Math.min(...ts),t1=Math.max(...ts),span=Math.max(1,t1-t0),pad=span*.02;
+  const x=o=>S.scale==='time'?left+(o.t-t0+pad)/(span+2*pad)*(W-left-right):left+(o.order+.5)/obs.length*(W-left-right);
+  const laneY=l=>top+lines.indexOf(l)*laneH+laneH/2;
+  let s='';
+  // month ticks (time scale only)
+  if(S.scale==='time'){
+    const d=new Date(t0);d.setUTCDate(1);d.setUTCHours(0,0,0,0);
+    const ticks=[];while(d.getTime()<=t1+pad){if(d.getTime()>=t0-pad)ticks.push(d.getTime());d.setUTCMonth(d.getUTCMonth()+1);}
+    const step=Math.ceil(ticks.length/Math.max(2,Math.floor((W-left)/52)));
+    ticks.forEach((t,i)=>{const X=left+(t-t0+pad)/(span+2*pad)*(W-left-right);s+=`<line x1="${X}" x2="${X}" y1="${top-6}" y2="${H-14}" stroke="var(--line)"/>`;if(i%step===0){const m=new Date(t);s+=`<text x="${X+3}" y="${top-8}">${MONS[m.getUTCMonth()]}${m.getUTCMonth()===0||i===0?' '+String(m.getUTCFullYear()).slice(2):''}</text>`;}});
+  }else s+=`<text x="${left}" y="${top-8}">каждый замер — равный шаг, слева направо по времени</text>`;
+  for(const l of lines){const y=laneY(l);s+=`<line x1="${left}" x2="${W-right}" y1="${y}" y2="${y}" stroke="var(--axis)"/><text class="lane" x="4" y="${y+4}">${LINE[l]}</text>`;}
+  const vis=new Set(visiblePairs().map(p=>p.i));
+  // runs
+  for(const r of runs){
+    const y=laneY(r.line),x0=x(r.items[0]),x1=x(r.items.at(-1)),w=Math.max(8,x1-x0+8);
+    const dim=S.grade!==null&&r.grade!==S.grade?' opacity=".3"':'';
+    s+=`<rect x="${(x0+x1)/2-w/2}" y="${y-7}" width="${w}" height="14" rx="4" fill="${gc(r.grade)}"${dim}/>`;
+  }
+  // change markers
+  const cur=S.mode==='pair'?pairs[S.pair]:null;
+  for(const p of pairs){
+    const y=laneY(p.from.line),X=(x(p.from.items.at(-1))+x(p.to.items[0]))/2,on=cur===p;
+    if(!vis.has(p.i))continue;
+    s+=`<line x1="${X}" x2="${X}" y1="${y-15}" y2="${y+15}" stroke="${on?'var(--ink)':'var(--ink-2)'}" stroke-width="${on?2.5:1}" ${on?'':'stroke-dasharray="2 2"'}/>`;
+    if(on)s+=`<path d="M${X-5} ${y-21} L${X+5} ${y-21} L${X} ${y-15}Z" fill="var(--ink)"/>`;
+    s+=`<rect class="hit" data-pair="${p.i}" x="${X-8}" y="${y-20}" width="16" height="40"><title>${esc(G[p.from.grade].name)} → ${esc(G[p.to.grade].name)}</title></rect>`;
+  }
+  // observation dots
+  const sel=S.mode==='free'?[S.freeA,S.freeB]:cur?[cur.from.items.at(-1).id,cur.to.items[0].id]:[];
+  geom=obs.map(o=>({o,X:x(o),Y:laneY(o.line)}));
+  for(const g of geom){
+    const on=sel.includes(g.o.id),empty=!Object.keys(g.o.vals).length;
+    s+=`<circle cx="${g.X}" cy="${g.Y}" r="${on?5.5:3.5}" fill="${empty?'var(--surface)':on?'var(--ink)':'var(--surface)'}" stroke="${on?'var(--surface)':'var(--ink)'}" stroke-width="${on?2:1.2}"/>`;
+    if(S.mode==='free'&&on)s+=`<text x="${g.X}" y="${g.Y+22}" text-anchor="middle" style="fill:var(--ink);font-weight:600">${g.o.id===S.freeA?'А':'Б'}</text>`;
+  }
+  box.querySelector('svg')?.remove();
+  box.insertAdjacentHTML('afterbegin',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Хронология замеров по линиям, цвет — марка">${s}</svg>`);
+  $('tl-hint').textContent=S.mode==='pair'?'Пунктир — смена марки между соседними снимками. Нажмите на пунктир или на точку замера, чтобы открыть сравнение.':'Нажимайте на точки: выбор чередуется между замером А и Б.';
+}
+function nearest(ev){
+  const svg=$('tl').querySelector('svg');if(!svg||!geom)return null;
+  const r=svg.getBoundingClientRect(),k=svg.viewBox.baseVal.width/r.width,mx=(ev.clientX-r.left)*k,my=(ev.clientY-r.top)*k;
+  let best=null,bd=18*k;
+  for(const g of geom){const d=Math.hypot(g.X-mx,(g.Y-my)*1.6);if(d<bd){bd=d;best=g;}}
+  return best&&{...best,px:best.X/k,py:best.Y/k};
+}
+$('tl').addEventListener('pointermove',ev=>{
+  const n=nearest(ev),tip=$('tip');
+  if(!n){tip.hidden=true;return;}
+  const vals=Object.values(n.o.vals),c=vals.filter(v=>v[1]==='confirmed').length;
+  tip.innerHTML=`<b>${esc(G[n.o.grade].name)}</b> · линия ${LINE[n.o.line]}<br>${dt(n.o.t)}<br>${vals.length?`${vals.length} знач. · сверено ${c}`:'значений нет'}`;
+  tip.style.left=n.px+'px';tip.style.top=n.py+'px';tip.hidden=false;
+});
+$('tl').addEventListener('pointerleave',()=>$('tip').hidden=true);
+$('tl').addEventListener('click',ev=>{
+  const hit=ev.target.closest('[data-pair]');
+  if(hit&&S.mode==='pair'){S.pair=Number(hit.dataset.pair);return render(true);}
+  const n=nearest(ev);if(!n)return;
+  if(S.mode==='free'){if(S.nextSlot==='A'){S.freeA=n.o.id;S.nextSlot='B';}else{S.freeB=n.o.id;S.nextSlot='A';}return render();}
+  const vp=visiblePairs(),p=vp.find(p=>p.to.items.includes(n.o))||vp.find(p=>p.from.items.includes(n.o));
+  if(p){S.pair=p.i;render(true);}
+});
+
+/* ---------- pair list / free selects ---------- */
+function renderNav(){
+  $('pair-nav').hidden=S.mode!=='pair';$('free').hidden=S.mode!=='free';
+  if(S.mode==='pair'){
+    const vp=visiblePairs();
+    if(vp.length&&!vp.includes(pairs[S.pair]))S.pair=vp.at(-1).i;
+    $('pairs').innerHTML=vp.map(p=>`<button class="pair" data-pair="${p.i}" aria-pressed="${p.i===S.pair}"><span class="g"><span class="sw" style="background:${gc(p.from.grade)}"></span>${esc(G[p.from.grade].name)} → <span class="sw" style="background:${gc(p.to.grade)}"></span>${esc(G[p.to.grade].name)}</span><span class="d">${dShort(p.to.items[0].t)} · линия ${LINE[p.from.line]} · через ${gapText(p.gapH)}</span>${p.dup?'<span class="flag">совпадают значения</span>':''}</button>`).join('')||'<span class="muted">Нет смен с этой маркой</span>';
+    const idx=vp.indexOf(pairs[S.pair]);$('prev').disabled=idx<=0;$('next').disabled=idx<0||idx>=vp.length-1;
+  }else{
+    const opts=sel=>obs.map(o=>`<option value="${o.id}" ${o.id===sel?'selected':''}>${dt(o.t)} · ${esc(G[o.grade].name)} · ${LINE[o.line]} · ${Object.keys(o.vals).length} знач.</option>`).join('');
+    $('free-a').innerHTML=opts(S.freeA);$('free-b').innerHTML=opts(S.freeB);
+  }
+}
+function scrollPair(){const box=$('pairs'),b=box.querySelector('[aria-pressed="true"]');if(!b)return;const left=b.offsetLeft-box.offsetLeft-(box.clientWidth-b.offsetWidth)/2;box.scrollTo({left:Math.max(0,left),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}
+
+/* ---------- comparison ---------- */
+function sideCard(items,label,vals){
+  const g=items[0].grade,first=items[0],last=items.at(-1),n=items.length;
+  const doc=docFor(label==='before'?last:first);
+  const when=n>1?`${dt(first.t)} — ${dt(last.t,true)}`:dt(first.t);
+  return `<div class="side" style="--c:${gc(g)}"><span class="eyebrow">${label==='before'?'До смены':label==='after'?'После смены':label}</span><span class="gname">${esc(G[g].name)}</span><span class="meta">Линия ${LINE[first.line]} · ${when}</span><span class="meta">${n} ${plural(n,'замер','замера','замеров')} · ${Object.keys(vals).length} параметров${doc?` · техкарта ${esc(doc.version)}`:''}</span></div>`;
+}
+function renderCompare(){
+  const el=$('compare');
+  let A,B,itemsA,itemsB,head,warns=[];
+  if(S.mode==='pair'){
+    const p=pairs[S.pair];
+    if(!p||!visiblePairs().includes(p)){el.innerHTML='<div class="empty">Соседних смен марки в базе нет. Перейдите в режим «Любые два замера».</div>';return;}
+    itemsA=p.from.items;itemsB=p.to.items;A=sideValues(itemsA,true);B=sideValues(itemsB,false);
+    head=`<div class="versus">${sideCard(itemsA,'before',A)}<div class="gap"><span class="arrow">→</span><span><b>${gapText(p.gapH)}</b>между снимками</span></div>${sideCard(itemsB,'after',B)}</div>`;
+    if(p.gapH>12)warns.push(`Между последним снимком ${esc(G[p.from.grade].name)} и первым снимком ${esc(G[p.to.grade].name)} прошло ${gapText(p.gapH)}. В этом промежутке могли быть другие марки и режимы, поэтому разница ниже — сравнение снимков, а не доказанный переход.`);
+    if(p.dup)warns.push(`На соседних снимках совпадают все ${p.dup} общих значений, хотя марки разные. Вероятно, один и тот же экран записан на две марки — проверьте привязку марки.`);
+  }else{
+    const a=byId[S.freeA],b=byId[S.freeB];
+    if(!a||!b){el.innerHTML='<div class="empty">Выберите два замера.</div>';return;}
+    itemsA=[a];itemsB=[b];A=sideValues(itemsA,false);B=sideValues(itemsB,false);
+    const h=Math.abs(b.t-a.t)/36e5;
+    head=`<div class="versus">${sideCard(itemsA,'Замер А',A)}<div class="gap"><span class="arrow">→</span><span><b>${gapText(h)}</b>${b.t<a.t?'Б раньше А':'между замерами'}</span></div>${sideCard(itemsB,'Замер Б',B)}</div>`;
+    if(a.id===b.id)warns.push('Выбран один и тот же замер.');
+    if(a.line!==b.line)warns.push('Замеры с разных линий: условия могут быть несопоставимы.');
+    const d=duplicate(a,b);if(d&&a.grade!==b.grade)warns.push(`Совпадают все ${d} общих значений при разных марках — вероятно, дубль одного экрана.`);
+  }
+  const all=[...Object.values(A),...Object.values(B)],rev=all.filter(v=>v.status==='review').length;
+  if(!S.confirmed&&rev)warns.push(`${rev} из ${all.length} значений ещё не сверены с фото (отмечены знаком <span class="rv">?</span>). Включите «Только сверенные», чтобы скрыть их.`);
+  if(S.confirmed&&!all.length)warns.push('Сверенных значений на этих снимках нет. Снимите флажок «Только сверенные».');
+
+  const controls=`<div class="row spread"><h2>Что изменилось</h2><div class="row">${S.mode==='pair'?`<div class="seg" role="group" aria-label="Какое значение брать"><button data-agg="edge" aria-pressed="${S.agg==='edge'}" title="Последний снимок до смены и первый после">Ближайшие к смене</button><button data-agg="mean" aria-pressed="${S.agg==='mean'}" title="Среднее по всем снимкам периода">Среднее за период</button></div>`:''}<label class="check"><input type="checkbox" id="only-conf" ${S.confirmed?'checked':''}>Только сверенные</label></div></div>`;
+
+  el.innerHTML=controls+head+(warns.length?`<div class="warns">${warns.map(w=>`<div class="warn"><span>${w}</span></div>`).join('')}</div>`:'')+tiles(A,B)+zones(A,B)+table(A,B)+norms(itemsA,itemsB);
+}
+
+function tiles(A,B){
+  const dA=derived(A),dB=derived(B);
+  const cand=[
+    ['pal','Расход ПАЛ',A.pal,B.pal,unit('pal'),2],
+    ['sum','Инициатор, сумма 3 зон',dA.sum,dB.sum,'кг/ч',2],
+    ['palSum','ПАЛ / сумма инициатора',dA.palSum,dB.palSum,'кг/кг',3],
+    ['palC3','ПАЛ / пропилен',dA.palC3,dB.palC3,'кг/м³',4],
+    ['mfr','ПТР',A.mfr,B.mfr,unit('mfr'),3],
+    ['drive_current','Ток главного привода',A.drive_current,B.drive_current,unit('drive_current'),1],
+    ['rpm','Обороты А-404',A.rpm,B.rpm,unit('rpm'),1],
+    ['vgvd','Давление ВГВД',A.vgvd,B.vgvd,unit('vgvd'),2],
+    ['pal_sp','Уставка ПАЛ',A.pal_sp,B.pal_sp,unit('pal_sp'),2],
+  ].filter(c=>c[2]&&c[3]).slice(0,6);
+  if(!cand.length)return `<div class="empty">На этих снимках нет общих ключевых показателей (ПАЛ, инициаторы, ПТР, привод). Ниже — всё, что снято с каждой стороны.</div>`;
+  return `<div><h3 style="margin-bottom:8px">Ключевые показатели</h3><div class="tiles">${cand.map(([k,name,a,b,u,p])=>{const d=delta(a.v,b.v,p);return `<div class="tile"><span class="k">${esc(name)}${u?`, ${esc(u)}`:''}</span><span class="ab">${fmt(a.v,p)}${rv(a.status)} → ${fmt(b.v,p)}${rv(b.status)}</span><span class="dv ${d.cls}">${d.html}</span><span class="pc ${d.cls}">${d.pctHtml}</span></div>`;}).join('')}</div>${cand.some(c=>c[0]==='palSum'||c[0]==='palC3')?'<p class="note muted" style="margin-top:8px">Пропорции — отношение наблюдаемых расходов на снимке, а не рецепт марки. ПАЛ/пропилен в кг/м³ не является массовой долей.</p>':''}</div>`;
+}
+
+function zones(A,B){
+  const dA=derived(A),dB=derived(B);
+  if(!dA.f.some(Boolean)&&!dB.f.some(Boolean))return '';
+  const bar=(d,name,g)=>`<div class="stack-row"><span class="lbl"><span class="sw" style="background:${gc(g)}"></span>${esc(name)}</span><div class="stack">${d.share?d.share.map((s,i)=>`<div class="z${i+1}" style="flex:${s.v}" title="Зона ${i+1}: ${fmt(d.f[i].v,2)} кг/ч, ${fmt(s.v,1)} %">${s.v>=9?fmt(s.v,1)+' %':''}</div>`).join(''):'<div class="none">нет всех трёх расходов</div>'}</div></div>`;
+  const gA=S.mode==='pair'?pairs[S.pair].from.grade:byId[S.freeA].grade,gB=S.mode==='pair'?pairs[S.pair].to.grade:byId[S.freeB].grade;
+  const nA=S.mode==='pair'?G[gA].name:'А · '+G[gA].name,nB=S.mode==='pair'?G[gB].name:'Б · '+G[gB].name;
+  const rows=[['Уставка Т','sp'],['Тмакс','t'],['Инициатор','f'],['Доля','share'],['Выход клапана','out']];
+  const cell=(a,b,p,u)=>{if(!a&&!b)return '<td class="na">—</td>';const d=delta(a?.v,b?.v,p);return `<td class="v">${a?fmt(a.v,p)+rv(a.status):'—'} → ${b?fmt(b.v,p)+rv(b.status):'—'}${a&&b?` <span class="${d.cls}">(${d.html}${u})</span>`:''}</td>`;};
+  const body=rows.map(([name,k])=>`<tr><td>${name}${k==='share'?', %':k==='f'?', кг/ч':k==='out'?', %':', °C'}</td>${[1,2,3].map(z=>{
+    if(k==='share')return cell(dA.share?.[z-1],dB.share?.[z-1],1,' п.п.');
+    if(k==='f')return cell(dA.f[z-1],dB.f[z-1],2,'');
+    const key='z'+z+'_'+k;return cell(A[key],B[key],prec(key,(A[key]||B[key])?.v??0),'');
+  }).join('')}</tr>`).join('');
+  return `<div class="zones"><h3>Инициатор по зонам реактора</h3><div class="zkey"><span><i class="sw" style="background:var(--z1)"></i>Зона 1</span><span><i class="sw" style="background:var(--z2)"></i>Зона 2</span><span><i class="sw" style="background:var(--z3)"></i>Зона 3</span></div>${bar(dA,nA,gA)}${bar(dB,nB,gB)}<div class="tw"><table><thead><tr><th></th><th>Зона 1</th><th>Зона 2</th><th>Зона 3</th></tr></thead><tbody>${body}</tbody></table></div></div>`;
+}
+
+function table(A,B){
+  const keys=[...new Set([...Object.keys(A),...Object.keys(B)])].sort((a,b)=>(PORDER[a]??999)-(PORDER[b]??999));
+  const both=keys.filter(k=>A[k]&&B[k]),single=keys.length-both.length,show=S.singles?keys:both;
+  if(!keys.length)return '';
+  const groups={};for(const k of show)(groups[P[k]?.group||'Прочее']??=[]).push(k);
+  const meanNote=v=>v&&v.n>1?` title="Среднее по ${v.n} снимкам"`:v?` title="${dt(v.obs[0].t)}"`:'';
+  const rows=Object.entries(groups).map(([g,ks])=>`<tr class="grp"><td colspan="5">${esc(g)}</td></tr>`+ks.map(k=>{
+    const a=A[k],b=B[k],p=prec(k,(a||b).v),d=delta(a?.v,b?.v,p),u=unit(k);
+    const w=d.pct===null||d.pct===undefined?0:Math.min(50,Math.abs(d.pct))/50*50;
+    return `<tr><td>${esc(P[k]?.name||k)}${u?`, ${esc(u)}`:''}<span class="tag">${esc(P[k]?.tag||k)}</span></td><td class="v"${meanNote(a)}>${a?fmt(a.v,p)+rv(a.status):'<span class="muted">нет на снимке</span>'}</td><td class="v"${meanNote(b)}>${b?fmt(b.v,p)+rv(b.status):'<span class="muted">нет на снимке</span>'}</td><td class="v dcol ${d.cls}">${d.html||''}</td><td>${a&&b?`<span class="bar" title="${d.pctHtml}">${w?`<i class="${d.pct>0?'pos':'neg'}" style="width:${w}%"></i>`:''}</span> <span class="num ${d.cls}" style="display:inline-block;min-width:64px">${d.pctHtml}</span>`:''}</td></tr>`;
+  }).join('')).join('');
+  const hA=S.mode==='pair'?'До':'А',hB=S.mode==='pair'?'После':'Б';
+  return `<div style="display:grid;gap:8px;min-width:0"><div class="row spread"><h3>Все параметры · ${both.length} общих</h3>${single?`<label class="check"><input type="checkbox" id="singles" ${S.singles?'checked':''}>Показать снятые только с одной стороны (${single})</label>`:''}</div>${show.length?`<div class="tw"><table><thead><tr><th>Параметр</th><th>${hA}</th><th>${hB}</th><th class="dcol">Δ</th><th>Изменение, %</th></tr></thead><tbody>${rows}</tbody></table></div>`:'<div class="empty">Общих параметров нет: снимки сделаны с разных экранов. Включите показ параметров одной стороны.</div>'}<p class="note muted">Полоска показывает относительное изменение, шкала ограничена ±50 %. Красный — рост, синий — снижение; это направление, а не оценка «хорошо/плохо».</p></div>`;
+}
+
+function norms(itemsA,itemsB){
+  const da=docFor(S.mode==='pair'?itemsA.at(-1):itemsA[0]),db=docFor(itemsB[0]);
+  if(!da&&!db)return `<p class="note muted">Действующие техкарты для этих снимков в базе не найдены.</p>`;
+  const na=D.norms.filter(n=>n.doc===da?.id),nb=D.norms.filter(n=>n.doc===db?.id);
+  const keys=[...new Set([...na,...nb].map(n=>n.key))].sort((a,b)=>(PORDER[a]??999)-(PORDER[b]??999));
+  const rng=n=>n?`${n.lo===null?'…':fmt(n.lo,prec(n.key,n.lo))} — ${n.hi===null?'…':fmt(n.hi,prec(n.key,n.hi))}${n.target!==null?` (цель ${fmt(n.target,prec(n.key,n.target))})`:''}`:'—';
+  const name=(d,items)=>d?`${esc(G[d.grade].name)} · ${esc(d.version)}`:`${esc(G[items[0].grade].name)} · нет техкарты`;
+  return `<details><summary>Нормы техкарт · ${name(da,itemsA)} и ${name(db,itemsB)}</summary><div class="tw" style="margin-top:8px"><table><thead><tr><th>Параметр</th><th>${name(da,itemsA)}</th><th>${name(db,itemsB)}</th></tr></thead><tbody>${keys.map(k=>`<tr><td>${esc(P[k]?.name||k)}${unit(k)?', '+esc(unit(k)):''}</td><td class="v">${rng(na.find(n=>n.key===k))}</td><td class="v">${rng(nb.find(n=>n.key===k))}</td></tr>`).join('')}</tbody></table></div></details>`;
+}
+
+/* ---------- wiring ---------- */
+function render(scroll){
+  $('mode-pair').setAttribute('aria-pressed',S.mode==='pair');$('mode-free').setAttribute('aria-pressed',S.mode==='free');
+  $('scale-time').setAttribute('aria-pressed',S.scale==='time');$('scale-order').setAttribute('aria-pressed',S.scale==='order');
+  renderLegend();renderNav();renderTimeline();renderCompare();
+  if(scroll)scrollPair();
+}
+$('mode-pair').onclick=()=>{S.mode='pair';store.set('mode',S.mode);render(true);};
+$('mode-free').onclick=()=>{S.mode='free';store.set('mode',S.mode);render();};
+$('scale-time').onclick=()=>{S.scale='time';store.set('scale',S.scale);renderTimeline();};
+$('scale-order').onclick=()=>{S.scale='order';store.set('scale',S.scale);renderTimeline();};
+$('legend').onclick=e=>{const b=e.target.closest('[data-grade]');if(!b)return;const g=Number(b.dataset.grade);S.grade=S.grade===g?null:g;if(S.mode!=='pair')S.mode='pair';render(true);};
+$('pairs').onclick=e=>{const b=e.target.closest('[data-pair]');if(b){S.pair=Number(b.dataset.pair);render(true);}};
+function step(dir){const vp=visiblePairs(),i=vp.indexOf(pairs[S.pair]),n=vp[i+dir];if(n){S.pair=n.i;render(true);}}
+$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+document.addEventListener('keydown',e=>{if(S.mode!=='pair'||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1);});
+$('free-a').onchange=e=>{S.freeA=Number(e.target.value);render();};
+$('free-b').onchange=e=>{S.freeB=Number(e.target.value);render();};
+$('swap').onclick=()=>{[S.freeA,S.freeB]=[S.freeB,S.freeA];render();};
+$('compare').addEventListener('click',e=>{const b=e.target.closest('[data-agg]');if(b){S.agg=b.dataset.agg;store.set('agg',S.agg);renderCompare();}});
+$('compare').addEventListener('change',e=>{
+  if(e.target.id==='only-conf'){S.confirmed=e.target.checked;store.set('confirmed',S.confirmed);renderCompare();}
+  if(e.target.id==='singles'){S.singles=e.target.checked;store.set('singles',S.singles);renderCompare();}
+});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(renderTimeline,120);});
+renderFacts();render(true);
+})();
+</script>
