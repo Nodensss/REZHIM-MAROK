@@ -258,7 +258,7 @@ function zoneLine(name,u,suffix,A,B){
   return `<div class="ln wide"><span class="nm">${esc(name)} <small>${esc(u)}</small></span><div class="zrow">${parts.join('')}</div></div>`;
 }
 function sharesBlock(A,B,ga,gb,la,lb){
-  if(!A.share&&!B.share)return '';
+  if(!A.share||!B.share)return '';
   const bar=(s,who,g)=>`<div class="sbar"><span class="who"><span class="gp" style="--c:${gc(g)}">${esc(who)}</span></span><div class="stack">${s?s.map((x,i)=>`<div class="z${i+1}" style="flex:${x.v}" title="Зона ${i+1}: ${num(x.v,1)} %">${x.v>=10?num(x.v,0)+' %':''}</div>`).join(''):'<div style="flex:1;background:var(--surface-2);color:var(--muted);font-weight:400">нет всех трёх зон</div>'}</div></div>`;
   let words='';
   if(A.share&&B.share){
