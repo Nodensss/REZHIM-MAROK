@@ -213,7 +213,8 @@ function change(a,b,u,p){
   if(Math.abs(d)<1e-9)return {cls:'flat',text:'без изменений',score:0};
   const cls=d>0?'up':'down',arrow=d>0?'▲':'▼',word=d>0?more:less;
   if(abs)return {cls,text:`${arrow} ${word} на ${num(Math.abs(d),p)}${u==='°C'?' °C':''}`,score:temp?Math.abs(d)*2:Math.abs(d)};
-  if(a===0)return {cls,text:`${arrow} ${word}`,score:100};
+  if(b===0)return {cls,text:`${arrow} до нуля`,score:100};
+  if(a===0)return {cls,text:`${arrow} ${word}, было 0`,score:100};
   const pct=100*d/Math.abs(a),r=b/a;
   if(Math.abs(pct)<1)return {cls:'flat',text:'почти без изменений',score:0};
   if(r>=1.5)return {cls,text:`${arrow} ${word} в ${num(r,1)} раза`,score:Math.abs(pct)};
