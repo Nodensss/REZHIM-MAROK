@@ -119,6 +119,11 @@ details.more[open] summary{margin-bottom:4px}
 .free select{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .swap{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:40px;height:40px;font-size:18px}
 .foot{font-size:13px;color:var(--muted);margin:0;max-width:70ch}
+.tgt{color:var(--muted);font-size:13px;font-weight:400;white-space:nowrap}
+.ln .vals .tgt{display:block}
+.path{display:grid;gap:4px;padding:8px 12px;border-left:3px solid var(--line);font-size:14px;color:var(--ink-2)}
+.path .t{font-weight:600;color:var(--ink)}
+.path ul{margin:0;padding-left:18px;display:grid;gap:2px}
 @media (max-width:640px){
   .ln,.ln.wide{grid-template-columns:minmax(0,1fr);gap:2px}
   .ln .ch{font-size:13px}
@@ -190,11 +195,19 @@ const gc=id=>`var(--g${slot[id]??0})`;
 const gp=id=>`<span class="gp" style="--c:${gc(id)}">${esc(G[id]?.name??'?')}</span>`;
 const lines=[...new Set(obs.map(o=>o.line))].sort();
 /* Runs of one grade on one line; the border between two runs is a grade change seen on neighbouring photos. */
+/* Points marked «переход» (steady = 0) are not a grade's regime: they are the path between two runs. */
+const isTrans=o=>o.steady===0;
 const runs=[],pairs=[];
-for(const line of lines){let cur=null;for(const o of obs.filter(x=>x.line===line)){if(!cur||cur.grade!==o.grade){cur={line,grade:o.grade,items:[]};runs.push(cur);}cur.items.push(o);}}
-for(const line of lines){const rs=runs.filter(r=>r.line===line);for(let i=1;i<rs.length;i++)pairs.push({from:rs[i-1],to:rs[i]});}
-pairs.sort((a,b)=>a.to.items[0].t-b.to.items[0].t);
-pairs.forEach((p,i)=>{p.i=i;p.gapH=(p.to.items[0].t-p.from.items.at(-1).t)/36e5;p.dup=duplicate(p.from.items.at(-1),p.to.items[0]);const d=new Date(p.to.items[0].t);p.ym=d.getUTCFullYear()*12+d.getUTCMonth();});
+for(const line of lines){let cur=null;for(const o of obs.filter(x=>x.line===line&&!isTrans(x))){if(!cur||cur.grade!==o.grade){cur={line,grade:o.grade,items:[]};runs.push(cur);}cur.items.push(o);}}
+for(const line of lines){
+  const rs=runs.filter(r=>r.line===line),tr=obs.filter(x=>x.line===line&&isTrans(x));
+  for(let i=1;i<rs.length;i++){const a=rs[i-1],b=rs[i];pairs.push({from:a,to:b,mid:tr.filter(o=>o.t>a.items.at(-1).t&&o.t<b.items[0].t)});}
+  const last=rs.at(-1),tail=last?tr.filter(o=>o.t>last.items.at(-1).t):[];
+  if(tail.length&&tail.at(-1).grade!==last.grade)pairs.push({from:last,to:{line,grade:tail.at(-1).grade,items:[]},mid:tail,ongoing:true});
+}
+const firstAfter=p=>p.ongoing?p.mid[0]:p.to.items[0];
+pairs.sort((a,b)=>firstAfter(a).t-firstAfter(b).t);
+pairs.forEach((p,i)=>{p.i=i;p.gapH=((p.ongoing?p.mid.at(-1):p.to.items[0]).t-p.from.items.at(-1).t)/36e5;p.dup=p.ongoing?0:duplicate(p.from.items.at(-1),p.to.items[0]);const d=new Date(firstAfter(p).t);p.ym=d.getUTCFullYear()*12+d.getUTCMonth();});
 function duplicate(a,b){const keys=Object.keys(a.vals).filter(k=>k in b.vals);return keys.length>=5&&keys.every(k=>a.vals[k][0]===b.vals[k][0])?keys.length:0;}
 
 /* ---------- words and numbers ---------- */
@@ -247,14 +260,16 @@ function sideValues(items,fromEnd,agg){
 function docFor(o){if(!o)return null;if(o.doc)return D.docs.find(d=>d.id===o.doc)||null;const day=o.ts.slice(0,10);return D.docs.find(d=>d.grade===o.grade&&d.from<=day&&(!d.to||day<=d.to))||null;}
 
 /* ---------- one story ---------- */
-let MIXED=false;
+let MIXED=false,TARGET=null;
+const tgt=(k,p)=>TARGET&&TARGET[k]?`<span class="tgt">на ${esc(TARGET.name)} было ${num(TARGET[k].v,p)}</span>`:'';
 const val=(x,p)=>MIXED&&x.status==='review'?`<span class="rv" title="Не сверено с фото">${num(x.v,p)}</span>`:num(x.v,p);
+let K=null;
 function line(name,u,a,b,p){
   const c=change(a.v,b.v,u,p);
-  return `<div class="ln"><span class="nm">${esc(name)}${u?` <small>${esc(u)}</small>`:''}</span><span class="vals"><span class="was">${val(a,p)}</span> → <b>${val(b,p)}</b></span><span class="ch ${c.cls}">${c.text}</span></div>`;
+  return `<div class="ln"><span class="nm">${esc(name)}${u?` <small>${esc(u)}</small>`:''}</span><span class="vals"><span class="was">${val(a,p)}</span> → <b>${val(b,p)}</b>${tgt(K,p)}</span><span class="ch ${c.cls}">${c.text}</span></div>`;
 }
 function zoneLine(name,u,suffix,A,B){
-  const parts=[1,2,3].map(z=>{const k='z'+z+'_'+suffix,a=A[k],b=B[k];if(!a||!b)return '';const p=prec(k),c=change(a.v,b.v,u,p);return `<span><em>${z}-я</em> ${val(a,p)} → <b>${val(b,p)}</b> <span class="${c.cls}">${c.cls==='flat'?'=':c.cls==='up'?'▲':'▼'}</span></span>`;}).filter(Boolean);
+  const parts=[1,2,3].map(z=>{const k='z'+z+'_'+suffix,a=A[k],b=B[k];if(!a||!b)return '';const p=prec(k),c=change(a.v,b.v,u,p);return `<span><em>${z}-я</em> ${val(a,p)} → <b>${val(b,p)}</b> <span class="${c.cls}">${c.cls==='flat'?'=':c.cls==='up'?'▲':'▼'}</span>${TARGET&&TARGET[k]&&(suffix==='sp'||suffix==='f')?` <span class="tgt">(было ${num(TARGET[k].v,p)})</span>`:''}</span>`;}).filter(Boolean);
   if(!parts.length)return '';
   return `<div class="ln wide"><span class="nm">${esc(name)} <small>${esc(u)}</small></span><div class="zrow">${parts.join('')}</div></div>`;
 }
@@ -268,7 +283,7 @@ function sharesBlock(A,B,ga,gb,la,lb){
   }
   return `<div class="shares"><span class="t">Как инициатор делится по зонам<small> · доля от суммы трёх зон</small>${words?`<br><small style="font-size:14px;color:var(--ink-2)">${words.trim()}</small>`:''}</span>${bar(A.share,la,ga)}${bar(B.share,lb,gb)}<div class="zkey"><span><i style="background:var(--z1)"></i>1-я зона</span><span><i style="background:var(--z2)"></i>2-я</span><span><i style="background:var(--z3)"></i>3-я</span></div></div>`;
 }
-const MAIN=['pal','sum','#f','#share','#sp','mfr','c3_flow','propylene','drive_current','rpm'];
+const MAIN=['pal','sum','#f','#share','#sp','mfr','mfr_raw','mfr_lab','c3_flow','propylene','drive_current','rpm'];
 function story(o){
   const {itemsA,itemsB,A,B,ga,gb}=o;
   const shown=[...Object.entries(A),...Object.entries(B)].filter(([k,x])=>B[k]&&A[k]&&x&&x.status),rev=shown.filter(([,x])=>x.status==='review').length;
@@ -283,10 +298,18 @@ function story(o){
   if(!common.length)main=`<p class="main">Сравнить нечего: до и после смены сняты разные экраны пульта, общих цифр нет.${S.agg==='edge'?' Попробуйте «Среднее за период».':''}</p>`;
   else if(!cands.length)main=`<p class="main"><b>Главное:</b> крупных изменений нет — общие цифры сдвинулись меньше чем на 10 %.</p>`;
   else main=`<p class="main"><b>Главное:</b> ${cands.map(x=>`${SHORT[x.k]||P[x.k]?.name||x.k} — <span class="${x.c.cls}">${x.c.text.replace(/^[▲▼] /,'')}</span>`).join('; ')}.</p>`;
+  if(o.T){
+    const keys=['pal','sum','mfr','mfr_raw','c3_flow','z1_sp','z2_sp','z3_sp','z1_f','z2_f','z3_f','drive_current','rpm'].filter(k=>B[k]&&o.T[k]);
+    const gapOf=k=>{const u=k==='sum'?unitOf('z1_f'):unitOf(k);return change(B[k].v,o.T[k].v,u,k==='sum'?2:prec(k));};
+    const far=keys.map(k=>({k,c:gapOf(k)})).filter(x=>x.c.score>=10).sort((a,b)=>b.c.score-a.c.score);
+    const near=keys.filter(k=>gapOf(k).score<10);
+    const pp=k=>k==='sum'?2:prec(k);
+    main=`<p class="main"><b>Сейчас против прежнего режима ${esc(o.T.name)}:</b> ${far.length?`ещё отличаются — ${far.slice(0,4).map(x=>`${SHORT[x.k]||P[x.k]?.name||x.k} ${num(B[x.k].v,pp(x.k))} (было ${num(o.T[x.k].v,pp(x.k))})`).join('; ')}`:'все общие цифры уже близки к прежним'}.${near.length?` Уже на прежнем уровне: ${near.map(k=>SHORT[k]||P[k]?.name||k).join(', ')}.`:''}</p>`;
+  }
 
   const used=new Set(['share','palSum','palC3']);
   const parts=[];
-  const add=(k,name,u,p)=>{if(both(k)){parts.push(line(name,u,A[k],B[k],p));}used.add(k);};
+  const add=(k,name,u,p)=>{if(both(k)){K=k;parts.push(line(name,u,A[k],B[k],p));K=null;}used.add(k);};
   for(const m of MAIN){
     if(m==='#f'){parts.push(zoneLine('Инициатор по зонам',unitOf('z1_f')||'кг/ч','f',A,B));[1,2,3].forEach(z=>{used.add('z'+z+'_f');used.add('initiator'+z);});}
     else if(m==='#share')parts.push(sharesBlock(A,B,ga,gb,o.la,o.lb));
@@ -307,6 +330,8 @@ function story(o){
   const normLines=normsWords(da,db);
 
 
+  const path=midPath(o.mid);
+  TARGET=null;
   return `<article class="story" ${o.id?`id="${o.id}"`:''}>
     <span class="when">${o.when}</span>
     <h3>${gp(ga)}<span class="arrow">→</span>${gp(gb)}${o.badge||''}</h3>
@@ -314,8 +339,16 @@ function story(o){
     ${flags.map(f=>`<p class="note">${f}</p>`).join('')}
     ${main}
     ${common.length?`<div class="lines">${parts.filter(Boolean).join('')}</div>`:''}
+    ${path}
     ${restHtml.length||normLines||onlyOne.length?`<details class="more"><summary>Подробнее${restHtml.length?`: ещё ${restHtml.length} ${plural(restHtml.length,'показатель','показателя','показателей')}`:''}${normLines?', нормы техкарт':''}</summary>${restHtml.length?`<div class="lines">${restHtml.join('')}</div>`:''}${normLines}${onlyOne.length?`<p class="sub" style="margin-top:8px">Есть только с одной стороны, сравнить нельзя: ${onlyOne.map(k=>esc(P[k].name)).join(', ')}.</p>`:''}</details>`:''}
   </article>`;
+}
+/* The path between two regimes: what each marked transition point showed. */
+const PATH_KEYS=[['pal','ПАЛ'],['mfr','ПТР'],['mfr_raw','ПТР исх.'],['mfr_lab','ПТР по журналу'],['z1_sp','Т 1-й'],['z2_sp','Т 2-й'],['z3_sp','Т 3-й'],['c3_flow','пропилен'],['drive_current','нагрузка']];
+function midPath(mid){
+  if(!mid||!mid.length)return '';
+  const rows=mid.map(o=>{const parts=PATH_KEYS.filter(([k])=>o.vals[k]).map(([k,l])=>`${l} ${num(o.vals[k][0],prec(k))}`);return `<li><b>${day(o.t,false)}</b>${parts.length?' — '+parts.join(' · '):''}</li>`;}).join('');
+  return `<div class="path"><span class="t">Ход перехода · ${mid.length} ${plural(mid.length,'точка','точки','точек')}</span><ul>${rows}</ul></div>`;
 }
 function normsWords(da,db){
   if(!da&&!db)return '';
@@ -327,6 +360,7 @@ function normsWords(da,db){
   return `<div class="lines" style="margin-top:6px"><p class="sub" style="padding:6px 0">Нормы по техкартам${da?`: ${esc(G[ga].name)} — версия ${esc(da.version)}`:''}${db?`, ${esc(G[gb].name)} — версия ${esc(db.version)}`:''}</p>${keys.map(k=>`<div class="ln"><span class="nm">${esc(P[k]?.name||k)}${unitOf(k)?` <small>${esc(unitOf(k))}</small>`:''}</span><span class="vals"><span class="was">${r(na[k])}</span> → <b>${r(nb[k])}</b></span><span class="ch ${JSON.stringify(na[k]&&[na[k].lo,na[k].hi])===JSON.stringify(nb[k]&&[nb[k].lo,nb[k].hi])?'flat':''}">${JSON.stringify(na[k]&&[na[k].lo,na[k].hi])===JSON.stringify(nb[k]&&[nb[k].lo,nb[k].hi])?'норма та же':'норма другая'}</span></div>`).join('')}</div>`;
 }
 function pairStory(p){
+  if(p.ongoing)return ongoingStory(p);
   const A=sideValues(p.from.items,true,S.agg),B=sideValues(p.to.items,false,S.agg);
   const a=p.from.items,b=p.to.items,na=G[p.from.grade].name,nb=G[p.to.grade].name;
   const sub=S.agg==='edge'
@@ -336,7 +370,17 @@ function pairStory(p){
   if(p.gapH>72)warn.push(`Между снимками ${gapText(p.gapH)} — за это время могли быть и другие марки.`);
   if(p.dup)warn.push(`Похоже на ошибку в базе: у обеих марок совпадают все ${p.dup} общих цифр. Возможно, один и тот же снимок записан на две марки.`);
   return story({id:'p'+p.i,itemsA:a,itemsB:b,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:nb,
-    when:`${ymName(p.ym)} · смена №${p.i+1} из ${pairs.length}`,sub,warn});
+    when:`${ymName(p.ym)} · смена №${p.i+1} из ${pairs.length}`,sub,warn,mid:p.mid});
+}
+function ongoingStory(p){
+  const a=p.from.items,m=p.mid,na=G[p.from.grade].name,nb=G[p.to.grade].name;
+  const A=sideValues(a,true,S.agg),B=sideValues(m,true,'edge');
+  const prev=runs.filter(r=>r.line===p.from.line&&r.grade===p.to.grade&&r.items.at(-1).t<a[0].t).at(-1);
+  const T=prev?{...sideValues(prev.items,true,S.agg),name:nb}:null;
+  TARGET=T;
+  const sub=`Линия ${LINE[p.from.line]}. Было: ${esc(na)}, последний снимок ${day(a.at(-1).t)}. Сейчас: последняя точка перехода ${day(m.at(-1).t)}.${prev?` «Было» на ${esc(nb)} — прежний режим этой марки на линии, снимки по ${day(prev.items.at(-1).t)}.`:''}`;
+  return story({id:'p'+p.i,itemsA:a,itemsB:m,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:'сейчас',T,mid:m,
+    when:`${ymName(p.ym)} · идёт переход`,badge:' <span class="flag">идёт переход</span>',sub,warn:[]});
 }
 
 /* ---------- page ---------- */

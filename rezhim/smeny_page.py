@@ -28,7 +28,7 @@ def build_data(conn):
     params = [{'key': r['key'], 'name': r['name'], 'unit': r['unit'], 'tag': r['tag'], 'group': r['group_name'],
                'role': r['role'], 'precision': r['precision']}
               for r in conn.execute('SELECT * FROM param ORDER BY rowid')]
-    observations = [{'id': r['id'], 'grade': r['grade_id'], 'line': r['line'], 'ts': r['timestamp'], 'doc': r['doc_id']}
+    observations = [{'id': r['id'], 'grade': r['grade_id'], 'line': r['line'], 'ts': r['timestamp'], 'doc': r['doc_id'], 'steady': r['steady']}
                     for r in conn.execute('SELECT * FROM observation ORDER BY line, timestamp')]
     # One value per observation and parameter: a confirmed variant wins over one under review;
     # rejected variants and missing numbers are left out.
