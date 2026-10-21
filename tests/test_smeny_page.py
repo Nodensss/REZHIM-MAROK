@@ -29,6 +29,7 @@ class SmenyPageTests(unittest.TestCase):
         self.assertEqual(data['values']['2']['pal'], [6.0, 'review'])
         self.assertEqual([o['ts'] for o in data['observations']], ['2026-01-01T10:00:00', '2026-01-02T10:00:00'])
         self.assertEqual([o['steady'] for o in data['observations']], [None, None])
+        self.assertEqual(data['transitions'], [])
 
     def test_render_embeds_data_once(self):
         html = render(synthetic())

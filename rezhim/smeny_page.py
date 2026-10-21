@@ -42,8 +42,10 @@ def build_data(conn):
             for r in conn.execute('SELECT * FROM doc_version ORDER BY grade_id, valid_from')]
     norms = [{'doc': r['doc_id'], 'key': r['param_key'], 'lo': r['lower_value'], 'target': r['target'], 'hi': r['upper_value']}
              for r in conn.execute('SELECT * FROM norm ORDER BY id')]
+    transitions = [{'line': r['line'], 'from': r['grade_from'], 'to': r['grade_to'], 'start': r['start'], 'end': r['end']}
+                   for r in conn.execute('SELECT * FROM transition ORDER BY start')]
     return {'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'), 'grades': grades, 'params': params,
-            'observations': observations, 'values': values, 'docs': docs, 'norms': norms}
+            'observations': observations, 'values': values, 'docs': docs, 'norms': norms, 'transitions': transitions}
 
 
 def render(conn):
