@@ -289,7 +289,8 @@ function story(o){
   const shown=[...Object.entries(A),...Object.entries(B)].filter(([k,x])=>B[k]&&A[k]&&x&&x.status),rev=shown.filter(([,x])=>x.status==='review').length;
   MIXED=rev>0&&rev<shown.length;
   const check=!shown.length?'':rev===shown.length?' Цифры ещё не сверены с фото.':rev?' Подчёркнутые пунктиром цифры ещё не сверены с фото.':' Все цифры сверены с фото.';
-  const flags=o.warn||[];
+  const flags=[...(o.warn||[])];
+  if(o.mixed)flags.push('Расходы инициатора здесь — смесь старого раствора и нового: со слов оператора, раствор заменён не полностью. После 2–3 перекачиваний свежего раствора они ожидаются как на прежнем режиме этой марки, поэтому сейчас для сравнения не годятся.');
   const both=k=>A[k]&&B[k];
   /* «Главное»: up to three biggest changes, in words. */
   const cands=['pal','sum','mfr','c3_flow','propylene','drive_current','rpm','z1_sp','z2_sp','z3_sp','z1_f','z2_f','z3_f'].filter(both).map(k=>{const u=k==='sum'?unitOf('z1_f'):unitOf(k);return {k,c:change(A[k].v,B[k].v,u,k==='sum'?2:prec(k))};}).filter(x=>x.c.score>=10).sort((a,b)=>b.c.score-a.c.score).slice(0,3);
@@ -299,7 +300,7 @@ function story(o){
   else if(!cands.length)main=`<p class="main"><b>Главное:</b> крупных изменений нет — общие цифры сдвинулись меньше чем на 10 %.</p>`;
   else main=`<p class="main"><b>Главное:</b> ${cands.map(x=>`${SHORT[x.k]||P[x.k]?.name||x.k} — <span class="${x.c.cls}">${x.c.text.replace(/^[▲▼] /,'')}</span>`).join('; ')}.</p>`;
   if(o.T){
-    const keys=['pal','sum','mfr','mfr_raw','c3_flow','z1_sp','z2_sp','z3_sp','z1_f','z2_f','z3_f','drive_current','rpm'].filter(k=>B[k]&&o.T[k]);
+    const keys=['pal','sum','mfr','mfr_raw','c3_flow','z1_sp','z2_sp','z3_sp','z1_f','z2_f','z3_f','drive_current','rpm'].filter(k=>B[k]&&o.T[k]&&!(o.mixed&&(k==='sum'||/^z\d_f$/.test(k))));
     const gapOf=k=>{const u=k==='sum'?unitOf('z1_f'):unitOf(k);return change(B[k].v,o.T[k].v,u,k==='sum'?2:prec(k));};
     const far=keys.map(k=>({k,c:gapOf(k)})).filter(x=>x.c.score>=10).sort((a,b)=>b.c.score-a.c.score);
     const near=keys.filter(k=>gapOf(k).score<10);
@@ -311,10 +312,10 @@ function story(o){
   const parts=[];
   const add=(k,name,u,p)=>{if(both(k)){K=k;parts.push(line(name,u,A[k],B[k],p));K=null;}used.add(k);};
   for(const m of MAIN){
-    if(m==='#f'){parts.push(zoneLine('Инициатор по зонам',unitOf('z1_f')||'кг/ч','f',A,B));[1,2,3].forEach(z=>{used.add('z'+z+'_f');used.add('initiator'+z);});}
+    if(m==='#f'){parts.push(zoneLine(o.mixed?'Инициатор по зонам · смесь растворов':'Инициатор по зонам',unitOf('z1_f')||'кг/ч','f',A,B));[1,2,3].forEach(z=>{used.add('z'+z+'_f');used.add('initiator'+z);});}
     else if(m==='#share')parts.push(sharesBlock(A,B,ga,gb,o.la,o.lb));
     else if(m==='#sp'){parts.push(zoneLine('Уставки температуры зон','°C','sp',A,B));[1,2,3].forEach(z=>used.add('z'+z+'_sp'));}
-    else if(m==='sum')add('sum','Инициатор, всего',unitOf('z1_f')||'кг/ч',2);
+    else if(m==='sum')add('sum',o.mixed?'Инициатор, всего · смесь растворов':'Инициатор, всего',unitOf('z1_f')||'кг/ч',2);
     else add(m,P[m]?.name||m,unitOf(m),prec(m));
   }
   /* the rest, folded */
@@ -386,7 +387,8 @@ function ongoingStory(p){
   TARGET=T;
   const tr=marked(p),st=tr?Date.parse(tr.start+'Z'):null,en=tr&&tr.end?Date.parse(tr.end+'Z'):null;
   const sub=`Линия ${LINE[p.from.line]}.${tr?` Переход начат ${day(st)}${en?`, режим ${esc(nb)} устоявшийся с ${day(en,false)} — переход занял ${gapText((en-st)/36e5)}. Снимков устойчивого режима после этого времени пока нет, поэтому «сейчас» — последняя точка перехода`:`, к последней точке прошло ${gapText((m.at(-1).t-st)/36e5)}`}.`:''} Было: ${esc(na)}, последний снимок ${day(a.at(-1).t)}. Сейчас: последняя точка перехода ${day(m.at(-1).t)}.${prev?` «Было» на ${esc(nb)} — прежний режим этой марки на линии, снимки по ${day(prev.items.at(-1).t)}.`:''}`;
-  return story({id:'p'+p.i,itemsA:a,itemsB:m,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:'сейчас',T,mid:m,start:st,
+  const mixed=['z1_f','z2_f','z3_f'].some(k=>{const src=[...m].reverse().find(x=>x.vals[k]);return src&&src.mixed;});
+  return story({id:'p'+p.i,itemsA:a,itemsB:m,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:'сейчас',T,mid:m,start:st,mixed,
     when:`${ymName(p.ym)} · ${en?'переход завершён':'идёт переход'}`,badge:` <span class="flag">${en?'завершён '+day(en,false).split(', ')[1]:'идёт переход'}</span>`,sub,warn:[],end:en});
 }
 
