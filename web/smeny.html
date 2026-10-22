@@ -330,7 +330,7 @@ function story(o){
   const normLines=normsWords(da,db);
 
 
-  const path=midPath(o.mid,o.start);
+  const path=midPath(o.mid,o.start,o.end);
   TARGET=null;
   return `<article class="story" ${o.id?`id="${o.id}"`:''}>
     <span class="when">${o.when}</span>
@@ -345,11 +345,11 @@ function story(o){
 }
 /* The path between two regimes: what each marked transition point showed. */
 const PATH_KEYS=[['pal','ПАЛ'],['mfr','ПТР'],['mfr_raw','ПТР исх.'],['mfr_lab','ПТР по журналу'],['z1_sp','Т 1-й'],['z2_sp','Т 2-й'],['z3_sp','Т 3-й'],['c3_flow','пропилен'],['drive_current','нагрузка']];
-function midPath(mid,start){
+function midPath(mid,start,end){
   if(!mid||!mid.length)return '';
   const head=start?`<li><b>${day(start,false)}</b> — начало перехода</li>`:'';
   const rows=mid.map(o=>{const parts=PATH_KEYS.filter(([k])=>o.vals[k]).map(([k,l])=>`${l} ${num(o.vals[k][0],prec(k))}`);return `<li><b>${day(o.t,false)}</b>${parts.length?' — '+parts.join(' · '):''}</li>`;}).join('');
-  return `<div class="path"><span class="t">Ход перехода · ${mid.length} ${plural(mid.length,'точка','точки','точек')}</span><ul>${head}${rows}</ul></div>`;
+  return `<div class="path"><span class="t">Ход перехода · ${mid.length} ${plural(mid.length,'точка','точки','точек')}</span><ul>${head}${rows}${end?`<li><b>${day(end,false)}</b> — режим устоявшийся, переход завершён</li>`:''}</ul></div>`;
 }
 function normsWords(da,db){
   if(!da&&!db)return '';
@@ -384,10 +384,10 @@ function ongoingStory(p){
   const prev=runs.filter(r=>r.line===p.from.line&&r.grade===p.to.grade&&r.items.at(-1).t<a[0].t).at(-1);
   const T=prev?{...sideValues(prev.items,true,S.agg),name:nb}:null;
   TARGET=T;
-  const tr=marked(p),st=tr?Date.parse(tr.start+'Z'):null;
-  const sub=`Линия ${LINE[p.from.line]}.${tr?` Переход начат ${day(st)}, к последней точке прошло ${gapText((m.at(-1).t-st)/36e5)}.`:''} Было: ${esc(na)}, последний снимок ${day(a.at(-1).t)}. Сейчас: последняя точка перехода ${day(m.at(-1).t)}.${prev?` «Было» на ${esc(nb)} — прежний режим этой марки на линии, снимки по ${day(prev.items.at(-1).t)}.`:''}`;
+  const tr=marked(p),st=tr?Date.parse(tr.start+'Z'):null,en=tr&&tr.end?Date.parse(tr.end+'Z'):null;
+  const sub=`Линия ${LINE[p.from.line]}.${tr?` Переход начат ${day(st)}${en?`, режим ${esc(nb)} устоявшийся с ${day(en,false)} — переход занял ${gapText((en-st)/36e5)}. Снимков устойчивого режима после этого времени пока нет, поэтому «сейчас» — последняя точка перехода`:`, к последней точке прошло ${gapText((m.at(-1).t-st)/36e5)}`}.`:''} Было: ${esc(na)}, последний снимок ${day(a.at(-1).t)}. Сейчас: последняя точка перехода ${day(m.at(-1).t)}.${prev?` «Было» на ${esc(nb)} — прежний режим этой марки на линии, снимки по ${day(prev.items.at(-1).t)}.`:''}`;
   return story({id:'p'+p.i,itemsA:a,itemsB:m,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:'сейчас',T,mid:m,start:st,
-    when:`${ymName(p.ym)} · идёт переход`,badge:' <span class="flag">идёт переход</span>',sub,warn:[]});
+    when:`${ymName(p.ym)} · ${en?'переход завершён':'идёт переход'}`,badge:` <span class="flag">${en?'завершён '+day(en,false).split(', ')[1]:'идёт переход'}</span>`,sub,warn:[],end:en});
 }
 
 /* ---------- page ---------- */
