@@ -280,11 +280,9 @@ final class Store implements Analysis.Data {
     }
     for (List<Model.Val> list : valuesByObs.values()) list.sort(VALUE_ORDER);
 
-    for (JSONObject item : objects(layer("transitions"))) {
-      Model.Transition transition = transition(item);
-      transitions.add(transition);
-      transitionById.put(transition.id, transition);
-    }
+    // Transitions marked on the PC come with the snapshot; a phone edit of the same episode replaces it.
+    for (JSONObject item : objects(base("transitions"))) putTransition(transition(item));
+    for (JSONObject item : objects(layer("transitions"))) putTransition(transition(item));
     for (JSONObject item : objects(base("history"))) addHistory(history(item, false));
     for (JSONObject item : objects(layer("history"))) addHistory(history(item, true));
     history.sort(Comparator.comparing((Model.History h) -> h.at == null ? "" : h.at));
@@ -313,6 +311,12 @@ final class Store implements Analysis.Data {
   };
 
   private void addGrade(Model.Grade grade) { grades.add(grade); gradeById.put(grade.id, grade); }
+
+  private void putTransition(Model.Transition transition) {
+    Model.Transition old = transitionById.put(transition.id, transition);
+    if (old != null) transitions.remove(old);
+    transitions.add(transition);
+  }
 
   private void addParam(Model.Param param) {
     if (paramByKey.containsKey(param.key)) return;
@@ -383,6 +387,7 @@ final class Store implements Analysis.Data {
     for (JSONObject pump : objects(item.optJSONArray("pumps"))) obs.pumps.add(new int[]{pump.optInt("zone"), pump.optInt("pump")});
     obs.notes = strings(item.optJSONArray("notes"));
     obs.sources = strings(item.optJSONArray("sources"));
+    obs.initiatorMixed = item.optBoolean("initiator_mixed");
     obs.user = user;
     return obs;
   }

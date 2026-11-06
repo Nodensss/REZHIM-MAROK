@@ -16,7 +16,7 @@ import re
 import shutil
 import sqlite3
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from PIL import Image
@@ -66,10 +66,21 @@ def photo_exif(path):
     return stamp, orientation if orientation in range(1, 9) else 1
 
 
-def classify_time(obs_id, timestamp, notes, migrated, exif_times):
+def classify_time(obs_id, timestamp, notes, migrated, exif_times, time_sources=()):
     """Decide where an observation time came from: screen, exif, manual or unknown."""
     if obs_id in TIME_OVERRIDES:
         return TIME_OVERRIDES[obs_id]
+    # An explicit «time_source» written at import wins over guessing from the notes.
+    for text in time_sources:
+        lowered = text.lower()
+        if 'часы пульта' in lowered or 'с экрана' in lowered:
+            return 'screen', text
+    for text in time_sources:
+        lowered = text.lower()
+        if 'журнал' in lowered or 'со слов' in lowered or 'оценк' in lowered:
+            return 'manual', text
+        if 'exif' in lowered:
+            return 'exif', text
     text = ' '.join(notes).lower()
     for note in notes:
         lowered = note.lower()
@@ -140,6 +151,35 @@ def history_text(action, details, param_names, grade_names, source_names):
     return action
 
 
+def transition_item(t, observations):
+    """A marked transition as the phone stores it: grades, times and the observations around it.
+
+    Before: observations of the old grade on the line in the day before the start (or the one recorded);
+    during: points marked «переход» between start and end; after: the recorded observation or the first
+    non-transition observation of the new grade after the end. Confirmed only when all of them exist,
+    the same rule the phone applies to a manual marking.
+    """
+    start, end, line = t['start'], t['end'], t['line']
+    day_before = (datetime.fromisoformat(start) - timedelta(hours=24)).isoformat(timespec='seconds')
+    on_line = [o for o in observations if o['line'] == line]
+    before = [o['id'] for o in on_line if o['grade_id'] == t['grade_from'] and o['steady'] != 0 and day_before <= o['timestamp'] < start]
+    if t['observation_from'] and t['observation_from'] not in before:
+        before.append(t['observation_from'])
+    during = [o['id'] for o in on_line if o['steady'] == 0 and start <= o['timestamp'] <= (end or '9999')]
+    after = [t['observation_to']] if t['observation_to'] else []
+    if not after and end:
+        later = [o for o in on_line if o['grade_id'] == t['grade_to'] and o['steady'] != 0 and o['timestamp'] >= end]
+        after = [min(later, key=lambda o: o['timestamp'])['id']] if later else []
+    complete = bool(start and end and before and after)
+    return {
+        'id': f"t{t['id']}", 'from': f"g{t['grade_from']}", 'to': f"g{t['grade_to']}", 'line': line,
+        'start': start, 'end': end, 'status': 'confirmed' if complete else 'incomplete',
+        'operator': 'со слов оператора',
+        'notes': 'Начало и окончание перехода — со слов оператора.' if end else 'Начало перехода — со слов оператора; окончание не отмечено.',
+        'before': [f'o{i}' for i in sorted(before)], 'during': [f'o{i}' for i in during], 'after': [f'o{i}' for i in after],
+    }
+
+
 def build_snapshot(db_path, sources_dir):
     connection = sqlite3.connect(f'file:{db_path}?mode=ro', uri=True)
     connection.row_factory = sqlite3.Row
@@ -160,6 +200,7 @@ def build_snapshot(db_path, sources_dir):
         ai_obs = rows('SELECT * FROM ai_observation ORDER BY batch_id, observation_id')
         ai_items = rows('SELECT * FROM ai_item ORDER BY id')
         audit = rows('SELECT * FROM audit ORDER BY id')
+        transitions = rows('SELECT * FROM transition ORDER BY start, id')
         metadata = {row['key']: row['value'] for row in rows('SELECT * FROM metadata')}
     finally:
         connection.close()
@@ -191,6 +232,7 @@ def build_snapshot(db_path, sources_dir):
         })
 
     notes_by_obs = defaultdict(list)
+    time_sources_by_obs = defaultdict(list)
     screens_by_obs = defaultdict(list)
     phase_by_obs = {}
     photos_by_batch_obs = {}
@@ -198,6 +240,8 @@ def build_snapshot(db_path, sources_dir):
         meta = json.loads(item['metadata_json'])
         if meta.get('note') and meta['note'] not in notes_by_obs[item['observation_id']]:
             notes_by_obs[item['observation_id']].append(meta['note'])
+        if meta.get('time_source') and meta['time_source'] not in time_sources_by_obs[item['observation_id']]:
+            time_sources_by_obs[item['observation_id']].append(meta['time_source'])
         if meta.get('screen') and meta['screen'] not in screens_by_obs[item['observation_id']]:
             screens_by_obs[item['observation_id']].append(meta['screen'])
         if meta.get('phase'):
@@ -264,7 +308,7 @@ def build_snapshot(db_path, sources_dir):
         migrated = bool(details.get('migration_sha256'))
         notes = list(notes_by_obs[oid])
         exif_times = {exif_by_source[s]: source_names[s] for s in obs_sources[oid] if exif_by_source.get(s)}
-        time_origin, time_note = classify_time(oid, obs['timestamp'], notes, migrated, exif_times)
+        time_origin, time_note = classify_time(oid, obs['timestamp'], notes, migrated, exif_times, time_sources_by_obs[oid])
         grade_origin, grade_note = classify_grade(oid, notes, migrated, reassigned, oid in recognized)
         if details.get('source_description'):
             notes.insert(0, 'Источник: ' + details['source_description'])
@@ -272,6 +316,8 @@ def build_snapshot(db_path, sources_dir):
             notes.append('Насосы: ' + details['pumps_text'])
         for key in details.get('review_without_value') or []:
             notes.append(f'На сверке без числа: {param_names.get(key, key)}')
+        if details.get('note') and details['note'] not in notes:
+            notes.append(details['note'])
         observation_items.append({
             'id': f'o{oid}', 'grade': f"g{obs['grade_id']}", 'line': obs['line'], 'time': obs['timestamp'],
             'time_origin': time_origin, 'time_note': time_note,
@@ -282,6 +328,7 @@ def build_snapshot(db_path, sources_dir):
             'recipe12': obs['recipe12'], 'recipe3': obs['recipe3'],
             'pumps': pumps_by_obs[oid], 'screens': screens_by_obs[oid], 'phase': phase_by_obs.get(oid),
             'notes': notes, 'sources': [f's{s}' for s in sorted(obs_sources[oid])],
+            'initiator_mixed': bool(details.get('initiator_mixed')),
         })
 
     value_items = []
@@ -320,11 +367,13 @@ def build_snapshot(db_path, sources_dir):
             'photos': [f's{photo}'] if photo else [],
         })
 
+    transition_items = [transition_item(t, observations) for t in transitions]
+
     photo_count = sum(1 for s in source_items if s['media'].startswith('image/'))
     counts = {
         'grades': len(grades), 'observations': len(observations), 'values': len(measurements),
         'extras': len(extra_items), 'docs': len(docs), 'norms': len(norms), 'recipes': len(recipes),
-        'sources': len(source_items), 'photos': photo_count, 'history': len(history),
+        'sources': len(source_items), 'photos': photo_count, 'history': len(history), 'transitions': len(transition_items),
         'statuses': {s: sum(1 for v in measurements if v['status'] == s) for s in ('confirmed', 'review', 'rejected')},
     }
     revision = max((entry['id'] for entry in audit), default=0)
@@ -355,6 +404,7 @@ def build_snapshot(db_path, sources_dir):
         'observations': observation_items,
         'values': value_items,
         'extras': extra_items,
+        'transitions': transition_items,
         'history': history,
     }
 

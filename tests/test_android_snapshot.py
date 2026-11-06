@@ -54,6 +54,21 @@ class WorkingDatabaseSnapshotTests(unittest.TestCase):
             self.assertTrue(set(value['sources']) <= sources)
             self.assertTrue(set(value['photos']) <= sources)
 
+    def test_marked_transitions_carry_their_observations(self):
+        observations = {o['id']: o for o in self.snapshot['observations']}
+        with closing(sqlite3.connect(f'file:{DATA / "rezhim.sqlite3"}?mode=ro', uri=True)) as conn:
+            self.assertEqual(len(self.snapshot['transitions']), conn.execute('SELECT COUNT(*) FROM transition').fetchone()[0])
+        for t in self.snapshot['transitions']:
+            for key, grade, check in (('before', t['from'], lambda o: o['time'] < t['start']),
+                                      ('after', t['to'], lambda o: t['end'] is None or o['time'] >= t['end'])):
+                for oid in t[key]:
+                    self.assertEqual(observations[oid]['grade'], grade, oid)
+                    self.assertEqual(observations[oid]['line'], t['line'], oid)
+                    self.assertTrue(check(observations[oid]), oid)
+            for oid in t['during']:
+                self.assertIs(observations[oid]['steady'], False, oid)
+            self.assertEqual(t['status'] == 'confirmed', bool(t['start'] and t['end'] and t['before'] and t['after']))
+
     def test_time_origin_is_never_invented(self):
         origins = {o['id']: o['time_origin'] for o in self.snapshot['observations']}
         self.assertTrue(set(origins.values()) <= {'screen', 'exif', 'manual', 'unknown'})

@@ -53,7 +53,8 @@ final class Model {
     String a103 = "unknown", ab124 = "unknown", suutp = "unknown", doc, recipe12 = "", recipe3 = "";
     String phase, screen = "", createdAt, excludedReason = "";
     Boolean steady;
-    boolean excluded, user;
+    /** Initiator flows are a mix of the old and new solution (operator's note): not a reference for the grade. */
+    boolean excluded, user, initiatorMixed;
     List<int[]> pumps = new ArrayList<>();
     List<String> notes = new ArrayList<>();
     List<String> sources = new ArrayList<>();

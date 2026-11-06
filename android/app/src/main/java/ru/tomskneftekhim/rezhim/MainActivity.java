@@ -190,7 +190,7 @@ public class MainActivity extends Activity {
     tab(tabs, "Главная", "home".equals(tab), () -> home(() -> ArchiveScreens.home(this)));
     tab(tabs, "Марки", "grades".equals(tab), () -> home(() -> ArchiveScreens.grades(this, "")));
     tab(tabs, "Сравнение", "compare".equals(tab), () -> home(() -> CompareScreen.show(this)));
-    tab(tabs, "Переходы", "transitions".equals(tab), () -> home(() -> TransitionScreens.list(this)));
+    tab(tabs, "Смены", "transitions".equals(tab), () -> home(() -> SmenyScreen.show(this)));
     tab(tabs, "Сверка", "review".equals(tab), () -> home(() -> ReviewScreen.show(this)));
     root.addView(tabs);
   }
