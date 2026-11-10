@@ -1,7 +1,7 @@
 plugins { id 'com.android.application' }
 
 android { namespace 'ru.tomskneftekhim.rezhim'; compileSdk 35
-    defaultConfig { applicationId 'ru.tomskneftekhim.rezhim.full'; minSdk 26; targetSdk 34; versionCode 4; versionName '3.1' }
+    defaultConfig { applicationId 'ru.tomskneftekhim.rezhim.full'; minSdk 26; targetSdk 34; versionCode 5; versionName '3.2' }
     // Photos are already compressed; stored uncompressed they can be decoded region by region straight from the APK.
     androidResources { noCompress += ['jpg', 'jpeg', 'png'] }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }

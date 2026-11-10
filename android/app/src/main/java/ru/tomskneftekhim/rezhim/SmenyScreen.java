@@ -45,6 +45,7 @@ final class SmenyScreen {
     a.frame("Смены марок", MainActivity.count(pairs.size(), "смена", "смены", "смен") + " марки · новые сверху", "transitions");
     a.note("Что менялось в режиме, когда линия переходила с одной марки на другую. Соседние снимки разных марок — это сравнение двух "
       + "режимов; размеченный переход показывает ещё и путь между ними. Нажмите карточку, чтобы открыть все цифры.");
+    a.buttons("Переход: откуда → куда", () -> a.go(() -> RegimeScreens.plan(a)), "Прошлые режимы", () -> a.go(() -> RegimeScreens.history(a, null)));
     a.buttons(grade == null ? "Марка: все" : "Марка: " + s.gradeName(grade), () -> chooseGrade(a),
       mean(a) ? "Среднее за период" : "Ближайшие снимки", () -> {
         a.prefs().edit().putBoolean("smeny_mean", !mean(a)).apply();
@@ -78,7 +79,7 @@ final class SmenyScreen {
     });
   }
 
-  private static void feedCard(MainActivity a, Smeny.Pair p, int index) {
+  static void feedCard(MainActivity a, Smeny.Pair p, int index) {
     Store s = a.store;
     Sides sides = sides(a, p);
     String summary;
@@ -106,7 +107,7 @@ final class SmenyScreen {
 
   // ---------------------------------------------------------------- one change
 
-  private static final class Sides {
+  static final class Sides {
     Map<String, Smeny.Side> a, b, target;
     Smeny.Run previous;
   }
@@ -226,7 +227,7 @@ final class SmenyScreen {
       p.marked != null ? TransitionScreens.draftOf(p.marked) : draft(p)));
   }
 
-  private static int order(Store s, String key) {
+  static int order(Store s, String key) {
     int i = 0;
     for (Model.Param param : s.params) {
       if (param.key.equals(key)) return i;
@@ -252,7 +253,7 @@ final class SmenyScreen {
 
   // ---------------------------------------------------------------- rows
 
-  private static LinearLayout box(MainActivity a) {
+  static LinearLayout box(MainActivity a) {
     LinearLayout box = a.vertical();
     box.setBackground(a.box(Color.WHITE, MainActivity.BORDER));
     box.setPadding(a.dp(14), a.dp(4), a.dp(14), a.dp(4));
@@ -291,7 +292,7 @@ final class SmenyScreen {
     line(a, box, key, name, x, y, t, a.store, marks, sides.target == null ? "" : a.store.gradeName(sides.previous.grade));
   }
 
-  private static void zoneRow(MainActivity a, LinearLayout box, String title, String suffix, Sides sides, boolean marks) {
+  static void zoneRow(MainActivity a, LinearLayout box, String title, String suffix, Sides sides, boolean marks) {
     Store s = a.store;
     StringBuilder text = new StringBuilder();
     for (int zone = 1; zone <= 3; zone++) {
@@ -316,7 +317,7 @@ final class SmenyScreen {
     box.addView(row);
   }
 
-  private static void sharesRow(MainActivity a, LinearLayout box, Sides sides, String from, String to) {
+  static void sharesRow(MainActivity a, LinearLayout box, Sides sides, String from, String to) {
     if (!sides.a.containsKey("share1") || !sides.b.containsKey("share1")) return;
     LinearLayout row = a.vertical();
     row.setPadding(0, a.dp(9), 0, a.dp(9));
@@ -350,7 +351,7 @@ final class SmenyScreen {
     parent.addView(line, params);
   }
 
-  private static void divider(MainActivity a, LinearLayout box) {
+  static void divider(MainActivity a, LinearLayout box) {
     if (box.getChildCount() == 0) return;
     android.view.View line = new android.view.View(a);
     line.setBackgroundColor(MainActivity.BORDER);
@@ -489,6 +490,10 @@ final class SmenyScreen {
       feedCard(a, p, i);
     }
     if (found == 0) a.note("Смен с этой маркой в базе пока нет.");
+    a.buttons("Прошлые режимы", () -> a.go(() -> RegimeScreens.history(a, gradeId)), "Сравнить с нынешним", () -> {
+      a.prefs().edit().putString("plan_to", gradeId).putString("plan_target", "last").apply();
+      a.go(() -> RegimeScreens.plan(a));
+    });
     a.buttons("Все замеры марки", () -> a.go(() -> ArchiveScreens.observations(a, gradeId)), "Техкарты марки", () -> a.go(() -> ArchiveScreens.docs(a, gradeId)));
   }
 

@@ -43,6 +43,7 @@ final class ArchiveScreens {
       stats.addView(a.label("Спорные марки и дубли: " + s.duplicates.size() + " · конфликты импорта: " + s.openConflicts().size(),
         14, MainActivity.REJECTED, true));
     }
+    a.buttons("Переход: откуда → куда", () -> a.go(() -> RegimeScreens.plan(a)), "Прошлые режимы", () -> a.go(() -> RegimeScreens.history(a, null)));
     a.buttons("Смены марок", () -> a.home(() -> SmenyScreen.show(a)), "Разметка переходов", () -> a.go(() -> TransitionScreens.list(a)));
     a.buttons("Добавить фото", () -> a.go(() -> PhotoScreens.add(a)), "Оценка сейчас", () -> EstimateScreen.open(a));
     a.buttons("Все замеры", () -> a.go(() -> observations(a, null)), "Техкарты", () -> a.go(() -> docs(a, null)));
@@ -115,6 +116,10 @@ final class ArchiveScreens {
     int values = 0;
     for (Model.Obs obs : list) for (Model.Val value : s.values(obs.id)) if (!value.extra) values++;
     a.frame("Марка " + s.gradeName(gradeId), MainActivity.observations(list.size()) + " · " + MainActivity.docs(docs.size()) + " · " + MainActivity.values(values), "grades");
+    a.buttons("Прошлые режимы", () -> a.go(() -> RegimeScreens.history(a, gradeId)), "Сравнить с нынешним", () -> {
+      a.prefs().edit().putString("plan_to", gradeId).putString("plan_target", "last").apply();
+      a.go(() -> RegimeScreens.plan(a));
+    });
     a.buttons("Режим марки", () -> a.go(() -> SmenyScreen.mode(a, gradeId)), "Смены с маркой", () -> {
       a.prefs().edit().putString("smeny_grade", gradeId).apply();
       a.home(() -> SmenyScreen.show(a));

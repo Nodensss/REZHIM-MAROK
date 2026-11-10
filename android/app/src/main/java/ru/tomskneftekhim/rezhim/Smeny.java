@@ -216,7 +216,7 @@ final class Smeny {
     return result;
   }
 
-  private static void derive(Map<String, Side> side) {
+  static void derive(Map<String, Side> side) {
     Side[] flows = new Side[3];
     for (int i = 0; i < 3; i++) {
       flows[i] = side.get(SUM_KEYS[i]);
