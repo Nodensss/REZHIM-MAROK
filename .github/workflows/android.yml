@@ -35,7 +35,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
+      # The ubuntu runner ships the Android SDK (ANDROID_HOME); android-actions/setup-android failed
+      # there with «Failed to find package 'tools'», so the preinstalled SDK is used as is.
+      - name: Android SDK
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          test -d "$ANDROID_HOME"
 
       # The same key as the local builds, so a CI APK installs over the one on the phone and keeps its data.
       - name: Signing key
