@@ -423,7 +423,7 @@ final class SmenyScreen {
     if (n.lower != null && n.upper != null) return Smeny.num(n.lower, 3) + "–" + Smeny.num(n.upper, 3) + (n.target == null ? "" : " (цель " + Smeny.num(n.target, 3) + ")");
     if (n.lower != null) return "не менее " + Smeny.num(n.lower, 3);
     if (n.upper != null) return "не более " + Smeny.num(n.upper, 3);
-    return "без границ";
+    return n.target != null ? "цель " + Smeny.num(n.target, 3) : "без границ";
   }
 
   // ---------------------------------------------------------------- grade regime
