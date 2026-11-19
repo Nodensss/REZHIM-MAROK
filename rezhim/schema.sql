@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS pump_map (
 CREATE TABLE IF NOT EXISTS transition (
  id INTEGER PRIMARY KEY, grade_from INTEGER REFERENCES grade(id), grade_to INTEGER REFERENCES grade(id),
  line TEXT NOT NULL CHECK(line IN ('A','B')), start TEXT NOT NULL, end TEXT,
- observation_from INTEGER REFERENCES observation(id), observation_to INTEGER REFERENCES observation(id)
+ observation_from INTEGER REFERENCES observation(id), observation_to INTEGER REFERENCES observation(id),
+ notes TEXT NOT NULL DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS audit (
  id INTEGER PRIMARY KEY, created_at TEXT NOT NULL, action TEXT NOT NULL, details TEXT NOT NULL

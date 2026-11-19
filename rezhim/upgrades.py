@@ -33,3 +33,9 @@ def allow_unknown_steady(conn, folder):
         raise
     finally:
         conn.execute('PRAGMA foreign_keys=ON')
+
+
+def add_transition_notes(conn):
+    """Where the start and end of a marked transition came from: the operator's words, a trend, a journal."""
+    if not any(r['name'] == 'notes' for r in conn.execute('PRAGMA table_info(transition)').fetchall()):
+        conn.execute("ALTER TABLE transition ADD COLUMN notes TEXT NOT NULL DEFAULT ''")

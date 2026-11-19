@@ -373,7 +373,7 @@ function pairStory(p){
   const warn=[];
   if(p.gapH>72&&!tr)warn.push(`Между снимками ${gapText(p.gapH)} — за это время могли быть и другие марки.`);
   if(p.dup)warn.push(`Похоже на ошибку в базе: у обеих марок совпадают все ${p.dup} общих цифр. Возможно, один и тот же снимок записан на две марки.`);
-  const marks=tr?` Переход отмечен оператором: начат ${day(st)}${en?`, режим ${esc(nb)} устоявшийся с ${day(en,false)} — переход занял ${gapText((en-st)/36e5)}`:''}.`:'';
+  const marks=tr?` Переход отмечен${tr.notes?'':' оператором'}: начат ${day(st)}${en?`, режим ${esc(nb)} устоявшийся с ${day(en,false)} — переход занял ${gapText((en-st)/36e5)}`:''}.${tr.notes?' '+esc(tr.notes):''}`:'';
   return story({id:'p'+p.i,itemsA:a,itemsB:b,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:nb,
     when:`${ymName(p.ym)} · смена №${p.i+1} из ${pairs.length}`,sub:sub+marks,warn,mid:p.mid,start:st,end:en,
     badge:tr?' <span class="flag">переход размечен</span>':''});
@@ -390,7 +390,7 @@ function ongoingStory(p){
   const T=prev?{...sideValues(prev.items,true,S.agg),name:nb}:null;
   TARGET=T;
   const tr=marked(p),st=tr?Date.parse(tr.start+'Z'):null,en=tr&&tr.end?Date.parse(tr.end+'Z'):null;
-  const sub=`Линия ${LINE[p.from.line]}.${tr?` Переход начат ${day(st)}${en?`, режим ${esc(nb)} устоявшийся с ${day(en,false)} — переход занял ${gapText((en-st)/36e5)}. Снимков устойчивого режима после этого времени пока нет, поэтому «сейчас» — последняя точка перехода`:`, к последней точке прошло ${gapText((m.at(-1).t-st)/36e5)}`}.`:''} Было: ${esc(na)}, последний снимок ${day(a.at(-1).t)}. Сейчас: последняя точка перехода ${day(m.at(-1).t)}.${prev?` «Было» на ${esc(nb)} — прежний режим этой марки на линии, снимки по ${day(prev.items.at(-1).t)}.`:''}`;
+  const sub=`Линия ${LINE[p.from.line]}.${tr?` Переход начат ${day(st)}${en?`, режим ${esc(nb)} устоявшийся с ${day(en,false)} — переход занял ${gapText((en-st)/36e5)}. Снимков устойчивого режима после этого времени пока нет, поэтому «сейчас» — последняя точка перехода`:`, к последней точке прошло ${gapText((m.at(-1).t-st)/36e5)}`}.${tr.notes?' '+esc(tr.notes):''}`:''} Было: ${esc(na)}, последний снимок ${day(a.at(-1).t)}. Сейчас: последняя точка перехода ${day(m.at(-1).t)}.${prev?` «Было» на ${esc(nb)} — прежний режим этой марки на линии, снимки по ${day(prev.items.at(-1).t)}.`:''}`;
   const mixed=['z1_f','z2_f','z3_f'].some(k=>{const src=[...m].reverse().find(x=>x.vals[k]);return src&&src.mixed;});
   return story({id:'p'+p.i,itemsA:a,itemsB:m,A,B,ga:p.from.grade,gb:p.to.grade,la:na,lb:'сейчас',T,mid:m,start:st,mixed,
     when:`${ymName(p.ym)} · ${en?'переход завершён':'идёт переход'}`,badge:` <span class="flag">${en?'завершён '+day(en,false).split(', ')[1]:'идёт переход'}</span>`,sub,warn:[],end:en});

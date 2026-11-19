@@ -14,7 +14,7 @@ from werkzeug.exceptions import HTTPException
 from .catalog import PARAMS
 from .ocr_engine import installation_status
 from .smeny_page import render as render_smeny
-from .upgrades import allow_unknown_steady
+from .upgrades import add_transition_notes, allow_unknown_steady
 
 ROOT = Path(__file__).resolve().parent.parent
 STATES = {'running', 'stopped', 'unknown'}
@@ -67,6 +67,7 @@ def create_app(data_dir=None):
     with db() as conn:
         conn.executescript((ROOT / 'rezhim/schema.sql').read_text(encoding='utf-8'))
         allow_unknown_steady(conn, folder)
+        add_transition_notes(conn)
         conn.execute("UPDATE metadata SET value='2' WHERE key='schema_version'")
         for p in PARAMS:
             conn.execute('INSERT OR IGNORE INTO param(key,name,tag,unit,role,load_dependency,group_name) VALUES (?,?,?,?,?,?,?)', p)

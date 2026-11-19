@@ -175,7 +175,8 @@ def transition_item(t, observations):
         'id': f"t{t['id']}", 'from': f"g{t['grade_from']}", 'to': f"g{t['grade_to']}", 'line': line,
         'start': start, 'end': end, 'status': 'confirmed' if complete else 'incomplete',
         'operator': 'со слов оператора',
-        'notes': 'Начало и окончание перехода — со слов оператора.' if end else 'Начало перехода — со слов оператора; окончание не отмечено.',
+        'notes': t.get('notes') or ('Начало и окончание перехода — со слов оператора.' if end
+                                     else 'Начало перехода — со слов оператора; окончание не отмечено.'),
         'before': [f'o{i}' for i in sorted(before)], 'during': [f'o{i}' for i in during], 'after': [f'o{i}' for i in after],
     }
 

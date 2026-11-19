@@ -139,17 +139,20 @@ final class SmenyScreen {
 
     StringBuilder intro = new StringBuilder();
     if (p.marked != null) {
-      intro.append("Переход отмечен оператором: начат ").append(Smeny.day(p.marked.start, true));
+      intro.append("Переход размечен: начат ").append(Smeny.day(p.marked.start, true));
       if (p.marked.end != null) {
         intro.append(", режим ").append(to).append(" устоявшийся с ").append(Smeny.day(p.marked.end, false))
           .append(" — переход занял ").append(Smeny.gap(Analysis.hoursBetween(p.marked.start, p.marked.end)));
       }
       intro.append(".\n");
+      // Where the times came from: the operator's words, a trend, a journal.
+      if (p.marked.notes != null && !p.marked.notes.isEmpty()) intro.append(p.marked.notes).append("\n");
     }
     intro.append("Было: ").append(from).append(", ").append(mean(a) ? "среднее по " + MainActivity.observations(p.from.items.size()) + " до "
       : "последний снимок ").append(Smeny.day(p.from.last().time, true)).append(".\n");
     if (p.ongoing) {
       intro.append("Сейчас: последняя точка перехода ").append(Smeny.day(p.lastSeen().time, true)).append(".");
+      if (p.finished()) intro.append(" Снимков устоявшегося режима после окончания перехода пока нет.");
       if (sides.previous != null) {
         intro.append("\nСеро под цифрами — прежний режим ").append(to).append(" на этой линии, снимки по ")
           .append(Smeny.day(sides.previous.last().time, true)).append(".");

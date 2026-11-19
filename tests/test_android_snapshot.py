@@ -69,6 +69,12 @@ class WorkingDatabaseSnapshotTests(unittest.TestCase):
                 self.assertIs(observations[oid]['steady'], False, oid)
             self.assertEqual(t['status'] == 'confirmed', bool(t['start'] and t['end'] and t['before'] and t['after']))
 
+    def test_transition_notes_say_where_times_came_from(self):
+        by_id = {t['id']: t for t in self.snapshot['transitions']}
+        self.assertEqual(by_id['t1']['notes'], 'Начало и окончание перехода — со слов оператора.')
+        self.assertIn('по тренду', by_id['t2']['notes'])
+        self.assertEqual(by_id['t2']['status'], 'incomplete')  # no steady 40251 snapshot after 18:00 yet
+
     def test_time_origin_is_never_invented(self):
         origins = {o['id']: o['time_origin'] for o in self.snapshot['observations']}
         self.assertTrue(set(origins.values()) <= {'screen', 'exif', 'manual', 'unknown'})
